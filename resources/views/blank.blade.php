@@ -5,7 +5,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ __('Blank Page') }}</h1>
 
     <!-- Main Content goes here -->
-
+    
 
     <!-- End of Main Content -->
 @endsection
