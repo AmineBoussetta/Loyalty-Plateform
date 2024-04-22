@@ -1,11 +1,18 @@
 <?php
 
-namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+namespace App\Models;
 
-class Caissier extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class SuperAdmin extends Authenticatable
 {
-    use HasFactory;
+    protected $table = 'super_admins';
+
+    protected $fillable = ['user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

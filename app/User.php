@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
@@ -45,4 +46,12 @@ class User extends Authenticatable
 
         return "{$this->name} {$this->last_name}";
     }
+
+    public function gerant()
+{
+    return $this->hasOne(Gerant::class);
 }
+
+}
+
+
