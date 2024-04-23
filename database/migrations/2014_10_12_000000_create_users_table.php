@@ -12,18 +12,25 @@ class CreateUsersTable extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('companies', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('abbreviation'); // Add abbreviation field
+        $table->string('default_currency'); // Add default_currency field
+        $table->string('country'); // Add country field
+        $table->string('tax_id'); // Add tax_id field
+        $table->string('managers'); // Add managers field
+        $table->string('phone'); // Add phone field
+        $table->string('email')->unique();
+        $table->string('website')->nullable(); // Add website field
+        $table->text('description')->nullable(); // Add description field
+        $table->timestamp('email_verified_at')->nullable();
+        $table->string('password');
+        $table->rememberToken();
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
