@@ -31,9 +31,12 @@ Route::get('/blank', function () {
     return view('blank');
 })->name('blank');
 
+Route::resource('companies', CompanyController::class);
 
 Route::middleware('auth')->group(function() {
+    Route::get('/basic/{company}/edit', 'BasicController@edit')->name('basic.edit');
     Route::resource('basic', BasicController::class);
+    
 });
 
 Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');

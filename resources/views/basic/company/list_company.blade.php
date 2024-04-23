@@ -25,22 +25,20 @@
         </thead>
         <tbody>
         @foreach ($companies as $company)
-            <tr>
-                <td scope="row">{{ $loop->iteration }}</td>
-                <td>{{ $company->name }}</td>
-                <td>{{ $company->manager }}</td> <!-- Assuming 'manager' is the field for the manager's name -->
-                <td>
-                    <div class="d-flex">
-                        <a href="{{ route('basic.edit', $company->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                        <form action="{{ route('basic.destroy', $company->id) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this?')">Delete</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $company->name }}</td>
+        <td>{{ $company->manager }}</td>
+        <td>
+            <a href="{{ route('basic.edit', $company) }}" class="btn btn-primary">Edit</a>
+            <form action="{{ route('basic.destroy', $company) }}" method="POST" style="display: inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+@endforeach
     </tbody>
     </table>
 
