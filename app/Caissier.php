@@ -7,9 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class SuperAdmin extends Authenticatable
 {
-    protected $table = 'super_admins';
+    protected $table = 'caissiers';
 
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id','$company_name'];
 
     public function user()
     {
