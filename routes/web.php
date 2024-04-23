@@ -35,3 +35,5 @@ Route::get('/blank', function () {
 Route::middleware('auth')->group(function() {
     Route::resource('basic', BasicController::class);
 });
+
+Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
