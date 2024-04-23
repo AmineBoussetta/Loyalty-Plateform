@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\EditUserRequest;
+use App\Company; // Import the Company model
+use App\Http\Requests\StoreCompanyRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +20,9 @@ class BasicController extends Controller
      */
     public function index()
     {
-        return view('basic.list', [
-            'title' => 'Basic CRUD',
-            'users' => User::paginate(10)
-        ]);
+        // Retrieve companies data and pass it to the view
+        $companies = Company::paginate(10);
+        return view('basic.list', compact('companies'));
     }
 
     /**
@@ -32,8 +33,7 @@ class BasicController extends Controller
     public function create()
     {
         return view('basic.create', [
-            'title' => 'New User',
-            'users' => User::paginate(10)
+            'title' => 'New Company'
         ]);
     }
 
@@ -43,17 +43,27 @@ class BasicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddUserRequest $request)
+    public function store(StoreCompanyRequest $request)
     {
-        User::create([
+        // Create a new Company record using the submitted form data
+        Company::create([
             'name' => $request->name,
-            'last_name' => $request->last_name,
+            'abbreviation' => $request->abbreviation,
+            'default_currency' => $request->default_currency,
+            'country' => $request->country,
+            'tax_id' => $request->tax_id,
+            'managers' => $request->managers,
+            'phone' => $request->phone,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'website' => $request->website,
+            'description' => $request->description,
         ]);
-
-        return redirect()->route('basic.index')->with('message', 'User added successfully!');
+    
+        // Redirect the user back to the index page with a success message
+        return redirect()->route('basic.index')->with('success', 'Company added successfully!');
     }
+    
+    
 
     /**
      * Display the specified resource.
