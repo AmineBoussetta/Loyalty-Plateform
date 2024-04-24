@@ -44,7 +44,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ Nav::isRoute('home_caissier') }}">
-            <a class="nav-link" href="{{ route('home') }}">
+            <a class="nav-link" href="{{ route('home_caissier') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>{{ __('Dashboard') }}</span></a>
         </li>
@@ -58,13 +58,13 @@
         </div>
 
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('basic.index') }}">
-            <a class="nav-link" href="{{ route('basic.index') }}">
+        <li class="nav-item {{ Nav::isRoute('clients.index') }}">
+            <a class="nav-link" href="{{ route('clients.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>
         </li>
-        <li class="nav-item {{ Nav::isRoute('basic.index') }}">
+        <li class="nav-item {{ Nav::isRoute('clients.index') }}"> {{-- change 'clients to carteFidelite later' --}}
             <a class="nav-link" href="{{ route('basic.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Carte fidélite') }}</span>
@@ -72,8 +72,8 @@
         </li>
 
         <!-- Nav Item - Profile -->
-        <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile') }}">
+        <li class="nav-item {{ Nav::isRoute('profileCaissier') }}">
+            <a class="nav-link" href="{{ route('profileCaissier') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Profile') }}</span>
             </a>

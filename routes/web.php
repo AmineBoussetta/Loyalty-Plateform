@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BasicController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,18 @@ Route::middleware('auth')->group(function() {
 });
 
 Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
+
+Route::get('/clients/create', 'ClientController@create')->name('clients.create');
+Route::post('/clients', 'ClientController@store')->name('clients.store');
+Route::get('/clients', 'ClientController@index')->name('clients.index');
+Route::get('/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
+Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
+Route::delete('/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
+
+Route::get('/profileCaissier', 'ProfileController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+Route::put('/profileCaissier', 'ProfileController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+
+
+
+
+

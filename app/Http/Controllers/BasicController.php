@@ -18,11 +18,12 @@ class BasicController extends Controller
      */
     public function index()
     {
-        return view('basic.list', [
+        return view('basic.user.list', [
             'title' => 'Basic CRUD',
             'users' => User::paginate(10)
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
