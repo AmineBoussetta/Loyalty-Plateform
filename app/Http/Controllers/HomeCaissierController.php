@@ -2,7 +2,9 @@
 // DISPLAYS CLIENTS AND FIDELITY CARDS INFORMTIONS IN THE DASHBOARD STILL NOT MODIFIED AND SHARE THE "USER COUNTS"
 namespace App\Http\Controllers;
 
+use App\CarteFidelite;
 use App\User;
+use App\Client;
 use Illuminate\Http\Request;
 
 class HomeCaissierController extends Controller
@@ -24,11 +26,13 @@ class HomeCaissierController extends Controller
      */
     public function index()
     {
-        $users = User::count();
+        $clientsCount = Client::count();
+        $cardsCount = CarteFidelite::count();
 
         $widget = [
-            'users' => $users,
-            //...
+            'clientsCount' => $clientsCount,
+            'cardsCount' => $cardsCount,
+            // Add more widget data if needed
         ];
 
         return view('home_caissier', compact('widget'));

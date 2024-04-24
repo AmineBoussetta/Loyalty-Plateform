@@ -1,8 +1,10 @@
 <?php
 
+use App\CarteFidelite;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BasicController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CarteFideliteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,15 +44,25 @@ Route::middleware('auth')->group(function() {
 
 Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
 
+Route::get('/clients', 'ClientController@index')->name('clients.index');
 Route::get('/clients/create', 'ClientController@create')->name('clients.create');
 Route::post('/clients', 'ClientController@store')->name('clients.store');
-Route::get('/clients', 'ClientController@index')->name('clients.index');
 Route::get('/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
 Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
 Route::delete('/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
 
 Route::get('/profileCaissier', 'ProfileController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 Route::put('/profileCaissier', 'ProfileController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+
+Route::get('/carte-fidelite', 'CarteFideliteController@index')->name('carte_fidelite.index');
+Route::get('/carte-fidelite/create', 'CarteFideliteController@create')->name('carte_fidelite.create');
+Route::post('/carte-fidelite', 'CarteFideliteController@store')->name('carte_fidelite.store');
+Route::get('/carte-fidelite/{carte_fidelite}/edit', 'CarteFideliteController@edit')->name('carte_fidelite.edit');
+
+// Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
+
+Route::delete('/carte_fidelite/{id}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
+
 
 
 

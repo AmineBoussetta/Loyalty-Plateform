@@ -64,8 +64,8 @@
                 <span>{{ __('Clients') }}</span>
             </a>
         </li>
-        <li class="nav-item {{ Nav::isRoute('clients.index') }}"> {{-- change 'clients to carteFidelite later' --}}
-            <a class="nav-link" href="{{ route('basic.index') }}">
+        <li class="nav-item {{ Nav::isRoute('carte_fidelite.index') }}"> {{-- change 'clients to carteFidelite later' --}}
+            <a class="nav-link" href="{{ route('carte_fidelite.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Carte fidélite') }}</span>
             </a>
