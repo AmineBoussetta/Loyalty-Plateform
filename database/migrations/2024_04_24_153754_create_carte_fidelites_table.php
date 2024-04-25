@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('points_sum');
             $table->string('tier');
             $table->string('name');
+            $table->string('fidelity_program');
             $table->timestamps();
         });
     }

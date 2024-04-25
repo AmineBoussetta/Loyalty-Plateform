@@ -21,6 +21,7 @@
                 <th>Somme de points</th>
                 <th>Tier</th>
                 <th>Nom du deteneur</th>
+                <th>Programme de fidelite</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>
                     <td>{{ $carte->name }}</td>
+                    <td>{{ $carte->fidelity_program }}</td>
                     <td>
                         <a href="{{ route('carte_fidelite.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
                         <form action="{{ route('carte_fidelite.destroy', $carte->id) }}" method="post" style="display: inline;">

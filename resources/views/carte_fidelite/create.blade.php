@@ -42,6 +42,14 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                     </div>
+
+                    <div class="form-group">
+                      <label for="fidelity_program">Programme de fidelite</label>
+                      <input type="text" class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program" placeholder="Fidelity program" autocomplete="off" value="{{ old('fidelity_program') }}">
+                      @error('fidelity_program')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
   
                   <button type="submit" class="btn btn-primary">Save</button>
                   <a href="{{ route('carte_fidelite.index') }}" class="btn btn-default">Back to list</a>

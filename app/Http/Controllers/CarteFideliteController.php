@@ -31,6 +31,7 @@ class CarteFideliteController extends Controller
             'points_sum' => $request->points_sum,
             'tier' => $request->tier,
             'name' => $request->name,
+            'fidelity_program' => $request->fidelity_program,
         ]); 
 
     // Redirect the user back to the card listing page or any other desired page
