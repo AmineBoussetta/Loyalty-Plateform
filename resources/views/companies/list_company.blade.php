@@ -5,8 +5,8 @@
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
     <!-- Main Content goes here -->
-
-    <a href="{{ route('basic.create') }}" class="btn btn-primary mb-3">New company</a>
+    
+    <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3">New company</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -28,15 +28,20 @@
     <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $company->name }}</td>
-        <td>{{ $company->manager }}</td>
+        <td>{{ $company->managers }}</td>
         <td>
-            <a href="{{ route('basic.edit', $company) }}" class="btn btn-primary">Edit</a>
-            <form action="{{ route('basic.destroy', $company) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </td>
+    @if (!is_null($company->id))
+        <a href="{{ route('companies.edit_company', ['company' => $company->id]) }}" class="btn btn-primary">Edit</a>
+    @endif
+    @if (!is_null($company->id))
+        <form action="{{ route('companies.destroy', $company) }}" method="POST" style="display: inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    @endif
+</td>
+
     </tr>
 @endforeach
     </tbody>

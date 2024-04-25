@@ -58,8 +58,8 @@
         </div>
 
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('basic.index') }}">
-            <a class="nav-link" href="{{ route('basic.index') }}">
+        <li class="nav-item {{ Nav::isRoute('companies.index') }}">
+            <a class="nav-link" href="{{ route('companies.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Add company') }}</span>
             </a>

@@ -7,7 +7,7 @@
     <!-- Main Content goes here -->
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('basic.store') }}" method="post">
+        <form action="{{ route('companies.store') }}" method="post">
             @csrf
 
             <div class="form-group">
@@ -91,7 +91,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
-            <a href="{{ route('basic.index') }}" class="btn btn-default">Back to list</a>
+            <a href="{{ route('companies.index') }}" class="btn btn-default">Back to list</a>
 
         </form>
     </div>

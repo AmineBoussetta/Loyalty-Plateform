@@ -13,7 +13,7 @@
             {{ session('message') }}
         </div>
     @endif
-
+ 
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
