@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BasicController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,9 +33,11 @@ Route::get('/blank', function () {
 })->name('blank');
 
 Route::resource('companies', CompanyController::class);
+Route::get('/companies/{company}/edit_company', [\App\Http\Controllers\CompanyController::class, 'edit'])->name('companies.edit_company');
 
 Route::middleware('auth')->group(function() {
     Route::get('/basic/{company}/edit', 'BasicController@edit')->name('basic.edit');
     Route::resource('basic', BasicController::class);
-    
+    Route::resource('companies', CompanyController::class);
+
 });
