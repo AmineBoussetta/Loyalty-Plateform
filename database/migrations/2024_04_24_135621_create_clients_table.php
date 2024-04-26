@@ -16,7 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('card_id')->nullable(); // Add this column
             $table->timestamps();
+
+            // Add foreign key constraint
+            $table->foreign('card_id')->references('id')->on('carte_fidelites')->onDelete('set null');
         });
     }
 
@@ -25,6 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dropForeign(['card_id']);
+        });
+
         Schema::dropIfExists('clients');
     }
 };

@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'email', 'phone'];
+
+    public function cards()
+    {
+        return $this->hasMany(CarteFidelite::class);
+    }
 }
+

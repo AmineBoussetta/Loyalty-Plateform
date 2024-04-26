@@ -21,6 +21,8 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
+                <th>Card ID</th>
+
             </tr>
         </thead>
         <tbody>
@@ -30,6 +32,7 @@
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
+                    <td>{{ optional($client->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>

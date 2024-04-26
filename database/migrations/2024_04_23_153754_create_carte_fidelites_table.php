@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('carte_fidelites', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('commercial_ID');
+            $table->string('commercial_ID');
             $table->integer('points_sum');
             $table->string('tier');
             $table->string('name');
