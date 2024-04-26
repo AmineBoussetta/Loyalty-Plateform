@@ -57,7 +57,7 @@ class CompanyController extends Controller
             'description' => $request->description
         ]);
     
-        return redirect()->route('company.index')->with('message', 'Company added successfully!');
+        return redirect()->route('companies.index')->with('message', 'Company added successfully!');
     }
     
     
