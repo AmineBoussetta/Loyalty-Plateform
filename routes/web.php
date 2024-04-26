@@ -60,11 +60,11 @@ Route::put('/profileCaissier', 'ProfileController@update')->name('profileCaissie
 Route::get('/carte-fidelite', 'CarteFideliteController@index')->name('carte_fidelite.index');
 Route::get('/carte-fidelite/create', 'CarteFideliteController@create')->name('carte_fidelite.create');
 Route::post('/carte-fidelite', 'CarteFideliteController@store')->name('carte_fidelite.store');
-Route::get('/carte-fidelite/{carte_fidelite}/edit', 'CarteFideliteController@edit')->name('carte_fidelite.edit');
+Route::get('/carte-fidelite/{carte}/edit', 'CarteFideliteController@edit')->name('carte_fidelite.edit');
 
-// Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
+Route::put('/carte_fidelite/{carte}', 'CarteFideliteController@update')->name('carte_fidelite.update');
 
-Route::delete('/carte_fidelite/{id}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
+Route::delete('/carte_fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
 
 
 

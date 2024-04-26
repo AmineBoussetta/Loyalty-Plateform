@@ -30,7 +30,8 @@
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>
-                    <td>{{ $carte->name }}</td>
+                    <td>{{ optional($carte->client)->name }}</td>  {{-- still need fixing --}}
+                    
                     <td>{{ $carte->fidelity_program }}</td>
                     <td>
                         <a href="{{ route('carte_fidelite.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>

@@ -4,40 +4,68 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
+    {{-- {{ dd($carte) }} --}}
+
     <!-- Main Content goes here -->
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('carte_fidelite.update', $client->id) }}" method="post">
+            <form action="{{ route('carte_fidelite.update', ['carte' => $carte->id]) }}" method="post">
+
                 @csrf
                 @method('put')
 
                 <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Name" autocomplete="off" value="{{ old('name') ?? $client->name }}">
-                  @error('name')
+                  <label for="points_sum">Total Points</label>
+                  <input type="text" class="form-control @error('points_sum') is-invalid @enderror" name="points_sum" id="points_sum" placeholder="Total Points" autocomplete="off" value="{{ old('points_sum') ?? $carte->points_sum }}">
+                  @error('points_sum')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
 
                 <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ old('email') ?? $client->email }}">
-                  @error('email')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                </div>
+                    <label for="tier">Tier</label>
+                    <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
+                      <option disabled selected>Select a tier</option>
+                        <option value="gold" {{ old('tier') == 'gold' ? 'selected' : '' }}>Gold</option>
+                        <option value="silver" {{ old('tier') == 'silver' ? 'selected' : '' }}>Silver</option>
+                        <option value="bronze" {{ old('tier') == 'bronze' ? 'selected' : '' }}>Bronze</option>
+                    </select>
+                    @error('tier')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
 
-                <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="Phone" autocomplete="off" value="{{ old('phone') ?? $client->phone }}">
-                  @error('phone')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                </div>
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <select class="form-control @error('name') is-invalid @enderror" name="name" id="name">
+                        <option disabled selected>Select a holder</option>
+                        @foreach ($clients as $client)
+                            <option value="{{ $client->id }}" {{ old('name') == $client->id ? 'selected' : '' }}>
+                                {{ $client->name }} ({{ $client->phone }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+
+                  <div class="form-group">
+                    <label for="fidelity_program">Programme de fidélité</label>
+                    <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
+                      <option disabled selected>Sélectionner un programme</option>
+                        <option value="gold" {{ old('fidelity_program') == 'gold' ? 'selected' : '' }}>Programme 1</option>
+                        <option value="silver" {{ old('fidelity_program') == 'silver' ? 'selected' : '' }}>Programme 2</option>
+                        <option value="bronze" {{ old('fidelity_program') == 'bronze' ? 'selected' : '' }}>Programme 3</option>
+                    </select>
+                    @error('fidelity_program')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('clients.index') }}" class="btn btn-default">Back to list</a>
+                <a href="{{ route('carte_fidelite.index') }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>
