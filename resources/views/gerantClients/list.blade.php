@@ -1,4 +1,4 @@
-@extends('layouts.caissier')
+@extends('layouts.gerant')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3">Ajouter une carte</a>
+    <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Add Clients</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -17,42 +17,42 @@
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
-                <th>Identifiant Commercial</th>
-                <th>Somme de points</th>
-                <th>Tier</th>
-                <th>Nom du deteneur</th>
-                <th>Programme de fidelite</th>
+                <th>No</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Card ID</th>
+
             </tr>
         </thead>
         <tbody>
-            @forelse ($cartes as $carte)
+            @forelse ($gerantClients as $gerantClient)
                 <tr>
-                    <td>{{ $carte->commercial_ID }}</td>
-                    <td>{{ $carte->points_sum }}</td>
-                    <td>{{ $carte->tier }}</td>
-                    <td>{{ optional($carte->client)->name ?? 'No holder' }}</td> {{-- still needs fixing --}}
-     
-                    
-                    <td>{{ $carte->fidelity_program }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $gerantClient->name }}</td>
+                    <td>{{ $gerantClient->email }}</td>
+                    <td>{{ $gerantClient->phone }}</td>
+                    <td>{{ optional($gerantClient->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
-                        <a href="{{ route('carte_fidelite.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                        <form action="{{ route('carte_fidelite.destroy', $carte->id) }}" method="post" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
-                        </form>
+                        <div class="d-flex">
+                            <a href="{{ route('gerantClients.index', $gerantClient->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a><!-- change gerantClients.index to .edit-->
+                            <form action="{{ route('gerantClients.index', $gerantClient->id) }}" method="post" style="display: inline;"><!-- change gerantClients.index to .destroy -->
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
+                            </form>
                         </div>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">No card found.</td>
+                    <td colspan="4" class="text-center">No clients found.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
-    {{ $cartes->links() }}
+    {{ $gerantClients->links() }}
 
     <!-- End of Main Content -->
 @endsection

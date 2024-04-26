@@ -10,7 +10,7 @@ class Gerant extends Authenticatable
 {
     protected $table = 'gerants';
 
-    protected $fillable = ['company_name'];
+    protected $fillable = ['nom','email','phone_number','company_name','password'];
 
     public function user()
     {

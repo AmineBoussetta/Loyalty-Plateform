@@ -29,22 +29,22 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home_gerant') }}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Super Admin<sup></sup></div>
+            <div class="sidebar-brand-text mx-3">Gerant<sup></sup></div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item {{ Nav::isRoute('home') }}">
-            <a class="nav-link" href="{{ route('home') }}">
+        <li class="nav-item {{ Nav::isRoute('home_gerant') }}">
+            <a class="nav-link" href="{{ route('home_gerant') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>{{ __('Dashboard') }}</span></a>
         </li>
@@ -58,10 +58,24 @@
         </div>
 
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('companies.index') }}">
-            <a class="nav-link" href="{{ route('companies.index') }}">
+        <li class="nav-item {{ Nav::isRoute('gerantPrograms.index') }}">
+            <a class="nav-link" href="{{ route('gerantPrograms.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Add company') }}</span>
+                <span>{{ __('Programs') }}</span> <!--STILL NEED FIXING -->
+            </a>
+        </li>
+        <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
+            <a class="nav-link" href="{{ route('gerantClients.index') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Clients') }}</span> <!--STILL NEED FIXING -->
+            </a>
+        </li>
+        <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantOffers.index') }}"><!--STILL NEED FIXING -->
+            <a class="nav-link" href="{{ route('gerantOffers.index') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Offers') }}</span> 
             </a>
         </li>
 

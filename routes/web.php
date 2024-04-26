@@ -68,6 +68,14 @@ Route::delete('/carte_fidelite/{carte}', 'CarteFideliteController@destroy')->nam
 
 
 
+Route::get('/home_gerant', 'HomeGerantController@index')->name('home_gerant');
+Route::get('/gerant-programs', 'GerantProgramsController@index')->name('gerantPrograms.index');
+Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClients.index');
+Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');
+
+
+
+
 
 
 

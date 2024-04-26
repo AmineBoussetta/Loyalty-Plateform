@@ -11,9 +11,9 @@ class Client extends Model
 
     protected $fillable = ['name', 'email', 'phone'];
 
-    public function cards()
+    public function card()
     {
-        return $this->hasMany(CarteFidelite::class);
+        return $this->hasOne(CarteFidelite::class, 'client_id');
     }
 }
 

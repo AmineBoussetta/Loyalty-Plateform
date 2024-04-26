@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carte_fidelites', function (Blueprint $table) {
+        Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('commercial_ID');
-            $table->integer('points_sum');
-            $table->string('tier');
             $table->string('name');
-            $table->string('fidelity_program');
-            $table->unsignedBigInteger('client_id')->nullable();
+            $table->date('expiration_date');
+            $table->string('tier');
+            $table->string('reward');
+            $table->string('status');
             $table->timestamps();
-
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carte_fidelites');
+        Schema::dropIfExists('programs');
     }
 };
