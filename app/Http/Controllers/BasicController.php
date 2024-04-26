@@ -76,7 +76,7 @@ class BasicController extends Controller
      */
     public function edit(User $basic)
     {
-        return view('basic.edit', [
+        return view('basic.user.edit', [
             'title' => 'Edit User',
             'user' => $basic
         ]);
