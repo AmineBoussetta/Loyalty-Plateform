@@ -72,6 +72,8 @@ Route::get('/home_gerant', 'HomeGerantController@index')->name('home_gerant');
 Route::get('/gerant-programs', 'GerantProgramsController@index')->name('gerantPrograms.index');
 Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClients.index');
 Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');
+Route::get('gerant-clients/create', 'GerantClientsController@create')->name('gerantClients.create');
+Route::post('gerant-clients/client', 'GerantClientsController@store')->name('gerantClients.store');
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddClientRequest;
 
 class GerantClientsController extends Controller
 {
@@ -15,25 +16,25 @@ class GerantClientsController extends Controller
         ]);
     }
     
-    // public function create()
-    // {
-    //     return view('clients.create', [
-    //     'title' => 'New Client',
-    //     'clients' => Program::paginate(10)
-    //     ]);
-    // }
+    public function create()
+    {
+        return view('gerantClients.create', [
+        'title' => 'New Client',
+        'clients' => Client::paginate(10)
+        ]);
+    }
 
-    // public function store(AddProgramRequest $request)
-    // {
-    //     Program::create([
-    //         'name' => $request->name,
-    //         'phone' => $request->phone,
-    //         'email' => $request->email,
-    //     ]); 
+    public function store(AddClientRequest $request)
+    {
+        Client::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ]); 
 
-    //     // Redirect the user back to the client listing page or any other desired page
-    //     return redirect()->route('clients.index')->with('message', 'Client added successfully!');
-    // }
+        // Redirect the user back to the client listing page or any other desired page
+        return redirect()->route('gerantClients.index')->with('message', 'Client added successfully!');
+    }
 
     // public function edit(Program $client)
     // {

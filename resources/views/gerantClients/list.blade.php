@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Add Clients</a>
+    <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3">Add Clients</a>
 
     @if (session('message'))
         <div class="alert alert-success">

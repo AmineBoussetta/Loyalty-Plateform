@@ -1,4 +1,4 @@
-@extends('layouts.caissier')
+@extends('layouts.gerant')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('clients.store') }}" method="post">
+            <form action="{{ route('gerantClients.store') }}" method="post">
                 @csrf
 
                 <div class="form-group">
