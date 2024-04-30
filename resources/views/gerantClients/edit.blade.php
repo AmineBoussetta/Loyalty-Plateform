@@ -8,13 +8,13 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('clients.update', $client->id) }}" method="post">
+            <form action="{{ route('gerantClients.update', $client->id) }}" method="post">
                 @csrf
                 @method('put')
 
                 <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Name" autocomplete="off" value="{{ old('name') ?? $client->name }}">
+                  <label for="name">Full Name</label>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="First name" autocomplete="off" value="{{ old('name') ?? $client->name }}">
                   @error('name')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -29,15 +29,15 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="Phone" autocomplete="off" value="{{ old('phone') ?? $client->phone }}">
+                  <label for="phone">Phone Number</label>
+                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="Phone Number" autocomplete="off" value="{{ old('phone') ?? $client->phone }}">
                   @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('clients.index') }}" class="btn btn-default">Back to list</a>
+                <a href="{{ route('gerantClients.index') }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>

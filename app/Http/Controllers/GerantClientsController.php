@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddClientRequest;
+use App\Http\Requests\EditClientRequest;
 
 class GerantClientsController extends Controller
 {
@@ -36,28 +37,28 @@ class GerantClientsController extends Controller
         return redirect()->route('gerantClients.index')->with('message', 'Client added successfully!');
     }
 
-    // public function edit(Program $client)
-    // {
-    //     return view('clients.edit', [
-    //         'title' => 'Edit Client',
-    //         'client' => $client // Pass the client data to the view
-    //     ]);
-    // }
+    public function edit(Client $client)
+    {
+        return view('gerantClients.edit', [
+            'title' => 'Edit Client',
+            'client' => $client // Pass the client data to the view
+        ]);
+    }
 
-    // public function update(EditProgramRequest $request, Program $client)
-    // {
-    //     $client->name = $request->name;
-    //     $client->phone = $request->phone;
-    //     $client->email = $request->email;
-    //     $client->save();
+    public function update(EditClientRequest $request, Client $client)
+    {
+        $client->name = $request->name;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->save();
 
-    //     return redirect()->route('clients.index')->with('message', 'Client updated successfully!');
-    // }
+        return redirect()->route('gerantClients.index')->with('message', 'Client updated successfully!');
+    }
 
-    // public function destroy(Program $program)
-    // {
-    //     $program->delete();
+    public function destroy(Client $client)
+    {
+        $client->delete();
 
-    //     return redirect()->route('program.index')->with('message', 'User deleted successfully!');
-    // }
+        return redirect()->route('gerantClients.index')->with('message', 'Client deleted successfully!');
+    }
 }

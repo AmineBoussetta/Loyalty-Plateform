@@ -1,4 +1,4 @@
-@extends('layouts.caissier')
+@extends('layouts.gerant')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -8,36 +8,61 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('clients.update', $client->id) }}" method="post">
+            <form action="{{ route('gerantPrograms.update', $program->id) }}" method="post">
                 @csrf
                 @method('put')
 
                 <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Name" autocomplete="off" value="{{ old('name') ?? $client->name }}">
+                  <label for="name">Program Name</label>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Program name" autocomplete="off" value="{{ old('name') ?? $program->name}}">
                   @error('name')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
 
                 <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ old('email') ?? $client->email }}">
-                  @error('email')
+                  <label for="expiration_date">Expiration date</label>
+                  <input type="date" class="form-control @error('expiration_date') is-invalid @enderror" name="expiration_date" id="expiration_date" placeholder="Expiration date" autocomplete="off" value="{{ old('expiration_date') ?? $program->expiration_date}}">
+                  @error('expiration_date')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
 
                 <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="Phone" autocomplete="off" value="{{ old('phone') ?? $client->phone }}">
-                  @error('phone')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
+                    <label for="tier">Tier</label>
+                    <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
+                      <option disabled selected>Select a tier</option>
+                        <option value="gold" {{ old('tier') == 'gold' ? 'selected' : '' }}>Gold</option>
+                        <option value="silver" {{ old('tier') == 'silver' ? 'selected' : '' }}>Silver</option>
+                        <option value="bronze" {{ old('tier') == 'bronze' ? 'selected' : '' }}>Bronze</option>
+                    </select>
+                    @error('tier')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="reward">Reward</label>
+                    <input type="text" class="form-control @error('reward') is-invalid @enderror" name="reward" id="reward" placeholder="Reward" autocomplete="off" value="{{ old('reward') ?? $program->reward }}">
+                    @error('reward')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
+                      <option disabled selected>Select a status</option>
+                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                    @error('status')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('clients.index') }}" class="btn btn-default">Back to list</a>
+                <a href="{{ route('gerantPrograms.index') }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>

@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Add programs</a>
+    <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary mb-3">Add programs</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -37,8 +37,8 @@
                     <td>{{ $program->status }}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('gerantProgram.edit', $program->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <form action="{{ route('gerantProgram.destroy', $program->id) }}" method="post" style="display: inline;">
+                            <a href="{{ route('gerantPrograms.edit', $program->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                            <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>

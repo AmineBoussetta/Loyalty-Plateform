@@ -68,7 +68,7 @@
         <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
             <a class="nav-link" href="{{ route('gerantClients.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Clients') }}</span> <!--STILL NEED FIXING -->
+                <span>{{ __('Clients') }}</span>
             </a>
         </li>
         <!-- Nav Item -->

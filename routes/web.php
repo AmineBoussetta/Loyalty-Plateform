@@ -61,9 +61,7 @@ Route::get('/carte-fidelite', 'CarteFideliteController@index')->name('carte_fide
 Route::get('/carte-fidelite/create', 'CarteFideliteController@create')->name('carte_fidelite.create');
 Route::post('/carte-fidelite', 'CarteFideliteController@store')->name('carte_fidelite.store');
 Route::get('/carte-fidelite/{carte}/edit', 'CarteFideliteController@edit')->name('carte_fidelite.edit');
-
 Route::put('/carte_fidelite/{carte}', 'CarteFideliteController@update')->name('carte_fidelite.update');
-
 Route::delete('/carte_fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
 
 
@@ -72,9 +70,20 @@ Route::get('/home_gerant', 'HomeGerantController@index')->name('home_gerant');
 Route::get('/gerant-programs', 'GerantProgramsController@index')->name('gerantPrograms.index');
 Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClients.index');
 Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');
+
+//gerant clients
 Route::get('gerant-clients/create', 'GerantClientsController@create')->name('gerantClients.create');
 Route::post('gerant-clients/client', 'GerantClientsController@store')->name('gerantClients.store');
+Route::get('/gerant-clients/{client}/edit', 'GerantClientsController@edit')->name('gerantClients.edit');
+Route::put('/gerant-clients/{client}', 'GerantClientsController@update')->name('gerantClients.update');
+Route::delete('/gerant-clients/{client}', 'GerantClientsController@destroy')->name('gerantClients.destroy');
 
+//gerant program
+Route::get('gerant-programs/create', 'GerantProgramsController@create')->name('gerantPrograms.create');
+Route::post('gerant-programs/program', 'GerantProgramsController@store')->name('gerantPrograms.store');
+Route::get('/gerant-programs/{program}/edit', 'GerantProgramsController@edit')->name('gerantPrograms.edit');
+Route::put('/gerant-programs/{program}', 'GerantProgramsController@update')->name('gerantPrograms.update');
+Route::delete('/gerant-programs/{program}', 'GerantProgramsController@destroy')->name('gerantPrograms.destroy');
 
 
 

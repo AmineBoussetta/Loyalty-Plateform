@@ -35,8 +35,8 @@
                     <td>{{ optional($gerantClient->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('gerantClients.index', $gerantClient->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a><!-- change gerantClients.index to .edit-->
-                            <form action="{{ route('gerantClients.index', $gerantClient->id) }}" method="post" style="display: inline;"><!-- change gerantClients.index to .destroy -->
+                            <a href="{{ route('gerantClients.edit', $gerantClient->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a><!-- change gerantClients.index to .edit-->
+                            <form action="{{ route('gerantClients.destroy', $gerantClient->id) }}" method="post" style="display: inline;"><!-- change gerantClients.index to .destroy -->
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>

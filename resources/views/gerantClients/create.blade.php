@@ -36,7 +36,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('clients.index') }}" class="btn btn-default">Back to list</a>
+                <a href="{{ route('gerantClients.index') }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>
