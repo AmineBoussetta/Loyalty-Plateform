@@ -90,6 +90,14 @@ Route::get('/gerant-programs/inactive', 'GerantProgramsController@inactive')->na
 Route::put('/gerant-programs/activate/{program}', 'GerantProgramsController@activate')->name('gerantPrograms.activate');
 Route::put('/gerantPrograms/{program}/toggle-status', 'GerantProgramsController@toggleStatus')->name('gerantPrograms.toggleStatus');
 
+//gerant carte fidelite page 
+Route::get('/gerant-carte-fidelite', 'GerantCarteFideliteController@index')->name('gerantCF.index');
+Route::get('/gerant-carte-fidelite/create', 'GerantCarteFideliteController@create')->name('gerantCF.create');
+Route::post('/gerant-carte-fidelite', 'GerantCarteFideliteController@store')->name('gerantCF.store');
+Route::get('/gerant-carte-fidelite/{carte}/edit', 'GerantCarteFideliteController@edit')->name('gerantCF.edit');
+Route::put('/gerant-carte_fidelite/{carte}', 'GerantCarteFideliteController@update')->name('gerantCF.update');
+Route::delete('/gerant-carte_fidelite/{carte}', 'GerantCarteFideliteController@destroy')->name('gerantCF.destroy');
+
 
 
 

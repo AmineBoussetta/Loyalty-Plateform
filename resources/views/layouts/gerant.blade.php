@@ -61,9 +61,10 @@
         <li class="nav-item {{ Nav::isRoute('gerantPrograms.index') }}">
             <a class="nav-link" href="{{ route('gerantPrograms.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Programs') }}</span> <!--STILL NEED FIXING -->
+                <span>{{ __('Programs') }}</span> 
             </a>
         </li>
+
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
             <a class="nav-link" href="{{ route('gerantClients.index') }}">
@@ -71,8 +72,18 @@
                 <span>{{ __('Clients') }}</span>
             </a>
         </li>
+
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('gerantOffers.index') }}"><!--STILL NEED FIXING -->
+        <li class="nav-item {{ Nav::isRoute('gerantCF.index') }}">
+            <a class="nav-link" href="{{ route('gerantCF.index') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Carte Fidelite') }}</span>
+            </a>
+        </li>
+
+
+        <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantOffers.index') }}"><!--STILL NEEDs FIXING -->
             <a class="nav-link" href="{{ route('gerantOffers.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Offers') }}</span> 

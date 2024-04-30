@@ -55,9 +55,9 @@
                     <label for="fidelity_program">Programme de fidélité</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
                       <option disabled selected>Sélectionner un programme</option>
-                        <option value="gold" {{ old('fidelity_program') == 'gold' ? 'selected' : '' }}>Programme 1</option>
-                        <option value="silver" {{ old('fidelity_program') == 'silver' ? 'selected' : '' }}>Programme 2</option>
-                        <option value="bronze" {{ old('fidelity_program') == 'bronze' ? 'selected' : '' }}>Programme 3</option>
+                        <option value="Programme 1" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 1' ? 'selected' : '' }}>Programme 1</option>
+                        <option value="Programme 2" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 2' ? 'selected' : '' }}>Programme 2</option>
+                        <option value="Programme 3" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 3' ? 'selected' : '' }}>Programme 3</option>
                     </select>
                     @error('fidelity_program')
                         <span class="text-danger">{{ $message }}</span>

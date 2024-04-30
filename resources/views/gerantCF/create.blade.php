@@ -1,4 +1,4 @@
-@extends('layouts.caissier')
+@extends('layouts.gerant')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('carte_fidelite.store') }}" method="post">
+            <form action="{{ route('gerantCF.store') }}" method="post">
                 @csrf
 
                   <div class="form-group">
@@ -70,7 +70,7 @@
                   </div>
   
                   <button type="submit" class="btn btn-primary">Save</button>
-                  <a href="{{ route('carte_fidelite.index') }}" class="btn btn-default">Back to list</a>
+                  <a href="{{ route('gerantCF.index') }}" class="btn btn-default">Back to list</a>
   
               </form>
           </div>
