@@ -50,15 +50,11 @@
 
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
-                      <option disabled selected>Select a status</option>
-                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                    </select>
+                    <input type="text" class="form-control @error('status') is-invalid @enderror" name="status" id="status" placeholder="Active" autocomplete="off" value="{{ old('status') }}" readonly>
                     @error('status')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                  </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="{{ route('gerantPrograms.index') }}" class="btn btn-default">Back to list</a>

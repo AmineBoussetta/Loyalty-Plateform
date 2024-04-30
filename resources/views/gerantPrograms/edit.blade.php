@@ -29,17 +29,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="tier">Tier</label>
-                    <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
-                      <option disabled selected>Select a tier</option>
-                        <option value="gold" {{ old('tier') == 'gold' ? 'selected' : '' }}>Gold</option>
-                        <option value="silver" {{ old('tier') == 'silver' ? 'selected' : '' }}>Silver</option>
-                        <option value="bronze" {{ old('tier') == 'bronze' ? 'selected' : '' }}>Bronze</option>
-                    </select>
-                    @error('tier')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+                  <label for="tier">Tier</label>
+                  <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
+                      <option disabled>Select a tier</option>
+                      <option value="gold" {{ old('tier', $program->tier) === 'gold' ? 'selected' : '' }}>Gold</option>
+                      <option value="silver" {{ old('tier', $program->tier) === 'silver' ? 'selected' : '' }}>Silver</option>
+                      <option value="bronze" {{ old('tier', $program->tier) === 'bronze' ? 'selected' : '' }}>Bronze</option>
+                  </select>
+                  @error('tier')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
+              </div>
+              
 
                 <div class="form-group">
                     <label for="reward">Reward</label>
@@ -50,16 +51,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Status</label>
-                    <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
-                      <option disabled selected>Select a status</option>
-                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                    </select>
-                    @error('status')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+                  <label for="status">Status</label>
+                  <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
+                      <option disabled>Select a status</option>
+                      <option value="active" {{ old('status', $program->status) === 'active' ? 'selected' : '' }}>Active</option>
+                      <option value="inactive" {{ old('status', $program->status) === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                  </select>
+                  @error('status')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
+              </div>
+              
 
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="{{ route('gerantPrograms.index') }}" class="btn btn-default">Back to list</a>

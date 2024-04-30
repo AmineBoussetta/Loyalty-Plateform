@@ -85,6 +85,13 @@ Route::get('/gerant-programs/{program}/edit', 'GerantProgramsController@edit')->
 Route::put('/gerant-programs/{program}', 'GerantProgramsController@update')->name('gerantPrograms.update');
 Route::delete('/gerant-programs/{program}', 'GerantProgramsController@destroy')->name('gerantPrograms.destroy');
 
+//inactive programs page 
+Route::get('/gerant-programs/inactive', 'GerantProgramsController@inactive')->name('gerantPrograms.inactive');
+Route::put('/gerant-programs/activate/{program}', 'GerantProgramsController@activate')->name('gerantPrograms.activate');
+Route::put('/gerantPrograms/{program}/toggle-status', 'GerantProgramsController@toggleStatus')->name('gerantPrograms.toggleStatus');
+
+
+
 
 
 

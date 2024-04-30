@@ -7,6 +7,8 @@
     <!-- Main Content goes here -->
 
     <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary mb-3">Add programs</a>
+    <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-warning mb-3">View Inactive Programs</a>
+
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -43,6 +45,20 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>
                             </form>
+
+                            <form action="{{ route('gerantPrograms.toggleStatus', $program->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-warning">
+                                    @if ($program->status === 'active')
+                                        Deactivate
+                                    @else
+                                        Activate
+                                    @endif
+                                </button>
+                            </form>
+
+                            
                         </div>
                     </td>
                 </tr>
