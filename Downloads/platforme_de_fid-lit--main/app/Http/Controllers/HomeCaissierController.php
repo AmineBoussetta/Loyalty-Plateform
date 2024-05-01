@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CarteFidelite;
+use App\Transaction;
 use App\User;
 use App\Client;
 use Illuminate\Http\Request;
@@ -28,10 +29,13 @@ class HomeCaissierController extends Controller
     {
         $clientsCount = Client::count();
         $cardsCount = CarteFidelite::count();
+        $transactionCount = Transaction::count();
+
 
         $widget = [
             'clientsCount' => $clientsCount,
             'cardsCount' => $cardsCount,
+            'transactionCount'=> $transactionCount,
             // Add more widget data if needed
         ];
 

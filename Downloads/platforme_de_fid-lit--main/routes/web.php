@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TransactionController;
+
+use App\Http\Controllers\ProfileCaissierController;
+use App\Http\Controllers\ProfileGerantController;
+
 
 
 
@@ -52,8 +57,8 @@ Route::get('/clients/{client}/edit', 'ClientController@edit')->name('clients.edi
 Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
 Route::delete('/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
 
-Route::get('/profileCaissier', 'ProfileController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
-Route::put('/profileCaissier', 'ProfileController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+Route::get('/profileCaissier', 'ProfileCaissierController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+Route::put('/profileCaissier', 'ProfileCaissierController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 
 Route::get('/carte-fidelite', 'CarteFideliteController@index')->name('carte_fidelite.index');
 Route::get('/carte-fidelite/create', 'CarteFideliteController@create')->name('carte_fidelite.create');
@@ -63,8 +68,21 @@ Route::put('/carte_fidelite/{carte}', 'CarteFideliteController@update')->name('c
 Route::delete('/carte_fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
 
 
+Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
+Route::get('/transactions/create', 'TransactionController@create')->name('transactions.create');
+Route::post('/transactions', 'TransactionController@store')->name('transactions.store');
+Route::get('/transactions/{transaction}/edit', 'TransactionController@edit')->name('transactions.edit');
+Route::put('/transactions/{transaction}', 'TransactionController@update')->name('transactions.update');
+Route::delete('/transactions/{transaction}', 'TransactionController@destroy')->name('transactions.destroy');
+
+
+
 
 Route::get('/home_gerant', 'HomeGerantController@index')->name('home_gerant');
+
+Route::get('/profileGerant', 'ProfileGerantController@index')->name('profileGerant'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+Route::put('/profileGerant', 'ProfileGerantController@update')->name('profileGerant.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
+
 Route::get('/gerant-programs', 'GerantProgramsController@index')->name('gerantPrograms.index');
 Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClients.index');
 Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');

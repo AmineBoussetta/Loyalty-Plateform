@@ -1,4 +1,4 @@
-@extends('layouts.gerant')
+@extends('layouts.caissier')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -20,10 +20,9 @@
     </div>
 </div>
 
-
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantCF.create') }}" class="btn btn-primary mb-3">Ajouter une carte</a>
+    <a href="{{ route('transactions.create') }}" class="btn btn-primary mb-3">Add Transaction</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -34,26 +33,33 @@
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
-                <th>Identifiant Commercial</th>
-                <th>Somme de points</th>
-                <th>Tier</th>
-                <th>Nom du deteneur</th>
-                <th>Programme de fidelite</th>
+                <th>Transaction ID</th>
+                <th>Client ID</th>
+                <th>Type of Transaction</th>
+                <th>Amount</th>
+                <th>Transaction Date</th>
+                <th>Description</th>
+                <th>Payment Method</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($cartes as $carte)
+            @forelse ($transactions as $transaction)
                 <tr>
-                    <td>{{ $carte->commercial_ID }}</td>
-                    <td>{{ $carte->points_sum }}</td>
-                    <td>{{ $carte->tier }}</td>
-                    <td>{{ optional($carte->client)->name ?? 'No holder' }}</td> {{-- still needs fixing --}}
+                    <td>{{ $transaction->id }}</td>
+                    <td>{{ $transaction->client_id}}</td>
+                    <td>{{ $transaction->type }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    
      
                     
-                    <td>{{ $carte->fidelity_program }}</td>
+                    <td>{{ $transaction->transaction_date}}</td>
+                    <td>{{ $transaction->description}}</td>
+                    <td>{{ $transaction->payment_method}}</td>
+                    <td>{{ $transaction->status}}</td>
                     <td>
-                        <a href="{{ route('gerantCF.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                        <form action="{{ route('gerantCF.destroy', $carte->id) }}" method="post" style="display: inline;">
+                        <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                        <form action="{{ route('transactions.destroy', $transaction->id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
@@ -63,13 +69,13 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">No card found.</td>
+                    <td colspan="8" class="text-center">No Transaction found.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
-    {{ $cartes->links() }}
+    {{ $transactions->links() }}
 
     <!-- End of Main Content -->
 @endsection
