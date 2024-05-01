@@ -2,9 +2,11 @@
 
 use App\CarteFidelite;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BasicController;
+
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CarteFideliteController;
+use App\Http\Controllers\AuthController;
+
 
 
 /*
@@ -21,8 +23,10 @@ use App\Http\Controllers\CarteFideliteController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::get('/home', 'HomeController@index')->name('home');
+
+
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
