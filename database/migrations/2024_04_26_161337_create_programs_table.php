@@ -14,10 +14,15 @@ return new class extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('expiration_date');
+            $table->date('start_date')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->string('tier');
-            $table->string('reward');
+            $table->decimal('amount', 8, 2)->nullable();
+            $table->integer('points')->nullable();
             $table->string('status');
+            $table->decimal('minimum_amount', 8, 2)->nullable();
+            $table->decimal('conversion_factor', 8, 2)->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

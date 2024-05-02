@@ -41,8 +41,8 @@
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item {{ Nav::isRoute('home') }}" style="margin-top: 50px;" >
-    <a class="nav-link" href="{{ route('home') }}" style="color: white;">
+<li class="nav-item {{ Nav::isRoute('home_gerant') }}" style="margin-top: 50px;" >
+    <a class="nav-link" href="{{ route('home_gerant') }}" style="color: white;">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span style="color: white;">{{ __('Dashboard') }}</span></a>
 </li>

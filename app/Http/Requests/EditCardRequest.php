@@ -22,7 +22,11 @@ class EditCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'commercial_ID' => 'required',
+            'points_sum' => 'required|numeric',
+            'tier' => 'required',
+            'client_id' => 'required',
+            'fidelity_program' => 'required',
         ];
     }
 }

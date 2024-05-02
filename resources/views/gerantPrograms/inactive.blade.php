@@ -8,21 +8,15 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Expiration Date</th>
-                <th>Tier</th>
-                <th>Reward</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($inactivePrograms as $program)
-                <tr>
+                <tr onclick="window.location='{{ route('gerantPrograms.edit', $program->id) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $program->name }}</td>
-                    <td>{{ $program->expiration_date }}</td>
-                    <td>{{ $program->tier }}</td>
-                    <td>{{ $program->reward }}</td>
                     <td>{{ $program->status }}</td>
                     <td>
                         <!-- Add form to submit for activating the program -->

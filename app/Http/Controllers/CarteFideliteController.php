@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Program;
 use App\CarteFidelite;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCardRequest;
@@ -13,9 +14,11 @@ class CarteFideliteController extends Controller
     public function index()
     {
         $cartes = CarteFidelite::with('client')->paginate(10);
+        $programs = Program::all();
         return view('carte_fidelite.list', [
             'title' => 'Cards List',
-            'cartes' => $cartes
+            'cartes' => $cartes,
+             compact('programs')
         ]);
     }
     
@@ -30,11 +33,14 @@ class CarteFideliteController extends Controller
         $commercial_ID = "CARD-$currentYear-" . str_pad($newCardNumber, 5, '0', STR_PAD_LEFT);
 
         $clients = Client::all(); // Récupération de la liste des clients
+        $programs = Program::all();
+
 
         return view('carte_fidelite.create', [
             'title' => 'New Card',
             'clients' => $clients, // Passage de la liste des clients à la vue
             'commercial_ID' => $commercial_ID, // Passage de l'identifiant commercial à la vue
+            'programs' => $programs,
         ]);
     }
 

@@ -60,9 +60,9 @@
                     <label for="fidelity_program">Programme de fidélité</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
                       <option disabled selected>Sélectionner un programme</option>
-                        <option value="Programme 1" {{ old('fidelity_program') == 'Programme 1' ? 'selected' : '' }}>Programme 1</option>
-                        <option value="Programme 2" {{ old('fidelity_program') == 'Programme 2' ? 'selected' : '' }}>Programme 2</option>
-                        <option value="Programme 3" {{ old('fidelity_program') == 'Programme 3' ? 'selected' : '' }}>Programme 3</option>
+                        @foreach ($programs as $program)
+                            <option value="{{ $program->id }}">{{ $program->name }}</option>
+                        @endforeach
                     </select>
                     @error('fidelity_program')
                         <span class="text-danger">{{ $message }}</span>

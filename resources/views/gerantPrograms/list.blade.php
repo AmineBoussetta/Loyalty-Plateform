@@ -21,35 +21,23 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Expiration Date</th>
-                <th>Tier</th>
-                <th>Reward</th>
                 <th>Status</th>
+                <th>Actions</th>
 
             </tr>
         </thead>
         <tbody>
             @forelse ($programs as $program)
-                <tr>
+                <tr onclick="window.location='{{ route('gerantPrograms.edit', $program->id) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $program->name }}</td>
-                    <td>{{ $program->expiration_date }}</td>
-                    <td>{{ $program->tier }}</td>
-                    <td>{{ $program->reward }}</td>
                     <td>{{ $program->status }}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('gerantPrograms.edit', $program->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>
-                            </form>
-
                             <form action="{{ route('gerantPrograms.toggleStatus', $program->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-warning">
+                                <button type="submit" class="btn btn-sm btn-warning mr-2">
                                     @if ($program->status === 'active')
                                         Deactivate
                                     @else
@@ -57,7 +45,12 @@
                                     @endif
                                 </button>
                             </form>
-
+                            <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>
+                            </form>
+                            
                             
                         </div>
                     </td>

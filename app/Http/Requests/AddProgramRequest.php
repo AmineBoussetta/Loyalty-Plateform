@@ -22,7 +22,15 @@ class AddProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'expiry_date' => 'required|date|after:start_date',
+            'tier' => 'required|string',
+            'amount' => 'required|numeric',
+            'points' => 'required|integer',
+            'minimum_amount' => 'nullable|numeric',
+            'conversion_factor' => 'nullable|numeric',
+            'comment' => 'nullable|string|max:500',
         ];
     }
 }

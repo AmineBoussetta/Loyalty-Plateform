@@ -31,10 +31,15 @@ class GerantProgramsController extends Controller
     {
         Program::create([
             'name' => $request->name,
-            'expiration_date' => $request->expiration_date,
+            'start_date' => $request->start_date,
+            'expiry_date' => $request->expiry_date,
             'tier' => $request->tier,
-            'reward' => $request->reward,
+            'amount' => $request->amount,
+            'points' => $request->points,
             'status' => $request->status ?? 'active',
+            'minimum_amount' => $request->minimum_amount,
+            'conversion_factor' => $request->conversion_factor,
+            'comment' => $request->comment,
         ]); 
 
         // Redirect the user back to the client listing page or any other desired page
@@ -54,10 +59,15 @@ class GerantProgramsController extends Controller
     public function update(EditProgramRequest $request, Program $program)
     {
         $program->name = $request->name;
-        $program->expiration_date = $request->expiration_date;
+        $program->start_date = $request->start_date;
+        $program->expiry_date = $request->expiry_date;
         $program->tier = $request->tier;
-        $program->reward = $request->reward;
-        $program->status = $request->status;
+        $program->amount = $request->amount;
+        $program->points = $request->points;
+        $program->status = 'active';
+        $program->minimum_amount = $request->minimum_amount;
+        $program->conversion_factor = $request->conversion_factor;
+        $program->comment = $request->comment;
         $program->save();
 
         if ($program->status === 'inactive') {

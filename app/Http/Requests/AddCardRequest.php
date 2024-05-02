@@ -22,7 +22,11 @@ class AddCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'commercial_ID' => 'unique:carte_fidelites,commercial_ID',
+            'points_sum' => 'required|numeric',
+            'tier' => 'required',
+            'name' => 'required',
+            'fidelity_program' => 'required',
         ];
     }
 }
