@@ -29,37 +29,36 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home_gerant') }}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">Gerant<sup></sup></div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item {{ Nav::isRoute('home_gerant') }}">
-            <a class="nav-link" href="{{ route('home_gerant') }}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>{{ __('Dashboard') }}</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            {{ __('Settings') }}
+    <ul class="navbar-nav  sidebar  accordion" id="accordionSidebar" style="background-color: #00337C;" >
+<!-- Sidebar - Brand -->
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}" >
+<div class="sidebar-brand-icon" style="margin-top: 50px;" >
+            <img src="{{ asset('img/logo_c.png') }}" alt="Logo" width="120" height="120">
         </div>
+</a>
+
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item {{ Nav::isRoute('home') }}" style="margin-top: 50px;" >
+    <a class="nav-link" href="{{ route('home') }}" style="color: white;">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span style="color: white;">{{ __('Dashboard') }}</span></a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading " style="color: white;">
+    {{ __('Settings') }}
+</div>
+
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantPrograms.index') }}">
-            <a class="nav-link" href="{{ route('gerantPrograms.index') }}">
+            <a class="nav-link" href="{{ route('gerantPrograms.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Programs') }}</span> 
             </a>
@@ -67,7 +66,7 @@
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
-            <a class="nav-link" href="{{ route('gerantClients.index') }}">
+            <a class="nav-link" href="{{ route('gerantClients.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>
@@ -75,7 +74,7 @@
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantCF.index') }}">
-            <a class="nav-link" href="{{ route('gerantCF.index') }}">
+            <a class="nav-link" href="{{ route('gerantCF.index') }}"style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Carte Fidelite') }}</span>
             </a>
@@ -84,7 +83,7 @@
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantOffers.index') }}"><!--STILL NEEDs FIXING -->
-            <a class="nav-link" href="{{ route('gerantOffers.index') }}">
+            <a class="nav-link" href="{{ route('gerantOffers.index') }}"style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Offers') }}</span> 
             </a>
@@ -92,7 +91,7 @@
 
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile') }}">
+            <a class="nav-link" href="{{ route('profile') }}"style="color: white;">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Profile') }}</span>
             </a>

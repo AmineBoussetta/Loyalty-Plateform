@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
     
-    <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3">New company</a>
+    <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">New company</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -31,13 +31,13 @@
         <td>{{ $company->managers }}</td>
         <td>
     @if (!is_null($company->id))
-        <a href="{{ route('companies.edit_company', ['company' => $company->id]) }}" class="btn btn-primary">Edit</a>
+        <a href="{{ route('companies.edit_company', ['company' => $company->id]) }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Edit</a>
     @endif
     @if (!is_null($company->id))
         <form action="{{ route('companies.destroy', $company) }}" method="POST" style="display: inline;">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;">Delete</button>
         </form>
     @endif
 </td>

@@ -35,7 +35,7 @@
                   @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary"  style="background-color: #00337C; border-color: #00337C;">Save</button>
                 <a href="{{ route('clients.index') }}" class="btn btn-default">Back to list</a>
 
             </form>

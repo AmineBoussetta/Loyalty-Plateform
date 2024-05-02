@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3">Ajouter une carte</a>
+    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Ajouter une carte</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -35,11 +35,11 @@
                     
                     <td>{{ $carte->fidelity_program }}</td>
                     <td>
-                        <a href="{{ route('carte_fidelite.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                        <a href="{{ route('carte_fidelite.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                         <form action="{{ route('carte_fidelite.destroy', $carte->id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
                         </form>
                         </div>
                     </td>

@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Add Clients</a>
+    <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -35,11 +35,11 @@
                     <td>{{ optional($client->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                            <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                             <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
                             </form>
                         </div>
                     </td>
