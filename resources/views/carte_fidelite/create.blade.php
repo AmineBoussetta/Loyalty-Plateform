@@ -40,20 +40,20 @@
                     @enderror
                   </div>
   
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <select class="form-control @error('name') is-invalid @enderror" name="name" id="name">
+                <div class="form-group">
+                    <label for="client_id">Name</label>
+                    <select class="form-control @error('client_id') is-invalid @enderror" name="client_id" id="client_id">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('name') == $client->id ? 'selected' : '' }}>
+                            <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
                     </select>
-                    @error('name')
+                    @error('client_id')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                  </div>
+                </div>
                           
 
                   <div class="form-group">

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Client;
 
-
 class CarteFidelite extends Model
 {
     protected $fillable = ['commercial_ID', 'points_sum', 'tier', 'name', 'fidelity_program'];
@@ -15,6 +14,4 @@ class CarteFidelite extends Model
     {
         return $this->belongsTo(Client::class, 'client_id');
     }
-
-
 }

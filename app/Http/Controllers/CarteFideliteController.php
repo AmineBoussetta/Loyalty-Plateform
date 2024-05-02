@@ -56,9 +56,9 @@ class CarteFideliteController extends Controller
             'commercial_ID' => $newCardID,
             'points_sum' => $request->points_sum,
             'tier' => $request->tier,
-            'name' => $request->name,
+            'client_id' => $request->name,
             'fidelity_program' => $request->fidelity_program,
-        ]); 
+        ]);        
 
         return redirect()->route('carte_fidelite.index')->with('message', 'New card has been added');
     }
