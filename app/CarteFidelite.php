@@ -8,7 +8,7 @@ use App\Client;
 
 class CarteFidelite extends Model
 {
-    protected $fillable = ['commercial_ID', 'points_sum', 'tier', 'name', 'fidelity_program'];
+    protected $fillable = ['commercial_ID', 'points_sum', 'tier', 'holder_name', 'fidelity_program'];
 
     public function client()
     {

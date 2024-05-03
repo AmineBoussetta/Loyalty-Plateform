@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('commercial_ID');
             $table->integer('points_sum');
             $table->string('tier');
-            $table->string('name');
+            $table->string('holder_name')->nullable();
             $table->string('fidelity_program');
             $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();

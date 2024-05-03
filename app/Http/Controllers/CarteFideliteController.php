@@ -14,16 +14,21 @@ class CarteFideliteController extends Controller
     public function index()
     {
         $cartes = CarteFidelite::with('client')->paginate(10);
+        $clients = Client::all();
         $programs = Program::all();
         return view('carte_fidelite.list', [
             'title' => 'Cards List',
             'cartes' => $cartes,
-             compact('programs')
+            'clients' => $clients,
+             compact('programs'),
+             compact('clients')
+
         ]);
     }
     
     public function create()
     {
+        
         // Générer l'identifiant commercial
         $currentYear = date('Y');
         $latestCard = CarteFidelite::where('commercial_ID', 'like', "CARD-$currentYear%")
@@ -62,7 +67,7 @@ class CarteFideliteController extends Controller
             'commercial_ID' => $newCardID,
             'points_sum' => $request->points_sum,
             'tier' => $request->tier,
-            'client_id' => $request->name,
+            'holder_name' => $request->input('holder_name'),
             'fidelity_program' => $request->fidelity_program,
         ]);        
 
@@ -84,7 +89,7 @@ class CarteFideliteController extends Controller
         {
             $carte->points_sum = $request->points_sum;
             $carte->tier = $request->tier;
-            $carte->name = $request->name;
+            $carte->holder_name = $request->holder_name;
             $carte->fidelity_program = $request->fidelity_program;
             $carte->save();
 

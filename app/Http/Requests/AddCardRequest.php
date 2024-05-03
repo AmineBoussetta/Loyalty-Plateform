@@ -25,7 +25,7 @@ class AddCardRequest extends FormRequest
             'commercial_ID' => 'unique:carte_fidelites,commercial_ID',
             'points_sum' => 'required|numeric',
             'tier' => 'required',
-            'name' => 'required',
+            'holder_name' => 'required',
             'fidelity_program' => 'required',
         ];
     }

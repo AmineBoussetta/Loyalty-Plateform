@@ -30,7 +30,7 @@
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>
-                    <td>{{ optional($carte->client)->name ?? 'No holder' }}</td> {{-- still needs fixing --}}
+                    <td>{{ $carte->client->name ?? 'No holder' }}</td> {{-- still needs fixing --}}
      
                     
                     <td>{{ $carte->fidelity_program }}</td>

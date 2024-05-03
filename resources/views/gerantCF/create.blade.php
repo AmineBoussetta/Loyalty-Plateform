@@ -41,16 +41,16 @@
                   </div>
   
                   <div class="form-group">
-                    <label for="name">Name</label>
-                    <select class="form-control @error('name') is-invalid @enderror" name="name" id="name">
+                    <label for="holder_name">Holder Name</label>
+                    <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('name') == $client->id ? 'selected' : '' }}>
+                            <option value="{{ $client->id }}">
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
                     </select>
-                    @error('name')
+                    @error('holder_name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
