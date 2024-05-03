@@ -34,7 +34,7 @@ class GerantCarteFideliteController extends Controller
         $commercial_ID = "CARD-$currentYear-" . str_pad($newCardNumber, 5, '0', STR_PAD_LEFT);
 
         $clients = Client::all(); // Récupération de la liste des clients
-        $programs = Program::all();
+        $programs = Program::where('status', 'active')->get();
 
         return view('gerantCF.create', [
             'title' => 'New Card',

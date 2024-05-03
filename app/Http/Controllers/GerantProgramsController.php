@@ -104,11 +104,7 @@ class GerantProgramsController extends Controller
 
     public function toggleStatus(Program $program)
     {
-        if ($program->status === 'active') {
-            $program->status = 'inactive';
-        } else {
-            $program->status = 'active';
-        }
+        $program->status = $program->status === 'active'? 'inactive' : 'active';
         $program->save();
 
         return redirect()->route('gerantPrograms.index')->with('message', 'Program status toggled successfully!');
