@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Client;
 use App\Program;
 use App\CarteFidelite;
@@ -15,12 +16,14 @@ class GerantCarteFideliteController extends Controller
     {
         $cartes = CarteFidelite::with('client')->paginate(10);
         $programs = Program::all();
+        $clients = Client::all();
         return view('gerantCF.list', [
             'title' => 'Cards List',
             'cartes' => $cartes,
-            compact('programs')
-            
+            'programs' => $programs,
+            'clients' => $clients
         ]);
+        
     }
     
     public function create()
@@ -58,11 +61,16 @@ class GerantCarteFideliteController extends Controller
         $newCardNumber = $latestCard ? ((int)substr($latestCard->commercial_ID, -5) + 1) : 1;
         $newCardID = "CARD-$currentYear-" . str_pad($newCardNumber, 5, '0', STR_PAD_LEFT);
 
+        $client = Client::where('name', $request->holder_name)->first();
+        $program = Program::where('name', $request->fidelity_program)->first();
+
         CarteFidelite::create([
             'commercial_ID' => $newCardID,
             'points_sum' => $request->points_sum,
             'tier' => $request->tier,
-            'name' => $request->name,
+            'holder_name' => $request->holder_name,
+            'holder_id' => $client->id,
+            'program_id' => $program->id,
             'fidelity_program' => $request->fidelity_program,
         ]); 
 
@@ -71,21 +79,30 @@ class GerantCarteFideliteController extends Controller
 
         public function edit(CarteFidelite $carte)
         {
-            $clients = Client::all(); // Fetch all clients
-        
+            $clients = Client::all();
+            $programs = Program::where('status', 'active')->get();
             return view('gerantCF.edit', [
                 'title' => 'Edit Card',
                 'carte' => $carte,
-                'clients' => $clients, // Pass the $clients variable to the view
+                'clients' => $clients, 
+                'programs' => $programs,
             ]);
+            
         }
+        
 
         public function update(EditCardRequest $request, CarteFidelite $carte)
         {
+            $client = Client::where('name', $request->holder_name)->first();
+            $program = Program::where('name', $request->fidelity_program)->first();
+
             $carte->points_sum = $request->points_sum;
             $carte->tier = $request->tier;
-            $carte->name = $request->name;
+            $carte->holder_name = $request->holder_name;
             $carte->fidelity_program = $request->fidelity_program;
+
+            $carte->holder_id = $client->id;
+            $carte->program_id = $program->id;
             $carte->save();
 
             return redirect()->route('gerantCF.index')->with('message', 'Card updated successfully!');

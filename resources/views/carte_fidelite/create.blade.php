@@ -41,16 +41,16 @@
                   </div>
   
                 <div class="form-group">
-                    <label for="client_id">Name</label>
-                    <select class="form-control @error('client_id') is-invalid @enderror" name="client_id" id="client_id">
+                    <label for="holder_name">Holder Name</label>
+                    <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
+                            <option value="{{ $client->name }}">
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
                     </select>
-                    @error('client_id')
+                    @error('holder_name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -61,7 +61,7 @@
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
                       <option disabled selected>Sélectionner un programme</option>
                         @foreach ($programs as $program)
-                            <option value="{{ $program->id }}">{{ $program->name }}</option>
+                            <option value="{{ $program->name }}">{{ $program->name }}</option>
                         @endforeach
                     </select>
                     @error('fidelity_program')

@@ -26,6 +26,10 @@ return new class extends Migration
     public function down(): void
     {
 
+        Schema::table('carte_fidelites', function (Blueprint $table) {
+            $table->dropForeign(['holder_name']);
+        });
+
         Schema::dropIfExists('clients');
     }
 };

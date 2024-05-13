@@ -17,11 +17,11 @@
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
-                <th>Identifiant Commercial</th>
-                <th>Somme de points</th>
+                <th>Commercial ID</th>
+                <th>Total Points</th>
                 <th>Tier</th>
-                <th>Nom du deteneur</th>
-                <th>Programme de fidelite</th>
+                <th>Holder Name</th>
+                <th>Fidelity Program</th>
             </tr>
         </thead>
         <tbody>
@@ -30,11 +30,17 @@
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>
-                    <td>{{ optional($carte->client)->name ?? 'No holder' }}</td> <!-- Display client's name -->
-                    <td>{{ $carte->fidelity_program }}</td>
+                    <td>{{ $carte->client->name}}</td>
                     <td>
-                        <a href="{{ route('carte_fidelite.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
-                        <form action="{{ route('carte_fidelite.destroy', $carte->id) }}" method="post" style="display: inline;">
+                        @if ($carte->program->status === 'inactive')
+                            {{ $carte->program->name }} (Program Inactive)
+                        @else
+                            {{ $carte->program->name }}
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
+                        <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>

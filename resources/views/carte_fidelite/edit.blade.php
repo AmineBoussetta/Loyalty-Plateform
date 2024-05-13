@@ -37,11 +37,11 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Holder Name</label>
                     <select class="form-control @error('name') is-invalid @enderror" name="name" id="name">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('name') == $client->id ? 'selected' : '' }}>
+                            <option value="{{ $client->name }}" {{ old('name') == $client->name ? 'selected' : '' }}>
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
@@ -52,12 +52,12 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="fidelity_program">Programme de fidélité</label>
+                    <label for="fidelity_program">Fidelity Program</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
-                      <option disabled selected>Sélectionner un programme</option>
-                        <option value="Programme 1" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 1' ? 'selected' : '' }}>Programme 1</option>
-                        <option value="Programme 2" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 2' ? 'selected' : '' }}>Programme 2</option>
-                        <option value="Programme 3" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 3' ? 'selected' : '' }}>Programme 3</option>
+                      <option disabled selected>Select a program</option>
+                        @foreach ($programs as $program)
+                            <option value="{{ $program->name }}">{{ $program->name }}</option>
+                        @endforeach
                     </select>
                     @error('fidelity_program')
                         <span class="text-danger">{{ $message }}</span>

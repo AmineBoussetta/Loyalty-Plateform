@@ -18,10 +18,16 @@ return new class extends Migration
             $table->string('tier');
             $table->string('holder_name')->nullable();
             $table->string('fidelity_program');
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->timestamps();
+            $table->unsignedBigInteger('holder_id');
+            $table->unsignedBigInteger('program_id');
 
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('holder_id')->references('id')->on('clients')
+            ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('program_id')->references('id')->on('programs'); 
+            //handle a notif where it says  
+            // to select and existing program before deleting one with associalted cards
+            $table->timestamps();
         });
     }
 

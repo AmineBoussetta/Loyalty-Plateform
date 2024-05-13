@@ -21,7 +21,6 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
-                <th>Card ID</th>
 
             </tr>
         </thead>
@@ -32,7 +31,6 @@
                     <td>{{ $gerantClient->name }}</td>
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>
-                    <td>{{ optional($gerantClient->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('gerantClients.edit', $gerantClient->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a><!-- change gerantClients.index to .edit-->
