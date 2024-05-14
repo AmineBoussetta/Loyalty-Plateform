@@ -14,6 +14,7 @@
 
                 @csrf
                 @method('put')
+                
                 <div class="form-group">
                   <label for="points_sum">Total Points</label>
                   <input type="text" class="form-control @error('points_sum') is-invalid @enderror" name="points_sum" id="points_sum" placeholder="Total Points" autocomplete="off" value="{{ old('points_sum') ?? $carte->points_sum }}">

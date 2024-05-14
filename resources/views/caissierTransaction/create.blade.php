@@ -3,7 +3,6 @@
 @section('main-content')
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
-
     <!-- Main Content goes here -->
     <form action="{{ route('caissierTransaction.store') }}" method="post">
         <div class="card">
@@ -21,15 +20,22 @@
                                 @enderror
                             </div>
                         </div>
-    
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="carte_fidelite_id">Loyalty Card ID</label>
-                                <input type="text" class="form-control @error('carte_fidelite_id') is-invalid @enderror" name="carte_fidelite_id" id="carte_fidelite_id" placeholder="Loyalty Card ID" autocomplete="off" value="{{ old('carte_fidelite_id') }}">
-                                @error('carte_fidelite_id')
+                                
+                                <label for="carte_fidelite_id">Fidelity Card ID</label>
+                                <select class="form-control @error('carte_fidelite_id') is-invalid @enderror" name="carte_fidelite_id" id="carte_fidelite_id">
+                                  <option disabled selected>Select a Card</option>
+                                    @foreach ($cards as $card)
+                                        <option value="{{ $card->id }}">{{ $card->commercial_ID }}</option>
+                                    @endforeach
+                                </select>
+                                
+                                @error('fidelity_program')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                              </div>
                         </div>
                     </div>
                     <div class="form-row">

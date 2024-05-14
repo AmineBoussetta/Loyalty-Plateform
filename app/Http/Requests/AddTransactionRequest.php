@@ -23,7 +23,7 @@ class AddTransactionRequest extends FormRequest
     {
         return [
             'transaction_id' => 'nullable',
-            'carte_fidelite_id' => 'nullable',    //'required|exists:carte_fidelites,id',
+            'carte_fidelite_id' => 'required|exists:carte_fidelites,id',
             'transaction_date' => 'required|date',
             'amount' => 'required|numeric',
             'payment_method' => 'required|in:cash,fidelity_points',

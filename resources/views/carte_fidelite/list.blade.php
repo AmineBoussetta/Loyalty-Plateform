@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             @forelse ($cartes as $carte)
-                <tr>
+            <tr onclick="window.location='{{ route('carte_fidelite.edit', $carte->id) }}';" style="cursor:pointer;">
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>

@@ -27,7 +27,7 @@
         </thead>
         <tbody>
             @forelse ($clients as $client)
-                <tr>
+            <tr onclick="window.location='{{ route('client.edit', $carte->id) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
@@ -35,7 +35,6 @@
                     <td>{{ optional($client->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                             <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')

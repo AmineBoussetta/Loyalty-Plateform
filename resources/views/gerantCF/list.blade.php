@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             @forelse ($cartes as $carte)
-                <tr>
+            <tr onclick="window.location='{{ route('gerantCF.edit', $carte->id) }}';" style="cursor:pointer;">
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>
@@ -39,7 +39,6 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('gerantCF.edit', $carte->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
                         <form action="{{ route('gerantCF.destroy', $carte->id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')

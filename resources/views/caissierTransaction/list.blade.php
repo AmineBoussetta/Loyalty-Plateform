@@ -29,20 +29,17 @@
             <tr>
                 <th>Transaction Date</th>
                 <th>Amount</th>
-                <!-- Add more columns as needed -->
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($transactions as $transaction)
-                <tr onclick="window.location='{{ route('caissierTransactions.edit', $transaction->id) }}';" style="cursor:pointer;">
+                <tr onclick="window.location='{{ route('caissierTransaction.edit', $transaction->id) }}';" style="cursor:pointer;">
                     <td>{{ $transaction->transaction_date }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>
                         <div class="d-flex">
-                            <!-- Add edit and delete buttons as needed -->
-                            <a href="{{ route('caissierTransactions.edit', $transaction->id) }}" class="btn btn-sm btn-primary mr-2" style="background-color: #00337C; border-color: #00337C;">Edit</a>
-                            <form action="{{ route('caissierTransactions.destroy', $transaction->id) }}" method="post" style="display: inline;">
+                            <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>

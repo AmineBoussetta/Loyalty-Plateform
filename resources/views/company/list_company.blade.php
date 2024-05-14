@@ -25,18 +25,17 @@
         </thead>
         <tbody>
         @foreach ($companies as $company)
-    <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td>{{ $company->name }}</td>
-        <td>{{ $company->manager }}</td>
-        <td>
-            <a href="{{ route('basic.edit', $company) }}" class="btn btn-primary">Edit</a>
-            <form action="{{ route('basic.destroy', $company) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </td>
+        <tr onclick="window.location='{{ route('company.edit', $carte->id) }}';" style="cursor:pointer;">
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $company->name }}</td>
+            <td>{{ $company->manager }}</td>
+            <td>
+                <form action="{{ route('basic.destroy', $company) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
     </tr>
 @endforeach
     </tbody>

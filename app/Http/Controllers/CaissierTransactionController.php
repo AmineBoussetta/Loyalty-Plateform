@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Transaction;
 use App\CarteFidelite;
 use Illuminate\Http\Request;
-use App\EditTransactionRequest;
 use App\Http\Requests\AddTransactionRequest;
+use App\Http\Requests\EditTransactionRequest;
 
 class CaissierTransactionController extends Controller
 {
     public function index()
     {
+        $cartes = CarteFidelite::all();
         return view('caissierTransaction.list', [
             'title' => 'Transaction List',
-            'transactions' => Transaction::paginate(10)
+            'transactions' => Transaction::paginate(10),
+            'cartes' => $cartes,
             
         ]);
     }
@@ -24,7 +26,7 @@ class CaissierTransactionController extends Controller
         // Generate a unique transaction ID
         $latestTransaction = Transaction::latest()->first();
         $transactionId = $latestTransaction ? 'TRANS-' . (intval(substr($latestTransaction->transaction_id, 6)) + 1) : 'TRANS-1';
-        $cards = CarteFidelite::select('id', 'holder_name')->get();
+        $cards = CarteFidelite::all();
 
         return view('caissierTransaction.create', [
             'title' => 'New Transaction',
@@ -54,9 +56,11 @@ class CaissierTransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
+        $cards = CarteFidelite::all();
         return view('caissierTransaction.edit', [
             'title' => 'Edit Transaction',
-            'transaction' => $transaction
+            'transaction' => $transaction,
+            'cards' => $cards,
         ]);
     }
 
