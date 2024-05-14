@@ -21,18 +21,16 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
-                <th>Card ID</th>
 
             </tr>
         </thead>
         <tbody>
             @forelse ($clients as $client)
-            <tr onclick="window.location='{{ route('client.edit', $carte->id) }}';" style="cursor:pointer;">
+            <tr onclick="window.location='{{ route('clients.edit', $client->id) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
-                    <td>{{ optional($client->card)->commercial_ID }}</td> <!-- Display the associated card ID -->
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;">
