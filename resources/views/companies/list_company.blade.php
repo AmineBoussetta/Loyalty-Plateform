@@ -2,11 +2,106 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
+        </div>
+        <div>
+            <form class="form-inline">
+                <div class="input-group">
+                 <input type="text" id="companySearch" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                    <!-- JavaScript code goes here -->
+         <!-- JavaScript code -->
+         <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+         <script src="public/js/external.js"></script>
 
+         <script>
+$(document).ready(function() {
+    $('#companySearch').on('keyup', function () {
+        var query = $(this).val().trim();
+        if (query!== '') {
+            $.ajax({
+                url: '{{ route("search_companies") }}',
+                type: 'GET',
+                data: {
+                    'query': query
+                },
+                success: function (data) {
+                    updateCompaniesTable(data);
+                }
+            });
+        } else {
+            updateCompaniesTable([]); // Clear the table if the search query is empty
+        }
+    });
+
+    // Define the updateCompaniesTable function in JavaScript
+    function updateCompaniesTable(companies) {
+        var tbody = $('.table tbody'); // Get the table body
+        tbody.empty(); // Clear the existing rows
+
+        // Loop through the companies and create table rows
+        companies.forEach(function(company) {
+            var row = `
+                <tr>
+                    <td>${company.id}</td>
+                    <td>${company.name}</td>
+                    <td>`;
+            // Iterate over managers and append each to the row
+            company.managers.forEach(function(manager) {
+                row += `<div><strong>${manager}</strong></div>`;
+            });
+            row += `</td>
+                    <td>`;
+            // Iterate over actions and append each to the row
+            company.actions.forEach(function(action) {
+                row += `<button class="btn btn-${action}" data-action="${action}" style="${action === 'edit' ? 'background-color: #00337C; border-color: #00337C; color: white;' : 'background-color: #F05713; border-color: #F05713; color: white;'}">${action}</button>`;
+            });
+            row += `</td>
+                </tr>
+            `;
+            tbody.append(row);
+        });
+
+        // Re-attach event listeners to the newly created buttons
+        $('.btn-edit,.btn-delete').off('click').on('click', function() {
+            var action = $(this).data('action');
+            if (action === 'edit') {
+                // Handle edit action
+                console.log('Edit button clicked');
+                // Redirect to the edit page
+                var companyId = $(this).closest('tr').find('td:first').text(); // Get the company ID
+                window.location.href = `/companies/${companyId}/edit_company`; // Corrected URL
+            } else if (action === 'delete') {
+                // Handle delete action
+                console.log('Delete button clicked');
+                var companyId = $(this).closest('tr').find('td:first').text(); // Get the company ID
+
+                // Submit the form to delete the company
+                $(this).closest('form').submit();
+            }
+        });
+    }
+});
+
+</script>
+
+
+                </div>
+            </form>
+        
+
+
+        </div>
+    </div>
     <!-- Main Content goes here -->
     
-    <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">New company</a>
+    <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3 "  style="background-color: #00337C; border-color: #00337C;">New company</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -19,32 +114,37 @@
             <tr>
                 <th>No</th>
                 <th>Company name</th>
-                <th>Manager</th>
+                <th>Managers</th>
                 <th>#</th>
             </tr>
         </thead>
         <tbody>
-        @foreach ($companies as $company)
-    <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td>{{ $company->name }}</td>
-        <td>{{ $company->managers }}</td>
-        <td>
-    @if (!is_null($company->id))
-        <a href="{{ route('companies.edit_company', ['company' => $company->id]) }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Edit</a>
-    @endif
-    @if (!is_null($company->id))
-        <form action="{{ route('companies.destroy', $company) }}" method="POST" style="display: inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;">Delete</button>
-        </form>
-    @endif
-</td>
-
-    </tr>
-@endforeach
-    </tbody>
+            @foreach ($companies as $company)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $company->name }}</td>
+                    <td>
+                        @forelse ($company->gerants as $index => $gerant)
+                            <div><strong>M{{ $index + 1 }}</strong>: {{ $gerant->name }}</div>
+                        @empty
+                            <div>No managers</div>
+                        @endforelse
+                    </td>
+                    <td>
+                        @if (!is_null($company->id))
+                            <a href="{{ route('companies.edit_company', ['company' => $company->id]) }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Edit</a>
+                        @endif
+                        @if (!is_null($company->id))
+                            <form action="{{ route('companies.destroy', $company) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;">Delete</button>
+                            </form>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+      </tbody>
     </table>
 
     {{ $companies->links() }}

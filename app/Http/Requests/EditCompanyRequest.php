@@ -21,19 +21,31 @@ class EditCompanyRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|max:255',
-            'abbreviation' => 'required|max:10',
-            'default_currency' => 'required|max:3',
-            'country' => 'required|max:255',
-            'tax_id' => 'required|max:255',
-            'managers' => 'required|max:255',
-            'phone' => 'required|max:20',
-            'email' => 'required|email|max:255',
-            'website' => 'nullable|url|max:255',
-            'description' => 'nullable|max:1000',
-        ];
-    }
+    public function rules()
+{
+    return [
+        'name' => 'required|string|max:255',
+        'abbreviation' => 'nullable|string|max:10',
+        'default_currency' => 'nullable|string|max:10',
+        'country' => 'nullable|string|max:100',
+        'tax_id' => 'nullable|string|max:50',
+        'phone' => 'nullable|string|max:20',
+        'email' => 'nullable|email|max:255',
+        'website' => 'nullable|url|max:255',
+        'description' => 'nullable|string',
+        'gerant_name.*' => 'required|string|max:255',
+        'gerant_email.*' => 'required|email|max:255',
+        'gerant_phone.*' => 'required|string|max:20',
+    ];
+}
+
+public function messages()
+{
+    return [
+        'gerant_name.*.required' => 'The manager name field is required.',
+        'gerant_email.*.required' => 'The manager email field is required.',
+        'gerant_phone.*.required' => 'The manager phone field is required.',
+    ];
+}
+
 }
