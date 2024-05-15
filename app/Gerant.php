@@ -10,10 +10,15 @@ class Gerant extends Authenticatable
 {
     protected $table = 'gerants';
 
-    protected $fillable = ['nom','email','phone_number','company_name','password'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $fillable = ['name', 'email', 'phone', 'company_id'];
+
+
+
+    public function company()
+{
+    return $this->belongsTo(Company::class);
+}
+
+
 }

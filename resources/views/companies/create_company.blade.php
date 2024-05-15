@@ -25,14 +25,16 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-
             <div class="form-group">
-                <label for="default_currency">Default Currency</label>
-                <input type="text" class="form-control @error('default_currency') is-invalid @enderror" name="default_currency" id="default_currency" placeholder="Default Currency" autocomplete="off" value="{{ old('default_currency') }}">
-                @error('default_currency')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+    <label for="default_currency">Default Currency</label>
+    <select class="form-control" name="default_currency" id="default_currency">
+        <option value="">Select Currency</option>
+        @foreach($currencies as $code => $name)
+            <option value="{{ $code }}">{{ $name }} ({{ $code }})</option>
+        @endforeach
+    </select>
+</div>
+
 
             <div class="form-group">
                 <label for="country">Country</label>
@@ -46,14 +48,6 @@
                 <label for="tax_id">Tax ID</label>
                 <input type="text" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" id="tax_id" placeholder="Tax ID" autocomplete="off" value="{{ old('tax_id') }}">
                 @error('tax_id')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="managers">Managers</label>
-                <input type="text" class="form-control @error('managers') is-invalid @enderror" name="managers" id="managers" placeholder="Managers" autocomplete="off" value="{{ old('managers') }}">
-                @error('managers')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
@@ -88,14 +82,69 @@
                 @error('description')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-            </div>
+            </div><!-- Separator Line -->
+<hr>
 
-            <button type="submit" class="btn btn-primary " style="background-color: #00337C; border-color: #00337C;">Save</button>
-            <a href="{{ route('companies.index') }}" class="btn btn-default">Back to list</a>
-
-        </form>
-    </div>
+<!-- Manager Fields -->
+<div class="form-group">
+    <strong>Manager 1</strong>
+    <label for="gerant_name">Manager Name</label>
+    <input type="text" class="form-control" name="gerant_name[]" placeholder="Manager Name" autocomplete="off">
 </div>
+
+<div class="form-group">
+    <label for="gerant_email">Manager Email</label>
+    <input type="email" class="form-control" name="gerant_email[]" placeholder="Manager Email" autocomplete="off">
+</div>
+
+<div class="form-group">
+    <label for="gerant_phone">Manager Phone</label>
+    <input type="text" class="form-control" name="gerant_phone[]" placeholder="Manager Phone" autocomplete="off">
+</div>
+
+<!-- Container for adding more managers -->
+<div id="managersContainer"></div>
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Save</button>
+<!-- Button to add more managers -->
+<button type="button" class="btn btn-primary" id="addManagerBtn"style="background-color: #03C988; border-color: #03C988;" >Add More Managers</button>
+
+
+<!-- JavaScript to add more managers -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize manager count
+        let managerCount = 1;
+
+        // Button click event to add more managers
+        document.getElementById('addManagerBtn').addEventListener('click', function() {
+            managerCount++;
+
+            // Create new manager fields
+            const newManagerFields = `
+                <div class="form-group">
+                <strong>Manager ${managerCount}</strong>
+                </br>
+                    <label for="gerant_name_${managerCount}">Manager Name</label>
+                    <input type="text" class="form-control" name="gerant_name[]" placeholder="Manager Name" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="gerant_email_${managerCount}">Manager Email</label>
+                    <input type="email" class="form-control" name="gerant_email[]" placeholder="Manager Email" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="gerant_phone_${managerCount}">Manager Phone</label>
+                    <input type="text" class="form-control" name="gerant_phone[]" placeholder="Manager Phone" autocomplete="off">
+                </div>
+            `;
+
+            // Append new manager fields to the container
+            document.getElementById('managersContainer').insertAdjacentHTML('beforeend', newManagerFields);
+        });
+    });
+</script>
 
     <!-- End of Main Content -->
 @endsection
