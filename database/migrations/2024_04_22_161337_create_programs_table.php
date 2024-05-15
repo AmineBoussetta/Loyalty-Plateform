@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->date('start_date')->nullable();
             $table->date('expiry_date')->nullable();
-            $table->string('tier');
             $table->decimal('amount', 8, 2)->nullable();
             $table->integer('points')->nullable();
             $table->string('status');

@@ -33,7 +33,6 @@ class GerantProgramsController extends Controller
             'name' => $request->name,
             'start_date' => $request->start_date,
             'expiry_date' => $request->expiry_date,
-            'tier' => $request->tier,
             'amount' => $request->amount,
             'points' => $request->points,
             'status' => $request->status ?? 'active',
@@ -61,10 +60,9 @@ class GerantProgramsController extends Controller
         $program->name = $request->name;
         $program->start_date = $request->start_date;
         $program->expiry_date = $request->expiry_date;
-        $program->tier = $request->tier;
         $program->amount = $request->amount;
         $program->points = $request->points;
-        $program->status = 'active';
+        $program->status = $request->status ?? 'active';
         $program->minimum_amount = $request->minimum_amount;
         $program->conversion_factor = $request->conversion_factor;
         $program->comment = $request->comment;

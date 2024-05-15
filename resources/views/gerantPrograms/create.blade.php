@@ -53,19 +53,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="tier">Tier</label>
-                        <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
-                            <option disabled selected>Select a tier</option>
-                            <option value="gold" {{ old('tier') == 'gold' ? 'selected' : '' }}>Gold</option>
-                            <option value="silver" {{ old('tier') == 'silver' ? 'selected' : '' }}>Silver</option>
-                            <option value="bronze" {{ old('tier') == 'bronze' ? 'selected' : '' }}>Bronze</option>
-                        </select>
-                        @error('tier')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
                     <br>
                     <h3>Fidelity Points Logic</h3>
                     <hr>

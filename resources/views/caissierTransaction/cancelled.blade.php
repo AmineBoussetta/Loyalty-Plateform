@@ -1,7 +1,12 @@
 @extends('layouts.caissier')
 
 @section('main-content')
-    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Canceled Transactions') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Cancelled Transactions') }}</h1>
+
+
+    <div class="mb-3">
+        <a href="{{ route('caissierTransaction.index') }}" class="btn btn-primary">Go Back to Active Transactions</a>
+    </div>
 
     <table class="table table-bordered table-stripped">
         <thead>

@@ -15,7 +15,7 @@ class CarteFidelitesTableSeeder extends Seeder
     {
         $data = [
             [
-                'commercial_ID' => 'CARD2024-00001',
+                'commercial_ID' => 'CARD-2024-00001',
                 'points_sum' => 100,
                 'tier' => 'Bronze',
                 'holder_name' => 'John Doe',
@@ -24,7 +24,7 @@ class CarteFidelitesTableSeeder extends Seeder
                 'program_id' => 1, // Assuming you have a program with ID 1
             ],
             [
-                'commercial_ID' => 'CARD2024-00002',
+                'commercial_ID' => 'CARD-2024-00002',
                 'points_sum' => 200,
                 'tier' => 'Silver',
                 'holder_name' => 'Jane Smith',
@@ -33,7 +33,7 @@ class CarteFidelitesTableSeeder extends Seeder
                 'program_id' => 2, // Assuming you have another program with ID 2
             ],
             [
-                'commercial_ID' => 'CARD2024-00003',
+                'commercial_ID' => 'CARD-2024-00003',
                 'points_sum' => 200,
                 'tier' => 'Gold',
                 'holder_name' => 'Jack Sarrow',
