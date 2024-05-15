@@ -38,14 +38,14 @@
                     @error('tier')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                  </div>
+                  </div>                    
   
                   <div class="form-group">
                     <label for="holder_name">Holder Name</label>
                     <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">
+                            <option value="{{ $client->name }}">
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
@@ -53,15 +53,14 @@
                     @error('holder_name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                  </div>
-                          
+                </div>
 
                   <div class="form-group">
-                    <label for="fidelity_program">Programme de fidélité</label>
+                    <label for="fidelity_program">Fidelity Program</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
-                      <option disabled selected>Sélectionner un programme</option>
+                      <option disabled selected>Select a program</option>
                         @foreach ($programs as $program)
-                            <option value="{{ $program->id }}">{{ $program->name }}</option>
+                            <option value="{{ $program->name }}">{{ $program->name }}</option>
                         @endforeach
                     </select>
                     @error('fidelity_program')

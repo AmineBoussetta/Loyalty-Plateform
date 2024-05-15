@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('fidelity_card_id')->nullable();
+            $table->string('fidelity_card_commercial_ID')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Schema::table('carte_fidelites', function (Blueprint $table) {
+            $table->dropForeign(['holder_name']);
+        });
 
         Schema::dropIfExists('clients');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\CarteFidelite;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddClientRequest;
 use App\Http\Requests\EditClientRequest;
@@ -13,7 +14,7 @@ class GerantClientsController extends Controller
     {
         return view('gerantClients.list', [
             'title' => 'Clients List',
-            'gerantClients' => Client::paginate(10)
+            'gerantClients' => Client::paginate(10),
         ]);
     }
     

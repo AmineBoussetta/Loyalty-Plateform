@@ -41,8 +41,8 @@
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item {{ Nav::isRoute('home') }}" style="margin-top: 50px;" >
-    <a class="nav-link" href="{{ route('home') }}" style="color: white;">
+<li class="nav-item {{ Nav::isRoute('home_caissier') }}" style="margin-top: 50px;" >
+    <a class="nav-link" href="{{ route('home_caissier') }}" style="color: white;">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span style="color: white;">{{ __('Dashboard') }}</span></a>
 </li>
@@ -55,13 +55,25 @@
     {{ __('Settings') }}
 </div>
 
-        <!-- Nav Item -->
+
+        <!-- Transaction -->
+        <li class="nav-item {{ Nav::isRoute('caissierTransaction.index') }}">
+            <a class="nav-link" href="{{ route('caissierTransaction.index') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Transaction') }}</span>
+            </a>
+        </li>
+
+
+        <!-- Client -->
         <li class="nav-item {{ Nav::isRoute('clients.index') }}">
             <a class="nav-link" href="{{ route('clients.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>
         </li>
+
+        <!-- Carte fidelite -->
         <li class="nav-item {{ Nav::isRoute('carte_fidelite.index') }}">
             <a class="nav-link" href="{{ route('carte_fidelite.index') }}">
                 <i class="fas fa-fw fa-plus"></i>

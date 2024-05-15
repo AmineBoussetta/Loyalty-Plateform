@@ -9,11 +9,11 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'phone'];
+    protected $fillable = ['name', 'email', 'phone', 'fidelity_card_id'];
 
-    public function card()
+    public function carteFidelite()
     {
-        return $this->hasOne(CarteFidelite::class, 'client_id');
+        return $this->hasOne(CarteFidelite::class, 'holder_id');
     }
 }
 

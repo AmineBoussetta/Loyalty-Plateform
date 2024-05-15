@@ -10,11 +10,11 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('gerantCF.update', ['carte' => $carte->id]) }}" method="post">
+            <form action="{{ route('gerantCF.update', $carte->id) }}" method="post">
 
                 @csrf
                 @method('put')
-
+                
                 <div class="form-group">
                   <label for="points_sum">Total Points</label>
                   <input type="text" class="form-control @error('points_sum') is-invalid @enderror" name="points_sum" id="points_sum" placeholder="Total Points" autocomplete="off" value="{{ old('points_sum') ?? $carte->points_sum }}">
@@ -37,11 +37,11 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="name">Name</label>
-                    <select class="form-control @error('name') is-invalid @enderror" name="name" id="name">
+                    <label for="holder_name">Holder Name</label>
+                    <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('name') == $client->id ? 'selected' : '' }}>
+                            <option value="{{ $client->name }}" {{ old('name') == $client->name ? 'selected' : '' }}>
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
@@ -52,12 +52,12 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="fidelity_program">Programme de fidélité</label>
+                    <label for="fidelity_program">Fidelity Program</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
-                      <option disabled selected>Sélectionner un programme</option>
-                        <option value="Programme 1" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 1' ? 'selected' : '' }}>Programme 1</option>
-                        <option value="Programme 2" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 2' ? 'selected' : '' }}>Programme 2</option>
-                        <option value="Programme 3" {{ old('fidelity_program', $carte->fidelity_program) == 'Programme 3' ? 'selected' : '' }}>Programme 3</option>
+                      <option disabled selected>Select a program</option>
+                        @foreach ($programs as $program)
+                            <option value="{{ $program->name }}">{{ $program->name }}</option>
+                        @endforeach
                     </select>
                     @error('fidelity_program')
                         <span class="text-danger">{{ $message }}</span>
@@ -70,6 +70,7 @@
             </form>
         </div>
     </div>
+
 
     <!-- End of Main Content -->
 @endsection

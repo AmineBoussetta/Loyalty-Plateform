@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddCardRequest extends FormRequest
+class EditTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,10 @@ class AddCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'commercial_ID' => 'unique:carte_fidelites,commercial_ID',
-            'points_sum' => 'required|numeric',
-            'tier' => 'required',
-            'holder_name' => 'required',
-            'client_id' => 'nullable',
-            'program_id' => 'nullable',
-            'fidelity_program' => 'required',
+            'carte_fidelite_id' => 'required|exists:carte_fidelites,id',
+            'transaction_date' => 'required|date',
+            'amount' => 'required|numeric',
+            'payment_method' => 'required|in:cash,fidelity_points',
         ];
     }
 }
