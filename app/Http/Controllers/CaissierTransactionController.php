@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Program;
 use App\Transaction;
 use App\CarteFidelite;
+use App\Client;
 use App\FidelityPoints;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddTransactionRequest;
@@ -15,7 +16,7 @@ class CaissierTransactionController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $query = Transaction::with(['carteFidelite.client'])->where('status', 'active');
+        $query = Transaction::with(['carteFidelite.client'])->where('status', 'amended');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -41,12 +42,14 @@ class CaissierTransactionController extends Controller
         $latestTransaction = Transaction::latest()->first();
         $transactionId = $latestTransaction ? 'TRANS-' . (intval(substr($latestTransaction->transaction_id, 6)) + 1) : 'TRANS-1';
         $cards = CarteFidelite::all();
+        $clients = Client::all();
 
         return view('caissierTransaction.create', [
             'title' => 'New Transaction',
             'transactions' => Transaction::paginate(10),
             'transactionId' => (string) $transactionId,
             'cards' => $cards,
+            'clients' => $clients
         ]);
     }
 
@@ -68,20 +71,23 @@ class CaissierTransactionController extends Controller
         // Fetch the fidelity program based on the card's program_id
         $program = Program::find($card->program_id);
 
-        if (!$program || $program->status === "inactive") {
+        if (!$program || $program->status === "cancelled") {
             // Handle the case where no program is found for the given card ID
             return redirect()->back()->withErrors(['carte_fidelite_id' => 'No active program found for this card.']);
         }
 
-        // Calculate points based on the transaction amount and the program's rules
-        //     $points = 0;
-        // if ($request->amou   nt >= $program->minimum_amount) {
-        //     // Calculate the number of times the transaction amount exceeds the increment
-        //     $increments = floor(($request->amount - $program->minimum_amount) / $program->amount);
-        //     // Award points based on the number of increments
-        //     $points = $increments * $program->points;
-        // }
-        $points = $request->amount * $program->conversion_factor;
+    
+        // $points = $request->amount * $program->conversion_factor;
+
+        $points = 0;
+
+        if ($program->minimum_amount && $request->amount < $program->minimum_amount) {
+            // If minimum amount exists and transaction amount is less than minimum amount, no points awarded
+            $points = 0;
+        } else {
+            // Calculate points based on the program's amount
+            $points = floor($request->amount / $program->amount) * $program->points;
+        }
 
 
             // Create the transaction
@@ -91,7 +97,7 @@ class CaissierTransactionController extends Controller
         $transaction->transaction_date = $request->transaction_date;
         $transaction->amount = $request->amount;
         $transaction->payment_method = $request->payment_method;
-        $transaction->status  = $transaction->status ?? 'active';
+        $transaction->status  = $transaction->status ?? 'amended';
         $transaction->points = $points;
         $transaction->save();
 
@@ -161,7 +167,7 @@ class CaissierTransactionController extends Controller
 
     public function reactivate(Transaction $transaction)
     {
-        $transaction->status = 'active';
+        $transaction->status = 'amended';
         $transaction->save();
 
         // Restore the points to the associated fidelity card

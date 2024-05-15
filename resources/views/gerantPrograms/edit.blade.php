@@ -14,26 +14,11 @@
                     <h3>General</h3>
                     <hr>
                     <div class="form-row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Program Name</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Program name" autocomplete="off" value="{{ old('name') ?? $program->name }}">
                                 @error('name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-    
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="tier">Tier</label>
-                                <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
-                                    <option disabled selected>Select a tier</option>
-                                    <option value="gold" {{ old('tier') == 'gold' ? 'selected' : '' }}>Gold</option>
-                                    <option value="silver" {{ old('tier') == 'silver' ? 'selected' : '' }}>Silver</option>
-                                    <option value="bronze" {{ old('tier') == 'bronze' ? 'selected' : '' }}>Bronze</option>
-                                </select>
-                                @error('tier')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -94,7 +79,7 @@
 
                     <div class="form-group">
                         <label for="conversion_factor">Conversion Factor</label>
-                        <input type="number" class="form-control" id="conversion_factor" name="conversion_factor" placeholder="Enter conversion factor" autocomplete="off" value="{{ old('conversion_factor'?? $program->conversion_factor) }}">
+                        <input type="number" class="form-control" id="conversion_factor" name="conversion_factor" placeholder="Enter conversion factor" autocomplete="off" value="{{ old('conversion_factor')?? $program->conversion_factor }}">
                         <small class="form-text text-muted">Enter how much 1 Loyalty Point costs in base currency</small>
                     </div>
 

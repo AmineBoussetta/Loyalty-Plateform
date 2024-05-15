@@ -16,7 +16,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Transaction</a>
+    <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Transactions</a>
     <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary mb-3">View Cancelled Transactions</a>
 
     @if (session('message'))

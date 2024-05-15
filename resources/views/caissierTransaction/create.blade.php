@@ -28,7 +28,7 @@
                                 <select class="form-control @error('carte_fidelite_id') is-invalid @enderror" name="carte_fidelite_id" id="carte_fidelite_id">
                                   <option disabled selected>Select a Card</option>
                                     @foreach ($cards as $card)
-                                        <option value="{{ $card->id }}">{{ $card->commercial_ID }}</option>
+                                        <option value="{{ $card->id }}">{{ $card->commercial_ID }} ( {{ $card->holder_name }} - {{ $card->client->phone }})</option>
                                     @endforeach
                                 </select>
                                 
