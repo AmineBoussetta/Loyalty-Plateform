@@ -105,6 +105,10 @@ Route::post('/caissier-transaction', 'CaissierTransactionController@store')->nam
 Route::get('/caissier-transaction/{transaction}/edit', 'CaissierTransactionController@edit')->name('caissierTransaction.edit');
 Route::put('/caissier-transaction/{transaction}', 'CaissierTransactionController@update')->name('caissierTransaction.update');
 Route::delete('/caissier-transaction/{transaction}', 'CaissierTransactionController@destroy')->name('caissierTransaction.destroy');
+Route::put('/caissier-transaction/{transaction}/cancel', 'CaissierTransactionController@cancel')->name('caissierTransaction.cancel');
+Route::get('/cancelled-transactions', 'CaissierTransactionController@cancelledTransactions')->name('caissierTransaction.cancelledTransactions');
+Route::put('/transactions/{transaction}/reactivate', 'CaissierTransactionController@reactivate')->name('caissierTransaction.reactivate');
+Route::delete('/transactions/{transaction}/permanentDelete', 'CaissierTransactionController@permanentDelete')->name('caissierTransaction.permanentDelete');
 
 
 

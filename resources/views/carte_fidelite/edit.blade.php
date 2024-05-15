@@ -4,8 +4,6 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
-    {{-- {{ dd($carte) }} --}}
-
     <!-- Main Content goes here -->
 
     <div class="card">
@@ -37,8 +35,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="name">Holder Name</label>
-                    <select class="form-control @error('name') is-invalid @enderror" name="name" id="name">
+                    <label for="holder_name">Holder Name</label>
+                    <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option disabled selected>Select a holder</option>
                         @foreach ($clients as $client)
                             <option value="{{ $client->name }}" {{ old('name') == $client->name ? 'selected' : '' }}>
@@ -46,7 +44,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('name')
+                    @error('holder_name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>

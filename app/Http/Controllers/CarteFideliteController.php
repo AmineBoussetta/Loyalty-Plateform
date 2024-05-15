@@ -80,7 +80,7 @@ class CarteFideliteController extends Controller
         {
             $clients = Client::all();
             $programs = Program::where('status', 'active')->get();
-            return view('gerantCF.edit', [
+            return view('carte_fidelite.edit', [
                 'title' => 'Edit Card',
                 'carte' => $carte,
                 'clients' => $clients, 

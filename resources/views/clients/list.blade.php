@@ -21,6 +21,7 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
+                <th>Commercial ID</th>
 
             </tr>
         </thead>
@@ -31,6 +32,7 @@
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
+                    <td>{{ $client->fidelity_card_commercial_ID }}</td>
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;">

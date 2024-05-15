@@ -12,6 +12,8 @@
                 @csrf
                 @method('put')
 
+                <h3>Edit Transaction</h3>
+                <hr>
                     
                 <div class="form-group">
                     <label for="carte_fidelite_id">Fidelity Card ID</label>

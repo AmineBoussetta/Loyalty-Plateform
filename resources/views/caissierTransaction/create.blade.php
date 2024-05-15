@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
                     @csrf
-                    <h3>Transaction Details</h3>
+                    <h3>Create Transaction</h3>
                     <hr>
                     <div class="form-row">
                         <div class="col-md-6">
@@ -42,7 +42,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="transaction_date">Transaction Date</label>
-                                <input type="date" class="form-control @error('transaction_date') is-invalid @enderror" name="transaction_date" id="transaction_date" placeholder="Transaction Date" autocomplete="off" value="{{ old('transaction_date') }}">
+                                <input type="datetime-local" class="form-control @error('transaction_date') is-invalid @enderror" name="transaction_date" id="transaction_date" placeholder="Transaction Date" autocomplete="off" value="{{ old('transaction_date') }}">
                                 @error('transaction_date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

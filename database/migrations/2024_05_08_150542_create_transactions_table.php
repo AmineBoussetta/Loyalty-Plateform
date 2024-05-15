@@ -18,6 +18,9 @@ return new class extends Migration
             $table->dateTime('transaction_date');
             $table->decimal('amount', 10, 2);
             $table->string('payment_method');
+            $table->string('status');
+            $table->integer('points');
+
             $table->timestamps();
 
             $table->foreign('carte_fidelite_id')->references('id')->on('carte_fidelites');

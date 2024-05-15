@@ -17,6 +17,7 @@
     <!-- Main Content goes here -->
 
     <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Transaction</a>
+    <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary mb-3">View Cancelled Transactions</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -27,22 +28,33 @@
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
+                <th>No</th>
                 <th>Transaction Date</th>
                 <th>Amount</th>
+                <th>Points Added</th>
+                <th>Client Name</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($transactions as $transaction)
                 <tr onclick="window.location='{{ route('caissierTransaction.edit', $transaction->id) }}';" style="cursor:pointer;">
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $transaction->transaction_date }}</td>
                     <td>{{ $transaction->amount }}</td>
+                    <td>+ {{ $transaction->points }}</td>
+                    <td>{{ $transaction->carteFidelite->holder_name ?? 'N/A' }}</td>
                     <td>
-                        <div class="d-flex">
+                        <div class="d-row">
                             <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
+                            </form>
+                            <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
                             </form>
                         </div>
                     </td>
