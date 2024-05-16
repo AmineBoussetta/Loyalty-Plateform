@@ -48,10 +48,10 @@
                     
 
                     <br>
-                    <h3>Fidelity Points Logic</h3>
+                    <h3>Fidelity Points Logic for <b>Classic</b> Tier</h3>
                     <hr>
                     <div class="form-group row">
-                        <label for="amount" class="col-sm-2 col-form-label">Amount of Money</label>
+                        <label for="amount" step="0.01" class="col-sm-2 col-form-label">Amount of Money</label>
                         <div class="col-sm-4">
                             <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" autocomplete="off" value="{{ old('amount') ?? $program->amount }}">
                             <small class="form-text text-muted">Enter the base amount of money that can be converted to points.</small>
@@ -60,16 +60,42 @@
                     
                         <label for="points" class="col-sm-2 col-form-label">Converted to F.Points</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="points" name="points" placeholder="Enter number of converted points" autocomplete="off" value="{{ old('points') ?? $program->points }}">
+                            <input type="number" step="0.01" class="form-control" id="points" name="points" placeholder="Enter number of converted points" autocomplete="off" value="{{ old('points') ?? $program->points }}">
                             <small class="form-text text-muted">Enter the number of fidelity points that will be converted.</small>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="minimum_amount" class="col-sm-2 col-form-label">Minimum Amount Spent (Optional)</label> 
+                        <label for="minimum_amount" step="0.01" class="col-sm-2 col-form-label">Minimum Amount Spent (Optional)</label> 
                         <div class="col-sm-4">
                             <input type="number" class="form-control" id="minimum_amount" name="minimum_amount" placeholder="Enter minimum amount" autocomplete="off" value="{{ old('minimum_amount') ?? $program->minimum_amount}}">
                             <small class="form-text text-muted">Enter the minimum amount of money that needs to be spent to start converting to fidelity points.</small>
+                        </div>
+                    </div>
+
+                    <br>
+                    <h3>Fidelity Points Logic for <b>Premium</b> Tier</h3>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="amount_premium" class="col-sm-2 col-form-label">Amount of Money</label>
+                        <div class="col-sm-4">
+                            <input type="number" step="0.01" class="form-control" id="amount_premium" name="amount_premium" placeholder="Enter amount" autocomplete="off" value="{{ old('amount_premium') ?? $program->amount_premium }}">
+                            <small class="form-text text-muted">Enter the amount of money that will be converted to points .</small>
+                        </div>
+                        
+                    
+                        <label for="points_premium" class="col-sm-2 col-form-label">Converted to F.Points</label>
+                        <div class="col-sm-4">
+                            <input type="number" step="0.01" class="form-control" id="points_premium" name="points_premium" placeholder="Enter number of converted points" autocomplete="off" value="{{ old('points_premium') ?? $program->points_premium }}">
+                            <small class="form-text text-muted">Enter the number of F.Points that will be converted from the amount of money inserted .</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="minimum_amount_premium" class="col-sm-2 col-form-label">Minimum Amount Spent (Optional)</label> 
+                        <div class="col-sm-4">
+                            <input type="number" step="0.01" class="form-control" id="minimum_amount_premium" name="minimum_amount_premium" placeholder="Enter minimum amount" autocomplete="off" value="{{ old('minimum_amount_premium')?? $program->minimum_amount_premium }}">
+                            <small class="form-text text-muted">Enter the minimum amount of money spent to start converting money to F.Points .</small>
                         </div>
                     </div>
 
@@ -79,7 +105,7 @@
 
                     <div class="form-group">
                         <label for="conversion_factor">Conversion Factor</label>
-                        <input type="number" class="form-control" id="conversion_factor" name="conversion_factor" placeholder="Enter conversion factor" autocomplete="off" value="{{ old('conversion_factor')?? $program->conversion_factor }}">
+                        <input type="number" step="0.01" class="form-control" id="conversion_factor" name="conversion_factor" placeholder="Enter conversion factor" autocomplete="off" value="{{ old('conversion_factor')?? $program->conversion_factor }}">
                         <small class="form-text text-muted">Enter how much 1 Loyalty Point costs in base currency</small>
                     </div>
 

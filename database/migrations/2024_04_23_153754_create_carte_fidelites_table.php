@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tier');
             $table->string('holder_name')->nullable();
             $table->string('fidelity_program');
+            $table->decimal('money', 8, 2)->nullable();
             $table->unsignedBigInteger('holder_id');
             $table->unsignedBigInteger('program_id');
 

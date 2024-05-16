@@ -9,5 +9,5 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'start_date','expiry_date', 'amount', 'points','status', 'minimum_amount', 'conversion_factor', 'comment'];
+    protected $fillable = ['name', 'start_date','expiry_date', 'amount', 'points', 'minimum_amount','amount_premium', 'points_premium', 'minimum_amount_premium', 'conversion_factor', 'status', 'comment'];
 }
