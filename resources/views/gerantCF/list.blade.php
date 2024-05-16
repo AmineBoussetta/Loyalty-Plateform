@@ -22,6 +22,7 @@
                 <th>Tier</th>
                 <th>Holder Name</th>
                 <th>Fidelity Program</th>
+                <th>Money</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                             {{ $carte->program->name }}
                         @endif
                     </td>
+                    <td>{{ $carte->money}}</td>
                     <td>
                         <form action="{{ route('gerantCF.destroy', $carte->id) }}" method="post" style="display: inline;">
                             @csrf

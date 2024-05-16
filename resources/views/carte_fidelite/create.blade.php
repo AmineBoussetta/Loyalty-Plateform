@@ -30,10 +30,9 @@
                   <div class="form-group">
                     <label for="tier">Tier</label>
                     <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
-                      <option disabled selected>Select a tier</option>
-                        <option value="gold" {{ old('tier') == 'gold' ? 'selected' : '' }}>Gold</option>
-                        <option value="silver" {{ old('tier') == 'silver' ? 'selected' : '' }}>Silver</option>
-                        <option value="bronze" {{ old('tier') == 'bronze' ? 'selected' : '' }}>Bronze</option>
+                        <option value="" hidden>Select a tier</option>
+                        <option value="classic" {{ old('tier') == 'classic' ? 'selected' : '' }}>Classic</option>
+                        <option value="premium" {{ old('tier') == 'premium' ? 'selected' : '' }}>Premium</option>
                     </select>
                     @error('tier')
                         <span class="text-danger">{{ $message }}</span>
@@ -43,7 +42,7 @@
                 <div class="form-group">
                     <label for="holder_name">Holder Name</label>
                     <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
-                        <option disabled selected>Select a holder</option>
+                        <option value="" hidden>Select a holder</option>
                         @foreach ($clients as $client)
                             <option value="{{ $client->name }}">
                                 {{ $client->name }} ({{ $client->phone }})
@@ -57,9 +56,9 @@
                           
 
                   <div class="form-group">
-                    <label for="fidelity_program">Programme de fidélité</label>
+                    <label for="fidelity_program">Fidelity Program</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
-                      <option disabled selected>Sélectionner un programme</option>
+                      <option value="" hidden>Select a program</option>
                         @foreach ($programs as $program)
                             <option value="{{ $program->name }}">{{ $program->name }}</option>
                         @endforeach

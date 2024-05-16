@@ -76,19 +76,22 @@ class CaissierTransactionController extends Controller
             return redirect()->back()->withErrors(['carte_fidelite_id' => 'No active program found for this card.']);
         }
 
-    
-        // $points = $request->amount * $program->conversion_factor;
-
         $points = 0;
 
-        if ($program->minimum_amount && $request->amount < $program->minimum_amount) {
-            // If minimum amount exists and transaction amount is less than minimum amount, no points awarded
-            $points = 0;
-        } else {
-            // Calculate points based on the program's amount
-            $points = floor($request->amount / $program->amount) * $program->points;
+        if ($card->tier === 'classic') {
+            if ($program->minimum_amount && $request->amount < $program->minimum_amount) {
+                $points = 0;
+            } else {
+                $points = floor($request->amount / $program->amount) * $program->points;
+            }
+        } elseif ($card->tier === 'premium') {
+            if ($program->minimum_amount_premium && $request->amount < $program->minimum_amount_premium) {
+                $points = 0;
+            } else {
+                $points = floor($request->amount / $program->amount_premium) * $program->points_premium;
+            }
         }
-
+        
 
             // Create the transaction
         $transaction = new Transaction;
@@ -102,7 +105,10 @@ class CaissierTransactionController extends Controller
         $transaction->save();
 
         // Save the points to the database
-        $card->points_sum += $points; // Assuming total_points is an integer type
+        $card->points_sum += $points;
+        $card->save();
+
+        $card->money = $card->points_sum * $program->conversion_factor;
         $card->save();
 
 
@@ -120,17 +126,60 @@ class CaissierTransactionController extends Controller
         ]);
     }
 
+
+
+    
     public function update(EditTransactionRequest $request, Transaction $transaction)
     {
-        $transaction->update([
-            'carte_fidelite_id' => $request->carte_fidelite_id,
-            'transaction_date' => $request->transaction_date,
-            'amount' => $request->amount,
-            'payment_method' => $request->payment_method,
-        ]);
+                // Update the transaction details
+    $transaction->update([
+        'carte_fidelite_id' => $request->carte_fidelite_id,
+        'transaction_date' => $request->transaction_date,
+        'amount' => $request->amount,
+        'payment_method' => $request->payment_method,
+    ]);
 
-        return redirect()->route('caissierTransaction.index')->with('message', 'Transaction updated successfully!');
+    // Fetch the updated transaction object
+    $updatedTransaction = Transaction::find($transaction->id);
+
+    // Fetch the fidelity card associated with the updated transaction
+    $card = CarteFidelite::find($updatedTransaction->carte_fidelite_id);
+    
+    // Fetch the fidelity program based on the card's program_id
+    $program = Program::find($card->program_id);
+    
+    // Calculate points based on the updated amount and program details
+    $points = 0;
+
+    if ($card->tier === 'classic') {
+        if ($program->minimum_amount && $updatedTransaction->amount < $program->minimum_amount) {
+            $points = 0;
+        } else {
+            $points = floor($updatedTransaction->amount / $program->amount) * $program->points;
+        }
+    } elseif ($card->tier === 'premium') {
+        if ($program->minimum_amount_premium && $updatedTransaction->amount < $program->minimum_amount_premium) {
+            $points = 0;
+        } else {
+            $points = floor($updatedTransaction->amount / $program->amount_premium) * $program->points_premium;
+        }
     }
+    
+    // Update points and money on the associated fidelity card
+    $card->points_sum -= $transaction->points; // Subtract old points
+    $card->points_sum += $points; // Add new points
+    $card->money = $card->points_sum * $program->conversion_factor; // Update money based on new points
+    $card->save();
+
+    // Update the transaction points
+    $transaction->points = $points;
+    $transaction->save();
+
+    // Redirect with success message
+    return redirect()->route('caissierTransaction.index')->with('message', 'Transaction updated successfully!');
+    }
+
+
 
     public function destroy(Transaction $transaction)
     {
@@ -139,7 +188,7 @@ class CaissierTransactionController extends Controller
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction deleted successfully!');
     }
 
-    public function cancel(Request $request, Transaction $transaction)
+    public function cancel(Transaction $transaction)
     {
         // Set the transaction status to "canceled"
         $transaction->status = 'canceled';
@@ -151,6 +200,12 @@ class CaissierTransactionController extends Controller
         // Revert the points to their original state
         $card->points_sum -= $transaction->points; // Subtract the points awarded during the transaction
         $card->save();
+
+        // Update the money field based on the reverted points
+        $program = Program::find($card->program_id);
+        $card->money = $card->points_sum * $program->conversion_factor;
+        $card->save();
+
 
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction canceled successfully!');
     }
@@ -173,6 +228,10 @@ class CaissierTransactionController extends Controller
         // Restore the points to the associated fidelity card
         $card = CarteFidelite::find($transaction->carte_fidelite_id);
         $card->points_sum += $transaction->points;
+        $card->save();
+
+        $program = Program::find($card->program_id);
+        $card->money = $card->points_sum * $program->conversion_factor;
         $card->save();
 
         return redirect()->route('caissierTransaction.cancelledTransactions')->with('message', 'Transaction reactivated successfully!');

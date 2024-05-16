@@ -22,7 +22,18 @@ class EditProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'expiry_date' => 'required|date|after:start_date',
+            'amount' => 'required|numeric',
+            'points' => 'required|numeric',
+            'minimum_amount' => 'nullable|numeric',
+            'amount_premium' => 'required|numeric',
+            'points_premium' => 'required|integer',
+            'minimum_amount_premium' => 'nullable|numeric',
+            'conversion_factor' => 'nullable|numeric',
+            'comment' => 'nullable|string|max:500',
+            'status' => 'nullable',
         ];
     }
 }

@@ -63,6 +63,7 @@ class GerantCarteFideliteController extends Controller
         $client = Client::where('name', $request->holder_name)->first();
         $program = Program::where('name', $request->fidelity_program)->first();
 
+
         $card = CarteFidelite::create([
             'commercial_ID' => $newCardID,
             'points_sum' => $request->points_sum,
@@ -100,11 +101,11 @@ class GerantCarteFideliteController extends Controller
             $client = Client::where('name', $request->holder_name)->first();
             $program = Program::where('name', $request->fidelity_program)->first();
 
+
             $carte->points_sum = $request->points_sum;
             $carte->tier = $request->tier;
             $carte->holder_name = $request->holder_name;
             $carte->fidelity_program = $request->fidelity_program;
-
             $carte->holder_id = $client->id;
             $carte->program_id = $program->id;
             $carte->save();
