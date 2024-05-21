@@ -6,7 +6,19 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3">Add Clients</a>
+    <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
+  
+    <!-- Import Clients Section -->
+    <div class="mb-4">
+        <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <label for="file">Choose Excel file to import clients:</label>
+                <input type="file" name="file" id="file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success" style="background-color: #28a745; border-color: #28a745;">Import Clients</button>
+        </form>
+    </div>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -15,13 +27,16 @@
     @endif
 
     <table class="table table-bordered table-stripped">
+        
         <thead>
+        
             <tr>
                 <th>No</th>
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
                 <th>Commercial ID</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +59,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">No clients found.</td>
+                    <td colspan="6" class="text-center">No clients found.</td>
                 </tr>
             @endforelse
         </tbody>

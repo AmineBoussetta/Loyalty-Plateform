@@ -11,9 +11,10 @@
                 <div class="input-group">
                  <input type="text" id="companySearch" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
+                    <button class="btn btn-primary" type="button" style="background-color: #00337C; border-color: #00337C;">
+                    <i class="fas fa-search fa-sm"></i>
+                    </button>
+
                     </div>
                     <!-- JavaScript code goes here -->
          <!-- JavaScript code -->
@@ -131,16 +132,16 @@ $(document).ready(function() {
                         @endforelse
                     </td>
                     <td>
-                        @if (!is_null($company->id))
+                       
                             <a href="{{ route('companies.edit_company', ['company' => $company->id]) }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Edit</a>
-                        @endif
-                        @if (!is_null($company->id))
-                            <form action="{{ route('companies.destroy', $company) }}" method="POST" style="display: inline;">
+                       
+                        
+                            <form action="{{ route('companies.destroy', ['company' => $company->id]) }}" method="POST" style="display: inline;" id="deleteForm">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;">Delete</button>
+                                <button type="submit" class="btn btn-danger" id="deleteButton" style="background-color: #F05713; border-color: #F05713;" onclick="confirmDelete(event)">Delete</button>
                             </form>
-                        @endif
+                        
                     </td>
                 </tr>
             @endforeach
@@ -162,6 +163,32 @@ $(document).ready(function() {
         </div>
     @endif
 
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <!-- SweetAlert Script -->
+      <script>
+       
+       function confirmDelete(e) {
+        e.preventDefault()            
+            Swal.fire({
+                title: 'Are you sure to delete the company?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#00337C',
+                cancelButtonColor: '#F05713',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'The Company has been deleted.',
+                        'success'
+                    )
+                    document.getElementById('deleteForm').submit();
+                }
+            })
+        };
+    </script>
     @if (session('warning'))
         <div class="alert alert-warning border-left-warning alert-dismissible fade show" role="alert">
             {{ session('warning') }}

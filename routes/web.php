@@ -8,6 +8,8 @@ use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ProfileCaissierController;
+use App\Http\Controllers\ClientController;
+
 use App\Http\Controllers\ProfileGerantController;
 
 
@@ -130,9 +132,13 @@ Route::get('/cancelled-transactions', 'CaissierTransactionController@cancelledTr
 Route::put('/transactions/{transaction}/reactivate', 'CaissierTransactionController@reactivate')->name('caissierTransaction.reactivate');
 Route::delete('/transactions/{transaction}/permanentDelete', 'CaissierTransactionController@permanentDelete')->name('caissierTransaction.permanentDelete');
 // routes/web.php for search
-Route::get('/search/companies', 'CompanyController@search')->name('search_companies');
+Route::get('/search_clients', [ClientController::class, 'search'])->name('search_clients');
+Route::get('/search_companies', [CompanyController::class, 'search'])->name('search_companies');
 
+Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('load_all_clients');
+Route::resource('gerantClients', ClientController::class);
 
+Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
 
 
 

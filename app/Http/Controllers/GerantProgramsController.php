@@ -79,10 +79,14 @@ class GerantProgramsController extends Controller
 
     public function destroy(Program $program)
     {
-        $program->delete();
-
-        return redirect()->route('gerantPrograms.index')->with('message', 'Program deleted successfully!');
+        if ($program->status === 'inactive') {
+            $program->delete();
+            return redirect()->route('gerantPrograms.index')->with('message', 'Program deleted successfully!');
+        } else {
+            return redirect()->route('gerantPrograms.index')->with('warning', 'Cannot delete an active program!');
+        }
     }
+    
 
     public function inactive()
     {

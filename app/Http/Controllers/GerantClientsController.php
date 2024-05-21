@@ -62,4 +62,19 @@ class GerantClientsController extends Controller
 
         return redirect()->route('gerantClients.index')->with('message', 'Client deleted successfully!');
     }
+
+
+
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    $clients = Client::where('name', 'like', '%' . $query . '%')->get();
+    return response()->json($clients);
+}
+
+public function loadAll()
+{
+    $clients = Client::all();
+    return response()->json($clients);
+}
 }

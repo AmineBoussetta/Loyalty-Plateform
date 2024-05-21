@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantOffers.index') }}" class="btn btn-primary mb-3">Add Offers</a>
+    <a href="{{ route('gerantOffers.index') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Offers</a>
 
     @if (session('message'))
         <div class="alert alert-success">
