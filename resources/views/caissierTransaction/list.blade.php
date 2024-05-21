@@ -32,7 +32,8 @@
                 <th>Transaction Date</th>
                 <th>Amount</th>
                 <th>Points Added</th>
-                <th>Client Name</th>
+                <th>Money Added</th>
+                <th>Client</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -43,7 +44,8 @@
                     <td>{{ $transaction->transaction_date }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>+ {{ $transaction->points }}</td>
-                    <td>{{ $transaction->carteFidelite->holder_name ?? 'N/A' }}</td>
+                    <td>+ {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}</td>
+                    <td>{{ $transaction->carteFidelite->holder_name}} ({{ $transaction->carteFidelite->commercial_ID }})</td>
                     <td>
                         <div class="d-row">
                             <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;" id="cancelForm-{{ $transaction->id }}">

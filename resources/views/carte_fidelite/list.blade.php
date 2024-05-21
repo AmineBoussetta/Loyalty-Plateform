@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Ajouter une carte</a>
+    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Add Cards</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -22,6 +22,7 @@
                 <th>Tier</th>
                 <th>Holder Name</th>
                 <th>Fidelity Program</th>
+                <th>Money</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                             {{ $carte->program->name }}
                         @endif
                     </td>
+                    <td>{{ $carte->money}}</td>
                     <td>
                         <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                         <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;">

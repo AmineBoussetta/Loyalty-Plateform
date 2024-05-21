@@ -3,10 +3,12 @@
 use App\CarteFidelite;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BasicController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CarteFideliteController;
+use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
 use App\Http\Controllers\ClientController;
 
@@ -29,23 +31,22 @@ use App\Http\Controllers\ProfileGerantController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('/login',[AuthController::class,'login'])->name('login');
-//Route::post('/login',[AuthController::class,'login'])->name('sign');
+
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
+Route::get('/blank', function () {
+    return view('blank');
+})->name('blank');
 
-
+Route::resource('companies', CompanyController::class);
 Route::get('/companies/{company}/edit_company', [\App\Http\Controllers\CompanyController::class, 'edit'])->name('companies.edit_company');
-Route::patch('/companies/{company}', [\App\Http\Controllers\CompanyController::class, 'update'])->name('companies.update');
-Route::delete('/companies/{company}', [\App\Http\Controllers\CompanyController::class, 'destroy'])->name('companies.destroy');
-
 
 Route::middleware('auth')->group(function() {
     Route::get('/basic/{company}/edit', 'BasicController@edit')->name('basic.edit');

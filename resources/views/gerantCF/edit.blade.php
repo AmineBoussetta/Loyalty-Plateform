@@ -26,10 +26,9 @@
                 <div class="form-group">
                     <label for="tier">Tier</label>
                     <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
-                      <option disabled selected>Select a tier</option>
-                        <option value="gold" {{ old('tier', $carte->tier) == 'gold' ? 'selected' : '' }}>Gold</option>
-                        <option value="silver" {{ old('tier', $carte->tier) == 'silver' ? 'selected' : '' }}>Silver</option>
-                        <option value="bronze" {{ old('tier', $carte->tier) == 'bronze' ? 'selected' : '' }}>Bronze</option>
+                        <option value="" hidden>Select a tier</option>
+                        <option value="classic" {{ old('tier', $carte->tier) == 'classic' ? 'selected' : '' }}>Classic</option>
+                        <option value="premium" {{ old('tier', $carte->tier) == 'premium' ? 'selected' : '' }}>Premium</option>
                     </select>
                     @error('tier')
                         <span class="text-danger">{{ $message }}</span>
@@ -39,9 +38,9 @@
                   <div class="form-group">
                     <label for="holder_name">Holder Name</label>
                     <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
-                        <option disabled selected>Select a holder</option>
+                        <option value="" hidden>Select a holder</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->name }}" {{ old('name') == $client->name ? 'selected' : '' }}>
+                            <option value="{{ $client->name }}" {{ old('holder_name', $carte->holder_name) == $client->name ? 'selected' : '' }}>
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>
                         @endforeach
@@ -54,9 +53,11 @@
                   <div class="form-group">
                     <label for="fidelity_program">Fidelity Program</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
-                      <option disabled selected>Select a program</option>
+                      <option value="" hidden>Select a program</option>
                         @foreach ($programs as $program)
-                            <option value="{{ $program->name }}">{{ $program->name }}</option>
+                            <option value="{{ $program->name }}" {{ old('fidelity_program', $carte->fidelity_program) == $program->name ? 'selected' : '' }}>
+                                {{ $program->name }}
+                            </option>
                         @endforeach
                     </select>
                     @error('fidelity_program')

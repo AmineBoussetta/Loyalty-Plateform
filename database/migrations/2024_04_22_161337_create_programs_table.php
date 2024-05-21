@@ -16,12 +16,14 @@ return new class extends Migration
             $table->string('name');
             $table->date('start_date')->nullable();
             $table->date('expiry_date')->nullable();
-            $table->string('tier');
             $table->decimal('amount', 8, 2)->nullable();
-            $table->integer('points')->nullable();
-            $table->string('status');
+            $table->decimal('points', 8, 2)->nullable();
             $table->decimal('minimum_amount', 8, 2)->nullable();
+            $table->decimal('amount_premium', 8, 2)->nullable();
+            $table->integer('points_premium')->nullable();
+            $table->decimal('minimum_amount_premium', 8, 2)->nullable();
             $table->decimal('conversion_factor', 8, 2)->nullable();
+            $table->string('status');
             $table->string('comment')->nullable();
             $table->timestamps();
         });
