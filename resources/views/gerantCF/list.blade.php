@@ -1,4 +1,4 @@
-@extends('layouts.gerant')
+@extends('layouts.caissier')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantCF.create') }}" class="btn btn-primary mb-3">Ajouter une carte</a>
+    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Ajouter une carte</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -22,11 +22,12 @@
                 <th>Tier</th>
                 <th>Holder Name</th>
                 <th>Fidelity Program</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($cartes as $carte)
-            <tr onclick="window.location='{{ route('gerantCF.edit', $carte->id) }}';" style="cursor:pointer;">
+            <tr onclick="window.location='{{ route('carte_fidelite.edit', $carte->id) }}';" style="cursor:pointer;">
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->points_sum }}</td>
                     <td>{{ $carte->tier }}</td>
@@ -39,17 +40,18 @@
                         @endif
                     </td>
                     <td>
-                        <form action="{{ route('gerantCF.destroy', $carte->id) }}" method="post" style="display: inline;">
+                        <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
+                        <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;" id="deleteForm-{{ $carte->id }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(event, {{ $carte->id }})" style="background-color: #F05713; border-color: #F05713;">Delete</button>
                         </form>
                         </div>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">No card found.</td>
+                    <td colspan="6" class="text-center">No card found.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -84,4 +86,30 @@
             {{ session('status') }}
         </div>
     @endif
+
+    <!-- SweetAlert Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(event, carteId) {
+            event.stopPropagation(); // Stop the click event from propagating to the row
+            Swal.fire({
+                title: 'Are you sure to delete this card?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#00337C',
+                cancelButtonColor: '#F05713',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'The card has been deleted.',
+                        'success'
+                    )
+                    document.getElementById(`deleteForm-${carteId}`).submit();
+                }
+            })
+        }
+    </script>
 @endpush

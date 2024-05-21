@@ -58,16 +58,16 @@
 
         <!-- Transaction -->
         <li class="nav-item {{ Nav::isRoute('caissierTransaction.index') }}">
-            <a class="nav-link" href="{{ route('caissierTransaction.index') }}">
+            <a class="nav-link" href="{{ route('caissierTransaction.index') }}"style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Transaction') }}</span>
             </a>
         </li>
 
-
+        
         <!-- Client -->
         <li class="nav-item {{ Nav::isRoute('clients.index') }}">
-            <a class="nav-link" href="{{ route('clients.index') }}">
+            <a class="nav-link" href="{{ route('clients.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>
@@ -75,7 +75,7 @@
 
         <!-- Carte fidelite -->
         <li class="nav-item {{ Nav::isRoute('carte_fidelite.index') }}">
-            <a class="nav-link" href="{{ route('carte_fidelite.index') }}">
+            <a class="nav-link" href="{{ route('carte_fidelite.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Carte fidélite') }}</span>
             </a>
@@ -83,7 +83,7 @@
 
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profileCaissier') }}">
-            <a class="nav-link" href="{{ route('profileCaissier') }}">
+            <a class="nav-link" href="{{ route('profileCaissier') }}" style="color: white;">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Profile') }}</span>
             </a>

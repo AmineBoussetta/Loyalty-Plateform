@@ -6,6 +6,7 @@ use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddClientRequest;
 use App\Http\Requests\EditClientRequest;
+use App\Services\ClientImportService;
 
 class ClientController extends Controller
 {
@@ -62,6 +63,45 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index')->with('message', 'User deleted successfully!');
     }
+
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    $clients = GerantClient::where('name', 'like', '%' . $query . '%')->get();
+    return response()->json($clients);
+}
+
+    public function loadAll()
+    {
+        // Fetch all clients
+        $gerantClients = Client::all();
+        
+        // Pass the clients to the view
+        return view('gerantClients.list', compact('gerantClients'));
+    }
+
+
+
+// import export methods by excel ( baha )
+    protected $clientImportService;
+
+    public function __construct(ClientImportService $clientImportService)
+    {
+        $this->clientImportService = $clientImportService;
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        $filePath = $request->file('file')->getRealPath();
+        $this->clientImportService->import($filePath);
+
+        return redirect()->back()->with('success', 'Clients imported successfully.');
+    }
+
 
 }
 

@@ -11,7 +11,7 @@
                 <th>Amount</th>
                 <th>Points Substructed</th>
                 <th>Client Name</th>
-                <th>Status</th>
+               
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@
                     <td>{{ $cancelledTransaction->amount }}</td>
                     <td>- {{ $cancelledTransaction->points }}</td>
                     <td>{{ $cancelledTransaction->carteFidelite->holder_name ?? 'N/A' }}</td>
-                    <td>{{ $cancelledTransaction->status }}</td>
+                 
                     <td>
                         <div class="d-inline">
                             <form action="{{ route('caissierTransaction.reactivate', $cancelledTransaction->id) }}" method="POST" style="display:inline;">
@@ -31,11 +31,7 @@
                                 @method('PUT')
                                 <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Are you sure to reactivate this transaction?')">Amend</button>
                             </form>
-                            <form action="{{ route('caissierTransaction.permanentDelete', $cancelledTransaction->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction permanently?')">Delete</button>
-                            </form>
+                            
                         </div>
                     </td>
                 </tr>

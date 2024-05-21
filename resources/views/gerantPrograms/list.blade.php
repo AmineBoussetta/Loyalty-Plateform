@@ -6,8 +6,8 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary mb-3">Add programs</a>
-    <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-warning mb-3">View Inactive Programs</a>
+    <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add programs</a>
+    <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-warning mb-3"  style="background-color: #03C988; border-color: #03C988;">View Inactive Programs</a>
 
 
     @if (session('message'))
@@ -21,9 +21,7 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Status</th>
                 <th>Actions</th>
-
             </tr>
         </thead>
         <tbody>
@@ -31,13 +29,12 @@
                 <tr onclick="window.location='{{ route('gerantPrograms.edit', $program->id) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $program->name }}</td>
-                    <td>{{ $program->status }}</td>
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('gerantPrograms.toggleStatus', $program->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-warning mr-2">
+                                <button type="submit" class="btn btn-sm btn-warning mr-2" style="background-color: #03C988; border-color: #03C988;">
                                     @if ($program->status === 'active')
                                         Deactivate
                                     @else
@@ -45,19 +42,13 @@
                                     @endif
                                 </button>
                             </form>
-                            <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>
-                            </form>
-                            
-                            
+                           
                         </div>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">No programs found.</td>
+                    <td colspan="3" class="text-center">No programs found.</td>
                 </tr>
             @endforelse
         </tbody>

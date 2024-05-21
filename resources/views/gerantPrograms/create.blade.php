@@ -110,7 +110,7 @@
                         <small class="form-text text-muted">Provide any specific details or notes about this program.</small>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Save</button>
                     <a href="{{ route('gerantPrograms.index') }}" class="btn btn-default">Back to list</a>
             </div>
         </div>

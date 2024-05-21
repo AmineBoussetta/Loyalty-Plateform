@@ -17,7 +17,7 @@
     <!-- Main Content goes here -->
 
     <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Transaction</a>
-    <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary mb-3">View Cancelled Transactions</a>
+    <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary mb-3" style="background-color: #03C988; border-color: #03C988;">View Cancelled Transactions</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -46,15 +46,10 @@
                     <td>{{ $transaction->carteFidelite->holder_name ?? 'N/A' }}</td>
                     <td>
                         <div class="d-row">
-                            <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
-                            </form>
-                            <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
+                            <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;" id="cancelForm-{{ $transaction->id }}">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
+                                <button type="button" class="btn btn-sm btn-secondary" onclick="confirmCancel(event, {{ $transaction->id }})" style="background-color: #03C988; border-color: #03C988;">Cancel Transaction</button>
                             </form>
                         </div>
                     </td>
@@ -71,7 +66,6 @@
 
     <!-- End of Main Content -->
 @endsection
-
 
 @push('notif')
     @if (session('success'))
@@ -97,4 +91,30 @@
             {{ session('status') }}
         </div>
     @endif
+
+    <!-- SweetAlert Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmCancel(event, transactionId) {
+            event.stopPropagation(); // Stop the click event from propagating to the row
+            Swal.fire({
+                title: 'Are you sure to cancel this transaction?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#00337C',
+                cancelButtonColor: '#F05713',
+                confirmButtonText: 'Yes, cancel it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Cancelled!',
+                        'The transaction has been cancelled.',
+                        'success'
+                    )
+                    document.getElementById(`cancelForm-${transactionId}`).submit();
+                }
+            })
+        }
+    </script>
 @endpush
