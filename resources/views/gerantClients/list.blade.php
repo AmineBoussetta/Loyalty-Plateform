@@ -21,6 +21,7 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
+                <th>Money Spent</th>
                 <th>Commercial ID</th>
             </tr>
         </thead>
@@ -31,6 +32,7 @@
                     <td>{{ $gerantClient->name }}</td>
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>
+                    <td>{{ $gerantClient->money_spent }}</td>
                     <td>{{ $gerantClient->fidelity_card_commercial_ID }}</td>
                     <td>
                         <div class="d-flex">

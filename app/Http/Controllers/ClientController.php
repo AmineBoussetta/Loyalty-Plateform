@@ -32,6 +32,7 @@ class ClientController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
+            'money_spent' => 0.0,
         ]); 
 
         // Redirect the user back to the client listing page or any other desired page

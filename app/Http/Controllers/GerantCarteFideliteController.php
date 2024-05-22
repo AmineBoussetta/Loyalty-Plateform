@@ -108,6 +108,7 @@ class GerantCarteFideliteController extends Controller
             $carte->fidelity_program = $request->fidelity_program;
             $carte->holder_id = $client->id;
             $carte->program_id = $program->id;
+            $carte->money = $carte->points_sum * $program->conversion_factor;
             $carte->save();
 
             return redirect()->route('gerantCF.index')->with('message', 'Card updated successfully!');

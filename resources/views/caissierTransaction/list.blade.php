@@ -29,41 +29,71 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Transaction ID</th>
                 <th>Transaction Date</th>
                 <th>Amount</th>
-                <th>Points Added</th>
-                <th>Money Added</th>
+                <th>Points Added/Deducted</th>
+                <th>Money Added/Deducted</th>
                 <th>Client</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($transactions as $transaction)
-                <tr onclick="window.location='{{ route('caissierTransaction.edit', $transaction->id) }}';" style="cursor:pointer;">
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $transaction->transaction_date }}</td>
-                    <td>{{ $transaction->amount }}</td>
-                    <td>+ {{ $transaction->points }}</td>
-                    <td>+ {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}</td>
-                    <td>{{ $transaction->carteFidelite->holder_name}} ({{ $transaction->carteFidelite->commercial_ID }})</td>
-                    <td>
-                        <div class="d-row">
-                            <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
-                            </form>
-                            <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                @if ($transaction->status == 'paid')
+                    <tr onclick="window.location='{{ route('caissierTransaction.edit', $transaction->id) }}';" style="cursor:pointer;">
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $transaction->transaction_id }}</td>
+                        <td>{{ $transaction->transaction_date }}</td>
+                        <td>{{ $transaction->amount }}</td>
+                        <td>
+                            @if ($transaction->carteFidelite)
+                                @if ($transaction->payment_method == 'fidelity_points')
+                                    - {{ $transaction->points }}
+                                @else
+                                    + {{ $transaction->points }}
+                                @endif
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>
+                            @if ($transaction->carteFidelite)
+                                @if ($transaction->payment_method == 'fidelity_points')
+                                    - {{ $transaction->amount }}
+                                @else
+                                    + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}
+                                @endif
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>
+                            @if ($transaction->carteFidelite)
+                                {{ $transaction->carteFidelite->holder_name}} ({{ $transaction->carteFidelite->commercial_ID }})
+                            @else
+                                {{ $transaction->client->name }}
+                            @endif
+                        </td>
+                        <td>
+                            <div class="d-row">
+                                <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
+                                </form>
+                                <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">No transactions found.</td>
+                    <td colspan="8" class="text-center">No transactions found.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -73,7 +103,6 @@
 
     <!-- End of Main Content -->
 @endsection
-
 
 @push('notif')
     @if (session('success'))

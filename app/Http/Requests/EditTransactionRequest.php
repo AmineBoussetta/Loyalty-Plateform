@@ -22,10 +22,13 @@ class EditTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'carte_fidelite_id' => 'required|exists:carte_fidelites,id',
+            'transaction_id' => 'nullable',
+            'carte_fidelite_id' => 'nullable',
+            'client_id' => 'nullable',
             'transaction_date' => 'required|date',
             'amount' => 'required|numeric',
-            'payment_method' => 'required|in:cash,fidelity_points',
+            'amount_spent' => 'required|numeric',
+            'payment_method' => 'nullable|in:cash,fidelity_points',
         ];
     }
 }
