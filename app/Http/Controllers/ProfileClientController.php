@@ -2,30 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\Mail;
 
 
 
 use App\Http\Requests\EditUserRequest;
 
-class ProfileController extends Controller
+class ProfileClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('client-auth');
     }
 
     public function index()
     {
-        return view('profile'); //for different profiles change this view name according to needings
+        return view('profileClient'); //for different profiles change this view name according to needings
     }
 
-    public function update(Request $request)
+    public function update(EditUserRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -42,6 +41,7 @@ class ProfileController extends Controller
         $user->name = $request->input('name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
+        
 
         if (!is_null($request->input('current_password'))) {
             if (Hash::check($request->input('current_password'), $user->password)) {
@@ -53,6 +53,6 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile');
+        return redirect()->route('profileClient');
     }
 }

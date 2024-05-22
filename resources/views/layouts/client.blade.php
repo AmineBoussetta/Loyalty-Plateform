@@ -26,69 +26,64 @@
 </head>
 <body id="page-top">
 
-
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    <ul class="navbar-nav  sidebar  accordion" id="accordionSidebar" style="background-color: #00337C;" >
-<!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}" >
-<div class="sidebar-brand-icon" style=" margin-top: 30px;" >
-            <img src="{{ asset('img/logo_c.png') }}" alt="Logo" width="120" height="125">
-        </div>
-</a>
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home_gerant') }}">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">User<sup></sup></div>
+        </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item {{ Nav::isRoute('home_caissier') }}" style="margin-top: 50px;">
-            <a class="nav-link" href="{{ route('home_caissier') }}" style="color: white;">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span style="color: white;">{{ __('Dashboard') }}</span>
-            </a>
-        </li>
+<!-- Nav Item - Dashboard -->
+<li class="nav-item {{ Nav::isRoute('home_gerant') }}" style="margin-top: 50px;" >
+    <a class="nav-link" href="{{ route('home_gerant') }}" style="color: white;">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span style="color: white;">{{ __('Dashboard') }}</span></a>
+</li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-        <div class="sidebar-heading" style="color: white;">
+        <div class="sidebar-heading">
             {{ __('Settings') }}
         </div>
 
-        <!-- Transaction -->
-        <li class="nav-item {{ Nav::isRoute('caissierTransaction.index') }}">
-            <a class="nav-link" href="{{ route('caissierTransaction.index') }}" style="color: white;">
+        <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantPrograms.index') }}">
+            <a class="nav-link" href="{{ route('gerantPrograms.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Transactions') }}</span>
+                <span>{{ __('Transactions') }}</span> 
             </a>
         </li>
 
-        <!-- Client -->
-        <li class="nav-item {{ Nav::isRoute('clients.index') }}">
-            <a class="nav-link" href="{{ route('clients.index') }}" style="color: white;">
+        <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
+            <a class="nav-link" href="{{ route('gerantClients.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Clients') }}</span>
+                <span>{{ __('Historique') }}</span>
             </a>
         </li>
 
-        <!-- Carte fidelite -->
-        <li class="nav-item {{ Nav::isRoute('carte_fidelite.index') }}">
-            <a class="nav-link" href="{{ route('carte_fidelite.index') }}" style="color: white;">
-                <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Carte fidélite') }}</span>
-            </a>
-        </li>
         
 
         <!-- Nav Item - Profile -->
-        <li class="nav-item {{ Nav::isRoute('profileCaissier') }}">
-            <a class="nav-link" href="{{ route('profileCaissier') }}" style="color: white;">
+        <li class="nav-item {{ Nav::isRoute('profileClient') }}">
+            <a class="nav-link" href="{{ route('profileClient') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Profile') }}</span>
             </a>
         </li>
+
+      
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -97,6 +92,7 @@
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
+
     </ul>
     <!-- End of Sidebar -->
 
@@ -140,29 +136,28 @@
                         </div>
                     </li>
 
-                    <!-- Nav Item - Alerts -->
-                    
-                        
-                            
+
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
-                    @if(Auth::check())
-
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                            <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
+                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->name[0] }}"></figure>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profileCaissier') }}">
+                            <a class="dropdown-item" href="{{ route('profile') }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Profile') }}
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="javascript:void(0)">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Settings') }}
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                {{ __('Activity Log') }}
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -170,9 +165,7 @@
                                 {{ __('Logout') }}
                             </a>
                         </div>
-                    @endif
                     </li>
-                    
 
                 </ul>
 
@@ -183,6 +176,7 @@
             <div class="container-fluid">
                 @stack('notif')
                 @yield('main-content')
+
             </div>
             <!-- /.container-fluid -->
 
@@ -203,7 +197,6 @@
     <!-- End of Content Wrapper -->
 
 </div>
-<!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">

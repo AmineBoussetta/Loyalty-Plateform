@@ -14,4 +14,8 @@ class Company extends Model
     {
         return $this->hasMany(Gerant::class);
     }
+    public function caissiers()
+    {
+        return $this->hasMany(Caissier::class);
+    }
 }

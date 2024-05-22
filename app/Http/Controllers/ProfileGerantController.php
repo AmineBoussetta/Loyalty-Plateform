@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\Mail;
 
 
 
 use App\Http\Requests\EditUserRequest;
 
-class ProfileController extends Controller
+class ProfileGerantController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('gerant-auth');
     }
 
     public function index()
     {
-        return view('profile'); //for different profiles change this view name according to needings
+        return view('profileGerant'); //for different profiles change this view name according to needings
     }
 
     public function update(Request $request)
@@ -53,6 +52,6 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile');
+        return redirect()->route('profileGerant');
     }
 }

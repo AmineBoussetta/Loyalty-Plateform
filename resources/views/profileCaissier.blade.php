@@ -68,7 +68,7 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('profile.update') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('profileCaissier.update') }}" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="_method" value="PUT">
@@ -95,7 +95,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="email">Email address<span class="small text-danger">*</span></label>
-                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', Auth::user()->email) }}">
+                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', Auth::user()->email) }}"readonly>
                                     </div>
                                 </div>
                             </div>
