@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use App\User;
 use App\Http\Requests\AddCompanyRequest;
 use App\Http\Requests\EditCompanyRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Mail\GerantCredentialsEmail;
 use App\Gerant;
 
-use Illuminate\Support\Facades\Hash;
+
 
 class CompanyController extends Controller
 {
@@ -51,41 +56,63 @@ class CompanyController extends Controller
 
     
 
-    public function store(AddCompanyRequest $request)
-    {
-        // Create the company
-        $company = Company::create([
-            'name' => $request->name,
-            'abbreviation' => $request->abbreviation,
-            'default_currency' => $request->default_currency,
-            'country' => $request->country,
-            'tax_id' => $request->tax_id,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'website' => $request->website,
-            'description' => $request->description,
-        ]);
+public function store(AddCompanyRequest $request)
+{
+    // Create the company
+    $company = Company::create([
+        'name' => $request->name,
+        'abbreviation' => $request->abbreviation,
+        'default_currency' => $request->default_currency,
+        'country' => $request->country,
+        'tax_id' => $request->tax_id,
+        'phone' => $request->phone,
+        'email' => $request->email,
+        'website' => $request->website,
+        'description' => $request->description,
+    ]);
+
+    // Create gerants for the company
+    if ($request->has('gerant_name')) {
+        $gerantsData = $request->only(['gerant_name', 'gerant_email', 'gerant_phone']);
+        $gerants = [];
     
-        // Create gerants for the company
-        if ($request->has('gerant_name')) {
-            $gerantsData = $request->only(['gerant_name', 'gerant_email', 'gerant_phone']);
-            $gerants = [];
-    
-            // Prepare gerants data
-            foreach ($gerantsData['gerant_name'] as $key => $gerantName) {
-                $gerants[] = [
-                    'name' => $gerantName,
-                    'email' => $gerantsData['gerant_email'][$key],
-                    'phone' => $gerantsData['gerant_phone'][$key],
-                ];
-            }
-    
-            // Create gerants associated with the company
-            $company->gerants()->createMany($gerants);
+        // Prepare gerants data
+        foreach ($gerantsData['gerant_name'] as $key => $gerantName) {
+            // Create user account for gerant
+            $user_name=explode(' ', $gerantName)[0];
+            $user_last_name=explode(' ', $gerantName)[1];
+            $email=$gerantsData['gerant_email'][$key];
+            $user_email=$user_name.'.'.$user_last_name.'@'.$request->name.'.com';
+            $password=Str::random(8);
+            $hashedPassword = Hash::make($password);
+            $user = User::create([
+                'name' => $user_name,
+                'last_name' => $user_last_name,
+                'email' => $user_email,
+                'password' => $hashedPassword,
+                'role' => 2,
+                'company_id' => $company->id,
+            ]);
+
+            Mail::to($email)->send(new GerantCredentialsEmail($user_name, $user_email, $password));
+
+            // Collect gerant data with user_id
+            $gerants[] = [
+                'name' => $gerantName,
+                'email' => $email,
+                'phone' => $gerantsData['gerant_phone'][$key],
+                'user_id' => $user->id,
+                'company_id' => $company->id,
+            ];
         }
     
-        return redirect()->route('companies.index')->with('message', 'Company added successfully!');
+        // Create gerants associated with the company
+        $company->gerants()->createMany($gerants);
     }
+
+    return redirect()->route('companies.index')->with('message', 'Company added successfully!');
+}
+
     
     
     

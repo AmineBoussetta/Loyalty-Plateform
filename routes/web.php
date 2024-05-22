@@ -10,7 +10,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
-
+use App\Http\Controller\GerantCaissiersController;
 
 
 
@@ -24,13 +24,38 @@ use App\Http\Controllers\ProfileCaissierController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        $user = Auth::user();
+
+   
+    if ($user->role == 1) {
+        return redirect()->route('home');
+    } elseif ($user->role == 2) {
+        return redirect()->route('home_gerant');
+    } elseif ($user->role == 3) {
+        return redirect()->route('home_caissier');
+    } elseif ($user->role == 4) {
+    return redirect()->route('home_client');
+    }
+        
+        
+    } else {
+        
+        return view('welcome');
+    }
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/home_client', 'HomeClientController@index')->name('home_client');
+Route::get('/profileClient', 'ProfileClientController@index')->name('profileClient');
+Route::put('/profile-client', 'ProfileClientController@update')->name('profileClient.update');
+
+
+
+Route::post('/login',[AuthController::class,'login'])->name('login');
+
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 
@@ -51,6 +76,8 @@ Route::middleware('auth')->group(function() {
     Route::resource('companies', CompanyController::class);
 
 });
+
+
 
 Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
 
@@ -133,10 +160,21 @@ Route::delete('/transactions/{transaction}/permanentDelete', 'CaissierTransactio
 Route::get('/search/companies', 'CompanyController@search')->name('search_companies');
 
 
+//gerant caissiers
+//Route::get('/gerant-caissier/create', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
+//Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
+//Route::get('/gerant-caissier/{caissier_id}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
+//Route::put('/gerant-caissier/{caissier}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
+//Route::delete('/gerant-caissier/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
+//Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
 
 
 
-
-
+Route::get('/gerant-caissier/create/{gerant}', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
+Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
+Route::get('gerant/{gerant}/caissier/{caissierID}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
+Route::put('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@update')->name('gerantCaissier.update');
+Route::delete('/gerant-caissier/{gerant}/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
+Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
 
 

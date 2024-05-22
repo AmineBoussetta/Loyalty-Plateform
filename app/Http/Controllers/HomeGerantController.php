@@ -6,7 +6,9 @@ use App\Client;
 use App\CarteFidelite;
 use App\Offer;
 use App\Program;
+use App\Caissier;
 use Illuminate\Http\Request;
+use App\Gerant;
 
 class HomeGerantController extends Controller
 {
@@ -17,7 +19,7 @@ class HomeGerantController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('gerant-auth');
     }
 
     /**
@@ -28,10 +30,13 @@ class HomeGerantController extends Controller
     public function index()
     {
         $clientsCount = Client::count();
+        $caissiersCount = Caissier::count();
         $programsCount = Program::count();
         $offersCount = Offer::count();
+        
 
         $widget = [
+            'caissiersCount' => $caissiersCount,
             'clientsCount' => $clientsCount,
             'programsCount' => $programsCount,
             'offersCount' => $offersCount,
