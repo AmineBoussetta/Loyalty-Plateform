@@ -12,8 +12,6 @@ use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
 use App\Http\Controllers\ClientController;
 
-use App\Http\Controllers\ProfileGerantController;
-
 
 
 
@@ -71,8 +69,8 @@ Route::get('/carte-fidelite', 'CarteFideliteController@index')->name('carte_fide
 Route::get('/carte-fidelite/create', 'CarteFideliteController@create')->name('carte_fidelite.create');
 Route::post('/carte-fidelite', 'CarteFideliteController@store')->name('carte_fidelite.store');
 Route::get('/carte-fidelite/{carte}/edit', 'CarteFideliteController@edit')->name('carte_fidelite.edit');
-Route::put('/carte_fidelite/{carte}', 'CarteFideliteController@update')->name('carte_fidelite.update');
-Route::delete('/carte_fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
+Route::put('/carte-fidelite/{carte}', 'CarteFideliteController@update')->name('carte_fidelite.update');
+Route::delete('/carte-fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
 
 
 Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
@@ -118,8 +116,8 @@ Route::get('/gerant-carte-fidelite', 'GerantCarteFideliteController@index')->nam
 Route::get('/gerant-carte-fidelite/create', 'GerantCarteFideliteController@create')->name('gerantCF.create');
 Route::post('/gerant-carte-fidelite', 'GerantCarteFideliteController@store')->name('gerantCF.store');
 Route::get('/gerant-carte-fidelite/{carte}/edit', 'GerantCarteFideliteController@edit')->name('gerantCF.edit');
-Route::put('/gerant-carte_fidelite/{carte}', 'GerantCarteFideliteController@update')->name('gerantCF.update');
-Route::delete('/gerant-carte_fidelite/{carte}', 'GerantCarteFideliteController@destroy')->name('gerantCF.destroy');
+Route::put('/gerant-carte-fidelite/{carte}', 'GerantCarteFideliteController@update')->name('gerantCF.update');
+Route::delete('/gerant-carte-fidelite/{carte}', 'GerantCarteFideliteController@destroy')->name('gerantCF.destroy');
 
 //Caissier Transaction
 Route::get('/caissier-transaction', 'CaissierTransactionController@index')->name('caissierTransaction.index');

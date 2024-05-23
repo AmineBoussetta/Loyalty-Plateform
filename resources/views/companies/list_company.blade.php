@@ -116,7 +116,7 @@ $(document).ready(function() {
                 <th>No</th>
                 <th>Company name</th>
                 <th>Managers</th>
-                <th>#</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
