@@ -314,7 +314,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Satoripop</span>
+                    <span>Copyright &copy; R E W A R D Z</span>
                 </div>
             </div>
         </footer>

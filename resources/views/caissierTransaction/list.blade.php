@@ -15,9 +15,17 @@
     </form>
 
     <!-- Main Content goes here -->
+    <a href="{{ route('caissierTransaction.create') }}" 
+   class="btn btn-primary mb-3" 
+   style="background-color: #00337C; border-color: #00337C; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; padding: 0.5rem 1rem;">
+    Add Transaction
+</a>
+<a href="{{ route('caissierTransaction.cancelledTransactions') }}" 
+   class="btn btn-secondary mb-3" 
+   style="background-color: #5CE1E6; border-color: #5CE1E6; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; padding: 0.5rem 1rem;">
+    View Cancelled Transactions
+</a>
 
-    <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Transaction</a>
-    <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary mb-3" style="background-color: #03C988; border-color: #03C988;">View Cancelled Transactions</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -153,5 +161,27 @@
                 }
             })
         }
+
+        document.querySelectorAll('.elevated-btn').forEach(btn => {
+        btn.addEventListener('mouseover', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.2)';
+        });
+
+        btn.addEventListener('mouseout', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        });
+
+        btn.addEventListener('focus', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        });
+
+        btn.addEventListener('active', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        });
+    });
     </script>
 @endpush

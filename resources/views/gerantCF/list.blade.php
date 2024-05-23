@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantCF.create') }}" class="btn btn-primary mb-3">Add Cards</a>
+    <a href="{{ route('gerantCF.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Cards</a>
 
     @if (session('message'))
         <div class="alert alert-success">

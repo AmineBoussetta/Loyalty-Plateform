@@ -29,42 +29,41 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    <ul class="navbar-nav  sidebar  accordion" id="accordionSidebar" style="background-color: #00337C;" >
-<!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}" >
-<div class="sidebar-brand-icon" style="margin-top: 50px;" >
-            <img src="{{ asset('img/logo_c.png') }}" alt="Logo" width="120" height="120">
+    <ul class="navbar-nav sidebar accordion" id="accordionSidebar" style="background-color: #00337C;">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+            <div class="sidebar-brand-icon" style="margin-top: 50px;">
+                <img src="{{ asset('img/logo_c.png') }}" alt="Logo" class="img-fluid" style="max-width: 80%; height: auto;">
+            </div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item {{ Nav::isRoute('home_caissier') }}" style="margin-top: 50px;">
+            <a class="nav-link" href="{{ route('home_caissier') }}" style="color: white;">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span style="color: white;">{{ __('Dashboard') }}</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading" style="color: white;">
+            {{ __('Settings') }}
         </div>
-</a>
-
-<!-- Divider -->
-<hr class="sidebar-divider my-0">
-
-<!-- Nav Item - Dashboard -->
-<li class="nav-item {{ Nav::isRoute('home_caissier') }}" style="margin-top: 50px;" >
-    <a class="nav-link" href="{{ route('home_caissier') }}" style="color: white;">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span style="color: white;">{{ __('Dashboard') }}</span></a>
-</li>
-
-<!-- Divider -->
-<hr class="sidebar-divider">
-
-<!-- Heading -->
-<div class="sidebar-heading " style="color: white;">
-    {{ __('Settings') }}
-</div>
-
 
         <!-- Transaction -->
         <li class="nav-item {{ Nav::isRoute('caissierTransaction.index') }}">
-            <a class="nav-link" href="{{ route('caissierTransaction.index') }}"style="color: white;">
+            <a class="nav-link" href="{{ route('caissierTransaction.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Transactions') }}</span>
             </a>
         </li>
 
-        
         <!-- Client -->
         <li class="nav-item {{ Nav::isRoute('clients.index') }}">
             <a class="nav-link" href="{{ route('clients.index') }}" style="color: white;">
@@ -89,8 +88,6 @@
             </a>
         </li>
 
-      
-
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
@@ -98,7 +95,6 @@
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-
     </ul>
     <!-- End of Sidebar -->
 
@@ -214,7 +210,7 @@
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                                    <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div class="font-weight-bold">
@@ -224,7 +220,7 @@
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+                                    <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                     <div class="status-indicator"></div>
                                 </div>
                                 <div>
@@ -234,7 +230,7 @@
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+                                    <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                     <div class="status-indicator bg-warning"></div>
                                 </div>
                                 <div>
@@ -244,7 +240,7 @@
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+                                    <img class="rounded-circle" src="img/undraw_profile_4.svg" alt="...">
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div>
@@ -262,21 +258,17 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->name[0] }}"></figure>
+                            <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profile') }}">
+                            <a class="dropdown-item" href="{{ route('profileCaissier') }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Profile') }}
                             </a>
-                            <a class="dropdown-item" href="javascript:void(0)">
+                            <a class="dropdown-item" href="#">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Settings') }}
-                            </a>
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                {{ __('Activity Log') }}
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -295,7 +287,6 @@
             <div class="container-fluid">
                 @stack('notif')
                 @yield('main-content')
-
             </div>
             <!-- /.container-fluid -->
 
@@ -316,6 +307,7 @@
     <!-- End of Content Wrapper -->
 
 </div>
+<!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
