@@ -12,8 +12,6 @@ use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
 use App\Http\Controllers\ClientController;
 
-use App\Http\Controllers\ProfileGerantController;
-
 
 
 
