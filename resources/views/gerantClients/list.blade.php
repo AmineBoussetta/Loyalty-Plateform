@@ -8,15 +8,22 @@
 
     <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
   
-    <!-- Import Clients Section -->
     <div class="mb-4">
         <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label for="file">Choose Excel file to import clients:</label>
-                <input type="file" name="file" id="file" class="form-control" required>
+            <label for="file" class="col-form-label">Or you can choose an Excel file to import clients:</label>
+            <div class="form-group row">
+                
+                <div class="col-sm-7">
+                    <div class="custom-file">
+                        <input type="file" name="file" id="file" class="custom-file-input" required>
+                        <label class="custom-file-label" for="file">Choose file</label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-success" style="background-color: #5CE1E6; border-color: #5CE1E6;">Import Clients</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-success" style="background-color: #28a745; border-color: #28a745;">Import Clients</button>
         </form>
     </div>
 

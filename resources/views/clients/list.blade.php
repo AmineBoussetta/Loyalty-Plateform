@@ -8,7 +8,7 @@
 
     <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
   
-    <!-- Import Clients Section -->
+    <!-- Import Clients Section
     <div class="mb-4">
         <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -27,7 +27,7 @@
             </div>
         </form>
     </div>
-
+ -->
 
     @if (session('message'))
         <div class="alert alert-success">

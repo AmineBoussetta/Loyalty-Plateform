@@ -73,16 +73,6 @@ Route::put('/carte-fidelite/{carte}', 'CarteFideliteController@update')->name('c
 Route::delete('/carte-fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
 
 
-Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
-Route::get('/transactions/create', 'TransactionController@create')->name('transactions.create');
-Route::post('/transactions', 'TransactionController@store')->name('transactions.store');
-Route::get('/transactions/{transaction}/edit', 'TransactionController@edit')->name('transactions.edit');
-Route::put('/transactions/{transaction}', 'TransactionController@update')->name('transactions.update');
-Route::delete('/transactions/{transaction}', 'TransactionController@destroy')->name('transactions.destroy');
-
-
-
-
 Route::get('/home_gerant', 'HomeGerantController@index')->name('home_gerant');
 
 Route::get('/profileGerant', 'ProfileGerantController@index')->name('profileGerant'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
@@ -135,7 +125,7 @@ Route::get('/search_clients', [ClientController::class, 'search'])->name('search
 Route::get('/search_companies', [CompanyController::class, 'search'])->name('search_companies');
 
 Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('load_all_clients');
-Route::resource('gerantClients', ClientController::class);
+//Route::resource('gerantClients', ClientController::class);
 
 Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
 
