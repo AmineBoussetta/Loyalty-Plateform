@@ -60,7 +60,7 @@
         <li class="nav-item {{ Nav::isRoute('caissierTransaction.index') }}">
             <a class="nav-link" href="{{ route('caissierTransaction.index') }}"style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Transaction') }}</span>
+                <span>{{ __('Transactions') }}</span>
             </a>
         </li>
 

@@ -2,7 +2,7 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Edit Transaction') }}</h1>
 
     <!-- Main Content goes here -->
 
@@ -12,60 +12,98 @@
                 @csrf
                 @method('put')
 
-                <h3>Edit Transaction</h3>
+                <h3>{{ $title }}</h3>
                 <hr>
                     
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="transaction_id">Transaction ID</label>
+                        <input type="text" class="form-control" name="transaction_id" value="{{ $transaction->transaction_id }}" readonly>
+                        @error('transaction_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="transaction_date">Transaction Date</label>
+                        <input type="date" class="form-control @error('transaction_date') is-invalid @enderror" name="transaction_date" value="{{ date('Y-m-d') }}" required>
+                        @error('transaction_date')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="amount">Amount</label>
+                        <input type="number" class="form-control" name="amount" value="{{ old('amount', $transaction->amount) }}" required>
+                        @error('amount')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="amount_spent">Amount Spent</label>
+                        <input type="number" class="form-control" name="amount_spent" value="{{ old('amount_spent', $transaction->amount_spent) }}" required>
+                        @error('amount_spent')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                
                 <div class="form-group">
-                    <label for="carte_fidelite_id">Fidelity Card ID</label>
-                    <select class="form-control @error('carte_fidelite_id') is-invalid @enderror" name="carte_fidelite_id" id="carte_fidelite_id">
-                        <option disabled selected>Select a Card</option>
-                        @foreach ($cards as $card)
-                            <option value="{{ $card->id }}" {{ old('carte_fidelite_id', $transaction->carte_fidelite_id) == $card->id ? 'selected' : '' }}>{{ $card->commercial_ID }}</option>
-                        @endforeach
+                    <label for="client_id">Client</label>
+                    <select class="form-control" name="client_id" required>
+                        <option value="">Select Client</option>
+                        <optgroup label="Clients with Fidelity Card">
+                            @foreach ($clientsWithCard as $client)
+                                <option value="{{ $client->id }}" {{ $transaction->client_id == $client->id ? 'selected' : '' }} data-carte-fidelite-id="{{ $client->carteFidelite->id }}">
+                                    {{ $client->name }} ({{ $client->carteFidelite->commercial_ID }})
+                                </option>
+                            @endforeach
+                        </optgroup>
+                        <optgroup label="Clients without Fidelity Card">
+                            @foreach ($clientsWithoutCard as $client)
+                                <option value="{{ $client->id }}" {{ $transaction->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                            @endforeach
+                        </optgroup>
                     </select>
-                    
-                    
-                    @error('fidelity_program')
+                    @error('client_id')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                    
-
-                <div class="form-group">
-                    <label for="transaction_date">Transaction Date</label>
-                    <input type="datetime-local" class="form-control @error('transaction_date') is-invalid @enderror" name="transaction_date" id="transaction_date" placeholder="Transaction Date" autocomplete="off" value="{{ old('transaction_date') ?? $transaction->transaction_date }}">
-                    @error('transaction_date')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            
-            
-                <div class="form-group">
-                    <label for="amount">Amount</label>
-                    <input type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" id="amount" placeholder="Amount" autocomplete="off" value="{{ old('amount')  ?? $transaction->amount }}">
-                    @error('amount')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-       
+                
                 <div class="form-group">
                     <label for="payment_method">Payment Method</label>
-                    <select class="form-control @error('payment_method') is-invalid @enderror" name="payment_method" id="payment_method">
-                        <option disabled selected>Select Payment Method</option>
+                    <select class="form-control" name="payment_method">
                         <option value="cash" {{ old('payment_method', $transaction->payment_method) == 'cash' ? 'selected' : '' }}>Cash</option>
-                        <option value="fidelity_points" {{ old('payment_method', $transaction->payment_method) == 'fidelity_Points' ? 'selected' : '' }}>Fidelity Points</option>
+                        <option value="fidelity_points" {{ old('payment_method', $transaction->payment_method) == 'fidelity_points' ? 'selected' : '' }}>Fidelity Points</option>
                     </select>
                     @error('payment_method')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
+                <input type="hidden" name="carte_fidelite_id" id="carte_fidelite_id" value="{{ $transaction->carte_fidelite_id ?? '' }}">
                 <button type="submit" class="btn btn-primary"  style="background-color: #00337C; border-color: #00337C;">Save</button>
                 <a href="{{ route('caissierTransaction.index') }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>
     </div>
+
+    <script>
+        document.querySelector('select[name="client_id"]').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var carteFideliteId = selectedOption.getAttribute('data-carte-fidelite-id');
+            document.getElementById('carte_fidelite_id').value = carteFideliteId || '';
+        });
+
+        // Set the initial value for carte_fidelite_id on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectedOption = document.querySelector('select[name="client_id"] option:checked');
+            var carteFideliteId = selectedOption.getAttribute('data-carte-fidelite-id');
+            document.getElementById('carte_fidelite_id').value = carteFideliteId || '';
+        });
+    </script>
 
     <!-- End of Main Content -->
 @endsection

@@ -29,6 +29,13 @@ class GerantProgramsController extends Controller
 
     public function store(AddProgramRequest $request)
     {
+        $status = 'inactive'; // Set default status to inactive
+
+        // Check if the start date is in the past and the expiry date is in the future
+        if (strtotime($request->start_date) <= time() && strtotime($request->expiry_date) > time()) {
+            $status = 'active'; // Set status to active
+        }
+
         Program::create([
             'name' => $request->name,
             'start_date' => $request->start_date,
@@ -40,7 +47,7 @@ class GerantProgramsController extends Controller
             'points_premium' => $request->points_premium,
             'minimum_amount_premium' => $request->minimum_amount_premium,
             'conversion_factor' => $request->conversion_factor,
-            'status' => $request->status ?? 'active',
+            'status' => $request->status ?? $status,
             'comment' => $request->comment,
         ]); 
 
@@ -70,7 +77,11 @@ class GerantProgramsController extends Controller
         $program->points_premium = $request->points_premium; 
         $program->minimum_amount_premium = $request->minimum_amount_premium;
         $program->conversion_factor = $request->conversion_factor;
-        $program->status = $request->status ?? 'active';
+        if (strtotime($request->start_date) <= time() && strtotime($request->expiry_date) > time()) {
+            $program->status = 'active'; 
+        } else {
+            $program->status = 'inactive';
+        }
         $program->comment = $request->comment;
         $program->save();
 

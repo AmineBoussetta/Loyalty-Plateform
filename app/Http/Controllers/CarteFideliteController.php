@@ -63,15 +63,20 @@ class CarteFideliteController extends Controller
         $client = Client::where('name', $request->holder_name)->first();
         $program = Program::where('name', $request->fidelity_program)->first();
 
-        CarteFidelite::create([
+        $card = CarteFidelite::create([
             'commercial_ID' => $newCardID,
             'points_sum' => $request->points_sum,
             'tier' => $request->tier,
-            'fidelity_program' => $request->fidelity_program,
             'holder_name' => $request->holder_name,
             'holder_id' => $client->id,
             'program_id' => $program->id,
-        ]);        
+            'fidelity_program' => $request->fidelity_program,
+        ]); 
+
+            $client->fidelity_card_commercial_ID = $newCardID;
+            $client->fidelity_card_id = $card->id;
+
+            $client->save();        
 
         return redirect()->route('carte_fidelite.index')->with('message', 'New card has been added');
     }
@@ -99,12 +104,12 @@ class CarteFideliteController extends Controller
             $carte->tier = $request->tier;
             $carte->holder_name = $request->holder_name;
             $carte->fidelity_program = $request->fidelity_program;
-
             $carte->holder_id = $client->id;
             $carte->program_id = $program->id;
+            $carte->money = $carte->points_sum * $program->conversion_factor;
             $carte->save();
 
-            return redirect()->route('gerantCF.index')->with('message', 'Card updated successfully!');
+            return redirect()->route('carte_fidelite.index')->with('message', 'Card updated successfully!');
         }
 
         public function destroy(CarteFidelite $carte)

@@ -44,6 +44,7 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone number</th>
+                <th>Money Spent</th>
                 <th>Commercial ID</th>
                 <th>Actions</th>
             </tr>
@@ -55,6 +56,7 @@
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
+                    <td>{{ $client->money_spent }}</td>
                     <td>{{ $client->fidelity_card_commercial_ID }}</td>
                     <td>
                         <div class="d-flex">

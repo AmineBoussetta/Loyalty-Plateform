@@ -9,7 +9,7 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'phone', 'fidelity_card_id'];
+    protected $fillable = ['name', 'email', 'phone', 'fidelity_card_id', 'money_spent'];
 
     public function carteFidelite()
     {
