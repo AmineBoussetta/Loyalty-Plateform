@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.client')
 
 @section('main-content')
     <!-- Page Heading -->
@@ -19,7 +19,7 @@
         <div class="col-lg-4 order-lg-2">
 
             <div class="card shadow mb-4">
-                <div class="card-profile-image mt-4">
+                <div class= "card-profile-image mt-4">
                     <figure class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ Auth::user()->name[0] }}"></figure>
                 </div>
                 <div class="card-body">
@@ -68,7 +68,7 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('profile.update') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('profileClient.update') }}" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="_method" value="PUT">

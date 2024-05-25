@@ -22,22 +22,6 @@
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
 
-    <style>
-        .sidebar-brand-icon {
-            transition: all 0.3s ease-in-out;
-        }
-        .sidebar .nav-item .nav-link {
-            transition: all 0.3s ease-in-out;
-        }
-        .sidebar.toggled .sidebar-brand-icon {
-            width: 50px;
-            height: auto;
-        }
-        .sidebar-brand {
-            padding: 1.5rem 1rem;
-        }
-    </style>
-
     @stack('css')
 </head>
 <body id="page-top">
@@ -45,68 +29,61 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <ul class="navbar-nav sidebar accordion" id="accordionSidebar" style="background-color: #00337C;">
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-            <div class="sidebar-brand-icon"  style="margin-top: 50px;" >
-                <img src="{{ asset('img/logo_c.png') }}" alt="Logo" class="img-fluid"style="max-width: 80%; max-height: 80%;">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home_gerant') }}">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
             </div>
+            <div class="sidebar-brand-text mx-3">User<sup></sup></div>
         </a>
-
-    <ul class="navbar-nav  sidebar  accordion" id="accordionSidebar" style="background-color: #00337C;" >
-<!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}" >
-<div class="sidebar-brand-icon" style=" margin-top: 30px;" >
-            <img src="{{ asset('img/logo_c.png') }}" alt="Logo" width="120" height="125">
-        </div>
-</a>
-
-<!-- Divider -->
-<hr class="sidebar-divider my-0">
-
-<!-- Nav Item - Dashboard -->
-<li class="nav-item {{ Nav::isRoute('home') }}" style="margin-top: 30px;" >
-    <a class="nav-link" href="{{ route('home') }}" style="color: white;">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span style="color: white;">{{ __('Dashboard') }}</span></a>
-</li>
-
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item {{ Nav::isRoute('home') }}" style="margin-top: 50px;">
-            <a class="nav-link" href="{{ route('home') }}" style="color: white;">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span style="color: white;">{{ __('Dashboard') }}</span>
-            </a>
-        </li>
+<!-- Nav Item - Dashboard -->
+<li class="nav-item {{ Nav::isRoute('home_gerant') }}" style="margin-top: 50px;" >
+    <a class="nav-link" href="{{ route('home_gerant') }}" style="color: white;">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span style="color: white;">{{ __('Dashboard') }}</span></a>
+</li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-        <div class="sidebar-heading" style="color: white;">
+        <div class="sidebar-heading">
             {{ __('Settings') }}
         </div>
 
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('companies.index') }}">
-            <a class="nav-link" href="{{ route('companies.index') }}" style="color: white;">
+        <li class="nav-item {{ Nav::isRoute('gerantPrograms.index') }}">
+            <a class="nav-link" href="{{ route('gerantPrograms.index') }}">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Add company') }}</span>
+                <span>{{ __('Transactions') }}</span> 
             </a>
         </li>
 
+        <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
+            <a class="nav-link" href="{{ route('gerantClients.index') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Historique') }}</span>
+            </a>
+        </li>
+
+        
+
         <!-- Nav Item - Profile -->
-        <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile') }}" style="color: white;">
+        <li class="nav-item {{ Nav::isRoute('profileClient') }}">
+            <a class="nav-link" href="{{ route('profileClient') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Profile') }}</span>
             </a>
         </li>
+
+      
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -115,6 +92,7 @@
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
+
     </ul>
     <!-- End of Sidebar -->
 
@@ -209,7 +187,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; R E W A R D Z</span>
+                    <span>Copyright &copy; Satoripop</span>
                 </div>
             </div>
         </footer>
@@ -252,7 +230,6 @@
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stack('js')
 </body>
 </html>

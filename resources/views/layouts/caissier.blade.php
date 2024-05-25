@@ -26,9 +26,11 @@
 </head>
 <body id="page-top">
 
+
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
+
     <ul class="navbar-nav sidebar accordion" id="accordionSidebar" style="background-color: #00337C;">
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
@@ -36,6 +38,7 @@
                 <img src="{{ asset('img/logo_c.png') }}" alt="Logo" class="img-fluid" style="max-width: 80%; height: auto;">
             </div>
         </a>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
@@ -76,9 +79,10 @@
         <li class="nav-item {{ Nav::isRoute('carte_fidelite.index') }}">
             <a class="nav-link" href="{{ route('carte_fidelite.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Fidelity Cards') }}</span>
+                <span>{{ __('Carte fidélite') }}</span>
             </a>
         </li>
+        
 
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profileCaissier') }}">
@@ -113,16 +117,7 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -148,6 +143,7 @@
                     </li>
 
                     <!-- Nav Item - Alerts -->
+
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
@@ -252,10 +248,13 @@
                         </div>
                     </li>
 
+
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
+                    @if(Auth::check())
+
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                             <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
@@ -276,7 +275,9 @@
                                 {{ __('Logout') }}
                             </a>
                         </div>
+                    @endif
                     </li>
+                    
 
                 </ul>
 
