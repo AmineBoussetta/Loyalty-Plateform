@@ -14,7 +14,7 @@ class GerantClientsController extends Controller
     {
         return view('gerantClients.list', [
             'title' => 'Clients List',
-            'gerantClients' => Client::paginate(0),
+            'gerantClients' => Client::paginate(10),
         ]);
     }
     

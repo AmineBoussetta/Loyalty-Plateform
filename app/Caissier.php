@@ -1,28 +1,18 @@
 <?php
 
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Caissier extends Model
-{    
-    protected $fillable = ['Caissier_ID', 'name', 'email', 'phone', 'company_name','company_id'];
+class SuperAdmin extends Authenticatable
+{
+    protected $table = 'caissiers';
 
-    // Relation avec le modèle User si nécessaire
+    protected $fillable = ['user_id','$company_name'];
+
     public function user()
     {
-        return $this->belongsTo(User::class, 'company_name',);
+        return $this->belongsTo(User::class);
     }
-    public function gerant()
-    {
-        return $this->belongsTo(Gerant::class);
-    }
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-    
 }
-
-?>

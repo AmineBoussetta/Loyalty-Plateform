@@ -41,11 +41,6 @@ class AuthController extends Controller
             $redirect = 'home_caissier';
         }
 
-        else if (Auth::user() && Auth::user()->role == 4) {
-            $redirect = 'home_client';
-        }
-
-
         return $redirect;
     }
 }

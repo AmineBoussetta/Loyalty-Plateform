@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name', 'email','role', 'password','company_id'
+        'name', 'last_name', 'email', 'password',
     ];
 
     /**
@@ -51,10 +51,6 @@ class User extends Authenticatable
 {
     return $this->hasOne(Gerant::class);
 }
-public function caissiers()
-    {
-        return $this->hasMany(Caissier::class, 'company_name');
-    }
 
 }
 

@@ -9,17 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('gerants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
+        Schema::table('gerants', function (Blueprint $table) {
             $table->unsignedBigInteger('company_id');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-            
+
+            // Adding the foreign key constraint if necessary
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
@@ -27,8 +22,11 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('gerants');
+        Schema::table('gerants', function (Blueprint $table) {
+            $table->dropForeign(['company_id']);
+            $table->dropColumn('company_id');
+        });
     }
 };
