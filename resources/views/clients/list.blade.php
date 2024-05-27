@@ -46,7 +46,9 @@
                 <th>Phone number</th>
                 <th>Money Spent</th>
                 <th>Commercial ID</th>
-                <th>Actions</th>
+                <th>Fidelity Card Points</th>
+                <th>Fidelity Card Money</th>
+
             </tr>
         </thead>
         <tbody>
@@ -57,7 +59,29 @@
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
                     <td>{{ $client->money_spent }}</td>
-                    <td>{{ $client->fidelity_card_commercial_ID }}</td>
+                    <td>
+                        @if ($client->carteFidelite)
+                            {{ $client->carteFidelite->commercial_ID }}
+                        @else
+                        <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary">Create Card</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($client->carteFidelite)
+                            {{ optional($client->carteFidelite)->points_sum }}
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                        
+                    <td>
+                        @if ($client->carteFidelite)
+                            {{ optional($client->carteFidelite)->money }}                            
+                        @else
+                            No Card
+                        @endif
+                    </td>
+
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;" id="deleteForm-{{ $client->id }}">

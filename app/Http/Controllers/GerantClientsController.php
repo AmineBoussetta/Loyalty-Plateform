@@ -13,9 +13,9 @@ class GerantClientsController extends Controller
     public function index()
     {
         return view('gerantClients.list', [
-            'title' => 'Clients List',
-            'gerantClients' => Client::paginate(10),
-        ]);
+        'title' => 'Clients List',
+        'gerantClients' => Client::paginate(10)
+    ]);
     }
     
     public function create()

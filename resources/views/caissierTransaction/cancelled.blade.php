@@ -12,6 +12,7 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Status</th>
                 <th>Transaction Date</th>
                 <th>Amount</th>
                 <th>Points Substructed</th>
@@ -25,6 +26,7 @@
             @forelse ($cancelledTransactions as $cancelledTransaction)
                     <tr onclick="window.location='{{ route('caissierTransaction.edit', $cancelledTransaction->id) }}';" style="cursor:pointer;">
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $cancelledTransaction->status }}</td>
                         <td>{{ $cancelledTransaction->transaction_date }}</td>
                         <td>{{ $cancelledTransaction->amount }}</td>
                         <td>- {{ $cancelledTransaction->points }}</td>
@@ -39,7 +41,7 @@
                             @if ($cancelledTransaction->carteFidelite)
                                 {{ $cancelledTransaction->carteFidelite->holder_name }} ({{ $cancelledTransaction->carteFidelite->commercial_ID }})
                             @else
-                                N/A
+                            {{ $cancelledTransaction->client->name }}
                             @endif
                         </td>
                         <td>{{ $cancelledTransaction->status }}</td>
