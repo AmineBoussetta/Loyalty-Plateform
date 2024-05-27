@@ -8,29 +8,61 @@ use App\CarteFidelite;
 use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddTransactionRequest;
-use App\Http\Requests\EditTransactionRequest;
 
 class CaissierTransactionController extends Controller
 {
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $searchDate = $request->input('searchDate');
+        $withCard = $request->input('withCard');
+        $withoutCard = $request->input('withoutCard');
+
+
         $query = Transaction::with(['carteFidelite.client'])
-            ->where(function ($q) use ($search) {
+            ->where(function ($q) use ($search, $searchDate, $withCard, $withoutCard) {
                 if ($search) {
                     $q->where('transaction_id', 'LIKE', "%{$search}%")
-                      ->orWhere('transaction_date', 'LIKE', "%{$search}%")
-                      ->orWhere('amount', 'LIKE', "%{$search}%");
+                        ->orWhere('transaction_date', 'LIKE', "%{$search}%")
+                        ->orWhere('amount', 'LIKE', "%{$search}%")
+                        ->orWhereHas('client', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhereHas('carteFidelite.client', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhereHas('carteFidelite.program', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhereHas('carteFidelite', function ($query) use ($search) {
+                            $query->where('tier', 'LIKE', "%{$search}%");
+                        });
                 }
+
+                if ($searchDate) {
+                    $q->whereDate('transaction_date', $searchDate);
+                }
+
+
+                if ($withCard && !$withoutCard) {
+                    $q->whereNotNull('carte_fidelite_id');
+                } elseif(!$withCard && $withoutCard) {
+                    $q->whereNull('carte_fidelite_id');
+                }
+                
             })
             ->where('status', '!=', 'canceled')
-            ->paginate(50);
+            ->orderBy('transaction_date', 'desc');
+
+        $transactions = $query->paginate(50);
 
         return view('caissierTransaction.list', [
             'title' => 'Transaction List',
-            'transactions' => $query,
+            'transactions' => $transactions,
         ]);
     }
+
+
 
     public function create()
     {
@@ -38,12 +70,14 @@ class CaissierTransactionController extends Controller
         $transactionId = $latestTransaction ? 'TRANS-' . (intval(substr($latestTransaction->transaction_id, 6)) + 1) : 'TRANS-1';
         $clientsWithCard = Client::has('carteFidelite')->get();
         $clientsWithoutCard = Client::whereDoesntHave('carteFidelite')->get();
+        $currentDateTime = now()->format('Y-m-d\TH:i');
 
         return view('caissierTransaction.create', [
             'title' => 'New Transaction',
             'transactionId' => $transactionId,
             'clientsWithCard' => $clientsWithCard,
             'clientsWithoutCard' => $clientsWithoutCard,
+            'currentDateTime' => $currentDateTime,
         ]);
     }
 
@@ -65,6 +99,10 @@ class CaissierTransactionController extends Controller
         
         $client = Client::findOrFail($request->client_id);
 
+        if ($request->payment_method == 'fidelity_points' && !$client->carteFidelite) {
+            return redirect()->back()->withErrors(['payment_method' => "This client does not have a fidelity card."]);
+        }
+
         if ($client->carteFidelite) {
             $card = CarteFidelite::findOrFail($request->carte_fidelite_id);
             $program = Program::findOrFail($card->program_id);
@@ -77,6 +115,7 @@ class CaissierTransactionController extends Controller
                 }
 
                 $card->money -= $request->amount;
+                $transaction->points = $request->amount / $program->conversion_factor;
                 $card->points_sum = $card->money / $program->conversion_factor;
                 $card->save();
 
@@ -90,9 +129,10 @@ class CaissierTransactionController extends Controller
 
 
         $transaction->save();
-       
-        $client->money_spent += $request->amount;
-        $client->save();
+        if ($request->payment_method != 'fidelity_points'){
+            $client->money_spent += $request->amount;
+            $client->save();
+        }
 
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction added successfully! Change to be given back: ' . $change);
     }
@@ -136,71 +176,33 @@ class CaissierTransactionController extends Controller
         ]);
     }
 
-    public function update(EditTransactionRequest $request, Transaction $transaction)
-    {
-
-        // Update client money spent for the previous transaction
-        $client = Client::findOrFail($transaction->client_id);
-        $client->money_spent -= $transaction->amount;
-        $client->save();
-
-        $card = $transaction->carteFidelite;
-
-        if ($card) {
-            // Subtract the points from the fidelity card corresponding to the original transaction
-            $program = Program::findOrFail($card->program_id);
-            $card->points_sum -= $transaction->points;
-            $card->money = $card->points_sum * $program->conversion_factor;
-            $card->save();
-
-        $transaction->update([
-            'client_id' => $request->client_id,
-            'transaction_date' => $request->transaction_date,
-            'amount' => $request->amount,
-            'amount_spent' => $request->amount_spent,
-            'payment_method' => $request->payment_method ?? 'cash',
-        ]);
-
-        if ($request->carte_fidelite_id) {
-            $card = CarteFidelite::findOrFail($request->carte_fidelite_id);
-            $program = Program::findOrFail($card->program_id);
-            $transaction->carte_fidelite_id = $request->carte_fidelite_id;
-            $transaction->points = $this->calculatePoints($request->amount, $card, $program);
-            $this->updateFidelityCard($card, $transaction->points, $request->amount);
-        } else {
-            $transaction->points = 0;
-        }
-    
-
-        $transaction->save();
-
-        $client->money_spent += $request->amount;
-        $client->save();
-
-    } else {
-        // If there is no fidelity card associated with the transaction, update the transaction without modifying the fidelity card
-        $transaction->update([
-            'client_id' => $request->client_id,
-            'transaction_date' => $request->transaction_date,
-            'amount' => $request->amount,
-            'amount_spent' => $request->amount_spent,
-            'payment_method' => $request->payment_method ?? 'cash',
-            'carte_fidelite_id' => $request->carte_fidelite_id,
-        ]);
-
-        // Update client money spent for the new transaction
-        $client->money_spent += $request->amount;
-        $client->save();
-    }
-
-        return redirect()->route('caissierTransaction.index')->with('message', 'Transaction updated successfully!');
-    }
-
     public function destroy(Transaction $transaction)
     {
         $client = Client::findOrFail($transaction->client_id);
-        $client->money_spent -= $transaction->amount;
+
+        // Reverse the effects of the transaction on client's money spent
+        if ($transaction->payment_method != 'fidelity_points') {
+            $client->money_spent -= $transaction->amount;
+        }
+        // Check if the transaction has an associated fidelity card
+        if ($transaction->carte_fidelite_id) {
+            $card = CarteFidelite::findOrFail($transaction->carte_fidelite_id);
+            $program = Program::findOrFail($card->program_id);
+
+            // Reverse the points and money on the fidelity card
+            if ($transaction->payment_method == 'fidelity_points') {
+                $card->money += $transaction->amount;
+                $card->points_sum = $card->money / $program->conversion_factor;
+            } else {
+                $card->points_sum -= $transaction->points;
+                $card->money = $card->points_sum * $program->conversion_factor;
+            }
+
+            $card->save();
+        }
+
         $client->save();
+
         $transaction->delete();
 
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction deleted successfully!');
@@ -209,25 +211,44 @@ class CaissierTransactionController extends Controller
     public function cancel(Transaction $transaction)
     {
         $client = Client::findOrFail($transaction->client_id);
-        $client->money_spent -= $transaction->amount;
-        $client->save();
 
+        // Reverse the effects of the transaction on client's money spent
+        if ($transaction->payment_method != 'fidelity_points') {
+            $client->money_spent -= $transaction->amount;
+        }
+
+        // Check if the transaction has an associated fidelity card
         if ($transaction->carte_fidelite_id) {
             $card = CarteFidelite::findOrFail($transaction->carte_fidelite_id);
-            $card->points_sum -= $transaction->points;
-            $card->money = $card->points_sum * $card->program->conversion_factor;
+            $program = Program::findOrFail($card->program_id);
+
+            // Reverse the points and money on the fidelity card
+            if ($transaction->payment_method == 'fidelity_points') {
+                $card->money += $transaction->amount;
+                $card->points_sum = $card->money / $program->conversion_factor;
+            } else {
+                $card->points_sum -= $transaction->points;
+                $card->money = $card->points_sum * $program->conversion_factor;
+            }
+
+            // Save the updated card details
             $card->save();
         }
 
+        // Save the updated client details
+        $client->save();
+    
+        // Change the transaction status to 'cancelled'
         $transaction->status = 'cancelled';
         $transaction->save();
-
+    
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction canceled successfully!');
     }
 
     public function cancelledTransactions()
     {
         $cancelledTransactions = Transaction::where('status', 'cancelled')->paginate(10);
+
 
         return view('caissierTransaction.cancelled', [
             'title' => 'Cancelled Transactions',
@@ -238,18 +259,34 @@ class CaissierTransactionController extends Controller
     public function reactivate(Transaction $transaction)
     {
         $client = Client::findOrFail($transaction->client_id);
-        $client->money_spent += $transaction->amount;
-        $client->save();
 
+        // Update client's money spent if the payment method is not fidelity points
+        if ($transaction->payment_method != 'fidelity_points') {
+            $client->money_spent += $transaction->amount;
+        }
+
+        // Reactivate the transaction
         $transaction->status = 'paid';
         $transaction->save();
+        $client->save();
 
+        // Check if the transaction has an associated fidelity card
         if ($transaction->carte_fidelite_id) {
             $card = CarteFidelite::findOrFail($transaction->carte_fidelite_id);
-            $card->points_sum += $transaction->points;
-            $card->money = $card->points_sum * $card->program->conversion_factor;
+            $program = Program::findOrFail($card->program_id);
+
+            if ($transaction->payment_method == 'fidelity_points') {
+                // Deduct the amount from the fidelity card and update points
+                $card->money -= $transaction->amount;
+                $card->points_sum = $card->money / $program->conversion_factor;
+            } else {
+                // Add points based on the transaction amount
+                $transaction->points = $this->calculatePoints($transaction->amount, $card, $program);
+                $this->updateFidelityCard($card, $transaction->points, $transaction->amount);
+            }
+
             $card->save();
-        }
+            }
 
         return redirect()->route('caissierTransaction.cancelledTransactions')->with('message', 'Transaction reactivated successfully!');
     }

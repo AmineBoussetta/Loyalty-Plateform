@@ -18,10 +18,10 @@
         <thead>
             <tr>
                 <th>Commercial ID</th>
-                <th>Total Points</th>
-                <th>Tier</th>
                 <th>Holder Name</th>
                 <th>Fidelity Program</th>
+                <th>Tier</th>
+                <th>Total Points</th>
                 <th>Money</th>
             </tr>
         </thead>
@@ -29,8 +29,6 @@
             @forelse ($cartes as $carte)
             <tr onclick="window.location='{{ route('gerantCF.edit', $carte->id) }}';" style="cursor:pointer;">
                     <td>{{ $carte->commercial_ID }}</td>
-                    <td>{{ $carte->points_sum }}</td>
-                    <td>{{ $carte->tier }}</td>
                     <td>{{ $carte->client->name}}</td>
                     <td>
                         @if ($carte->program->status === 'inactive')
@@ -39,7 +37,15 @@
                             {{ $carte->program->name }}
                         @endif
                     </td>
-                    <td>{{ $carte->money}}</td>
+                    <td>{{ $carte->tier }}</td>
+                    <td>{{ $carte->points_sum }}</td>
+                    <td>
+                        @if ($carte->money > 0)
+                            {{ $carte->money}}
+                        @else
+                            0
+                        @endif
+                    </td>
                     <td>
                         <form action="{{ route('gerantCF.destroy', $carte->id) }}" method="post" style="display: inline;">
                             @csrf

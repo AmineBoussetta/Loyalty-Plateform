@@ -23,6 +23,8 @@
                 <th>Phone number</th>
                 <th>Money Spent</th>
                 <th>Commercial ID</th>
+                <th>Fidelity Card Points</th>
+                <th>Fidelity Card Money</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +35,28 @@
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>
                     <td>{{ $gerantClient->money_spent }}</td>
-                    <td>{{ $gerantClient->fidelity_card_commercial_ID }}</td>
+                    <td>
+                        @if ($gerantClient->carteFidelite)
+                            {{ $gerantClient->carteFidelite->commercial_ID }}
+                        @else
+                            <a href="{{ route('gerantCF.create') }}" class="btn btn-primary">Create Card</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($gerantClient->carteFidelite)
+                            {{ optional($gerantClient->carteFidelite)->points_sum }}
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                        
+                    <td>
+                        @if ($gerantClient->carteFidelite)
+                            {{ optional($gerantClient->carteFidelite)->money }}                            
+                        @else
+                            No Card
+                        @endif
+                    </td>
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('gerantClients.destroy', $gerantClient->id) }}" method="post" style="display: inline;">

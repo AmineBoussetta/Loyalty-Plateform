@@ -18,28 +18,34 @@
         <thead>
             <tr>
                 <th>Commercial ID</th>
-                <th>Total Points</th>
-                <th>Tier</th>
                 <th>Holder Name</th>
                 <th>Fidelity Program</th>
+                <th>Tier</th>
+                <th>Total Points</th>
                 <th>Money</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($cartes as $carte)
             <tr onclick="window.location='{{ route('carte_fidelite.edit', $carte->id) }}';" style="cursor:pointer;">
-                    <td>{{ $carte->commercial_ID }}</td>
-                    <td>{{ $carte->points_sum }}</td>
-                    <td>{{ $carte->tier }}</td>
-                    <td>{{ $carte->client->name}}</td>
-                    <td>
-                        @if ($carte->program->status === 'inactive')
-                            {{ $carte->program->name }} (Program Inactive)
-                        @else
-                            {{ $carte->program->name }}
-                        @endif
-                    </td>
-                    <td>{{ $carte->money}}</td>
+                <td>{{ $carte->commercial_ID }}</td>
+                <td>{{ $carte->client->name}}</td>
+                <td>
+                    @if ($carte->program->status === 'inactive')
+                        {{ $carte->program->name }} (Program Inactive)
+                    @else
+                        {{ $carte->program->name }}
+                    @endif
+                </td>
+                <td>{{ $carte->tier }}</td>
+                <td>{{ $carte->points_sum }}</td>
+                <td>
+                    @if ($carte->money > 0)
+                        {{ $carte->money}}
+                    @else
+                        0
+                    @endif
+                </td>
                     <td>
                         <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                         <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;">

@@ -110,11 +110,3 @@ Route::get('/cancelled-transactions', 'CaissierTransactionController@cancelledTr
 Route::put('/transactions/{transaction}/reactivate', 'CaissierTransactionController@reactivate')->name('caissierTransaction.reactivate');
 Route::delete('/transactions/{transaction}/permanentDelete', 'CaissierTransactionController@permanentDelete')->name('caissierTransaction.permanentDelete');
 
-
-
-
-
-
-
-
-
