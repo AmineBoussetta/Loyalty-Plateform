@@ -124,7 +124,7 @@ class CaissierTransactionController extends Controller
                 $pointsToDeduct = $request->amount / $program->conversion_factor;
                 $card->points_sum -= $pointsToDeduct;
                 $card->money = $card->points_sum * $program->conversion_factor;
-                $transaction->points = $pointsToDeduct;
+                $transaction->points = -$pointsToDeduct;
 
             }else{
                 $transaction->points = $this->calculatePoints($request->amount, $card, $program);
