@@ -80,7 +80,7 @@
                     <td>
                         @if ($transaction->carteFidelite)
                             @if ($transaction->payment_method == 'fidelity_points')
-                                - {{ $transaction->points }}
+                                {{ $transaction->points }}
                             @else
                                 + {{ $transaction->points }}
                             @endif
