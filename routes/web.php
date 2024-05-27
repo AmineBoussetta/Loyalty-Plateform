@@ -11,6 +11,9 @@ use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\GerantClientsController;
+use App\Http\Controllers\Transaction;
+
 
 
 
@@ -69,18 +72,8 @@ Route::get('/carte-fidelite', 'CarteFideliteController@index')->name('carte_fide
 Route::get('/carte-fidelite/create', 'CarteFideliteController@create')->name('carte_fidelite.create');
 Route::post('/carte-fidelite', 'CarteFideliteController@store')->name('carte_fidelite.store');
 Route::get('/carte-fidelite/{carte}/edit', 'CarteFideliteController@edit')->name('carte_fidelite.edit');
-Route::put('/carte_fidelite/{carte}', 'CarteFideliteController@update')->name('carte_fidelite.update');
-Route::delete('/carte_fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
-
-
-Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
-Route::get('/transactions/create', 'TransactionController@create')->name('transactions.create');
-Route::post('/transactions', 'TransactionController@store')->name('transactions.store');
-Route::get('/transactions/{transaction}/edit', 'TransactionController@edit')->name('transactions.edit');
-Route::put('/transactions/{transaction}', 'TransactionController@update')->name('transactions.update');
-Route::delete('/transactions/{transaction}', 'TransactionController@destroy')->name('transactions.destroy');
-
-
+Route::put('/carte-fidelite/{carte}', 'CarteFideliteController@update')->name('carte_fidelite.update');
+Route::delete('/carte-fidelite/{carte}', 'CarteFideliteController@destroy')->name('carte_fidelite.destroy');
 
 
 Route::get('/home_gerant', 'HomeGerantController@index')->name('home_gerant');
@@ -116,8 +109,8 @@ Route::get('/gerant-carte-fidelite', 'GerantCarteFideliteController@index')->nam
 Route::get('/gerant-carte-fidelite/create', 'GerantCarteFideliteController@create')->name('gerantCF.create');
 Route::post('/gerant-carte-fidelite', 'GerantCarteFideliteController@store')->name('gerantCF.store');
 Route::get('/gerant-carte-fidelite/{carte}/edit', 'GerantCarteFideliteController@edit')->name('gerantCF.edit');
-Route::put('/gerant-carte_fidelite/{carte}', 'GerantCarteFideliteController@update')->name('gerantCF.update');
-Route::delete('/gerant-carte_fidelite/{carte}', 'GerantCarteFideliteController@destroy')->name('gerantCF.destroy');
+Route::put('/gerant-carte-fidelite/{carte}', 'GerantCarteFideliteController@update')->name('gerantCF.update');
+Route::delete('/gerant-carte-fidelite/{carte}', 'GerantCarteFideliteController@destroy')->name('gerantCF.destroy');
 
 //Caissier Transaction
 Route::get('/caissier-transaction', 'CaissierTransactionController@index')->name('caissierTransaction.index');
@@ -135,11 +128,18 @@ Route::get('/search_clients', [ClientController::class, 'search'])->name('search
 Route::get('/search_companies', [CompanyController::class, 'search'])->name('search_companies');
 
 Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('load_all_clients');
-Route::resource('gerantClients', ClientController::class);
+// Routes for import functionality
+Route::post('/gerant-clients/import', [GerantClientsController::class, 'import'])->name('gerantClients.import');
 
-Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
 
 
+//gerant caissiers
+//Route::get('/gerant-caissier/create', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
+//Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
+//Route::get('/gerant-caissier/{caissier_id}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
+//Route::put('/gerant-caissier/{caissier}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
+//Route::delete('/gerant-caissier/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
+//Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
 
 
 

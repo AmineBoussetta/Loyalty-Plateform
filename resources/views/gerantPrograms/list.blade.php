@@ -7,7 +7,7 @@
     <!-- Main Content goes here -->
 
     <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add programs</a>
-    <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-warning mb-3"  style="background-color: #03C988; border-color: #03C988;">View Inactive Programs</a>
+    <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-warning mb-3"  style="background-color: #5CE1E6; border-color: #5CE1E6;">View Inactive Programs</a>
 
 
     @if (session('message'))
