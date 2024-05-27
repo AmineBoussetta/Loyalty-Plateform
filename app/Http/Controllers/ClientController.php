@@ -65,22 +65,6 @@ class ClientController extends Controller
         return redirect()->route('clients.index')->with('message', 'User deleted successfully!');
     }
 
-    public function search(Request $request)
-{
-    $query = $request->input('query');
-    $clients = GerantClient::where('name', 'like', '%' . $query . '%')->get();
-    return response()->json($clients);
-}
-
-    public function loadAll()
-    {
-        // Fetch all clients
-        $gerantClients = Client::all();
-        
-        // Pass the clients to the view
-        return view('gerantClients.list', compact('gerantClients'));
-    }
-
 
 
 
