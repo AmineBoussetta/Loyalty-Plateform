@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Gerant;
+use App\Company;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,11 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::count();
+        $gerants = Gerant::all(); 
+        $gerants = Gerant::count();
+        $companies = Company::count();
 
         $widget = [
-            'users' => $users,
-            //...
+            'gerants' => $gerants,
+            'companies' => $companies,
         ];
 
         return view('home', compact('widget'));

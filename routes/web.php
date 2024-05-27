@@ -11,6 +11,9 @@ use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\GerantClientsController;
+use App\Http\Controllers\Transaction;
+
 
 
 
@@ -125,10 +128,8 @@ Route::get('/search_clients', [ClientController::class, 'search'])->name('search
 Route::get('/search_companies', [CompanyController::class, 'search'])->name('search_companies');
 
 Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('load_all_clients');
-//Route::resource('gerantClients', ClientController::class);
-
-Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
-
+// Routes for import functionality
+Route::post('/gerant-clients/import', [GerantClientsController::class, 'import'])->name('gerantClients.import');
 
 
 

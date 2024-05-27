@@ -9,7 +9,7 @@
     <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
   
     <div class="mb-4">
-        <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('gerantClients.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <label for="file" class="col-form-label">Or you can choose an Excel file to import clients:</label>
             <div class="form-group row">

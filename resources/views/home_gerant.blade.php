@@ -19,6 +19,32 @@
         {{ session('status') }}
     </div>
 @endif
+<!-- Date Filter Form -->
+<form method="GET" action="{{ route('home_gerant') }}">
+    <div class="row align-items-end">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="start_date">Start Date :</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request('start_date') }}">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="end_date">End Date :</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ request('end_date') }}">
+            </div>
+        </div>
+        <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block ml-2" style="background-color: #5CE1E6; border-color: #5CE1E6; font-size: 17px;" >Apply Filter</button>
+            </div>
+        </div>
+       
+           
+       
+    
+</form>
+
+
 <div class="row mt-3">
     <div class="col-xl-12">
         <div class="card-header pt-7">
@@ -34,9 +60,7 @@
             </div>
         </div>
     </div>
-</div> 
-
-
+</div>
 
 <div class="row mt-3">
     <div class="col-xl-6">
@@ -87,19 +111,30 @@
             </div>
         </div>
     </div>
-
-
-    <div class="row mt-3"> 
-    
 </div>
+<div class="row mt-3">
+    <div class="col-xl-12">
+        <div class="card-header pt-7">
+            <!--begin::Title-->
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label fw-bold text-gray-800">Total Money Spent by Clients Monthly</span><br>
+                <div class='py-2'></div>
+                <span class="text-gray-400 mt-1 fw-semibold fs-1">Total money spent by all clients per month</span>
+            </h3>
+            <!--end::Title-->
+            <div class="col-lg-12 mb-4">
+                <canvas id="moneySpentMonthlyChart" style="width: 100%; height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Add Chart.js script here -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- JavaScript code to create the charts -->
 <script>
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
     // Client Chart
     var ctxClient = document.getElementById('clientChart').getContext('2d');
     var clientData = {
@@ -194,8 +229,7 @@
             label: 'Points',
             data: {!! json_encode($topClients->pluck('points_sum')) !!},
             backgroundColor: 'rgba(222, 255, 179, 1)', // Background color #DEFFB3
-borderColor: 'rgba(86, 141, 14, 1)', // Border color #568D0E
-          
+            borderColor: 'rgba(86, 141, 14, 1)', // Border color #568D0E
             borderWidth: 1
         }]
     };
@@ -223,10 +257,11 @@ borderColor: 'rgba(86, 141, 14, 1)', // Border color #568D0E
                     display: false
                 }
             },
-            borderRadius : 12 ,
+            borderRadius: 12,
         }
     });
- // Program Cards Chart
+
+    // Program Cards Chart
 var ctxProgramCards = document.getElementById('programFidelityCardsChart').getContext('2d');
 var programCardsData = {
     labels: {!! json_encode($programsData->pluck('name')) !!},
@@ -269,6 +304,45 @@ var programCardsChart = new Chart(ctxProgramCards, {
         }
     }
 });
+
+// Total Money Spent by Clients Monthly Chart
+var ctxMoneySpentMonthly = document.getElementById('moneySpentMonthlyChart').getContext('2d');
+var moneySpentMonthlyData = {
+    labels: {!! json_encode($moneySpentMonthly->pluck('month')) !!},
+    datasets: [{
+        label: 'Total Money Spent',
+        data: {!! json_encode($moneySpentMonthly->pluck('total_money_spent')) !!},
+        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red
+        borderColor: 'rgba(255, 99, 132, 1)', // Red
+        borderWidth: 1
+    }]
+};
+var moneySpentMonthlyChart = new Chart(ctxMoneySpentMonthly, {
+    type: 'bar',
+    data: moneySpentMonthlyData,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: { display: false }
+            },
+            x: {
+                grid: { display: false }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: false
+            }
+        },
+        borderRadius: 12,
+    }
+});
+
+
 
 </script>
 
