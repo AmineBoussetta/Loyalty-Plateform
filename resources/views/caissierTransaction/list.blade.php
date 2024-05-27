@@ -29,7 +29,7 @@
                 <div class="custom-control custom-checkbox">
                     <input class="custom-control-input" type="checkbox" name="withCard" id="customSwitch1" {{ request()->query('withCard') ? 'checked' : '' }}>
                     <label class="custom-control-label" for="customSwitch1">
-                        Witch Card
+                        With Card
                     </label>
                 </div>
             </div>
@@ -47,7 +47,6 @@
         </div>
     </form>
     
-
     <!-- Main Content goes here -->
     <a href="{{ route('caissierTransaction.create') }}" 
    class="btn btn-primary mb-3" 
@@ -67,14 +66,12 @@
         </div>
     @endif
     
-
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
-                <th>No</th>
                 <th>Transaction ID</th>
                 <th>Status</th>
-                <th>Transaction Date</th>
+                <th>Transaction Date <span class="sort-indicator">▼</span></th>
                 <th>Transaction Amount</th>
                 <th>Points Added/Deducted from the Card</th>
                 <th>Money Added/Deducted from the Card</th>
@@ -84,61 +81,53 @@
         </thead>
         <tbody>
             @forelse ($transactions as $transaction)
-                @if ($transaction->status == 'paid')
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $transaction->status}}</td>
-                        <td>{{ $transaction->transaction_id }}</td>
-                        <td>{{ $transaction->transaction_date }}</td>
-                        <td>{{ $transaction->amount }}</td>
-                        <td>
-                            @if ($transaction->carteFidelite)
-                                @if ($transaction->payment_method == 'fidelity_points')
-                                    - {{ $transaction->points }}
-                                @else
-                                    + {{ $transaction->points }}
-                                @endif
+                <tr>
+                    <td>{{ $transaction->transaction_id }}</td>
+                    <td>{{ $transaction->status }}</td>
+                    <td>{{ $transaction->transaction_date }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    <td>
+                        @if ($transaction->carteFidelite)
+                            @if ($transaction->payment_method == 'fidelity_points')
+                                - {{ $transaction->points }}
                             @else
-                                No Card
+                                + {{ $transaction->points }}
                             @endif
-                        </td>
-                        <td>
-                            @if ($transaction->carteFidelite)
-                                @if ($transaction->payment_method == 'fidelity_points')
-                                    - {{ $transaction->amount }}
-                                @else
-                                    + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}
-                                @endif
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                    <td>
+                        @if ($transaction->carteFidelite)
+                            @if ($transaction->payment_method == 'fidelity_points')
+                                - {{ $transaction->amount }}
                             @else
-                                No Card
+                                + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}
                             @endif
-                        </td>
-                        <td>
-                            @if ($transaction->carteFidelite)
-                                {{ $transaction->carteFidelite->holder_name}} ({{ $transaction->carteFidelite->commercial_ID }})
-                            @else
-                                {{ $transaction->client->name }}
-                            @endif
-                        </td>
-                        <td>
-                            <div class="d-row">
-                                {{-- <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
-                                </form> --}}
-                                <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endif
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                    <td>
+                        @if ($transaction->carteFidelite)
+                            {{ $transaction->carteFidelite->client->name }} ({{ $transaction->carteFidelite->tier }})
+                        @else
+                            {{ $transaction->client->name }}
+                        @endif
+                    </td>
+                    <td>
+                        <div class="d-row">
+                            <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="text-center">No transactions found.</td>
+                    <td colspan="9" class="text-center">No transactions found.</td>
                 </tr>
             @endforelse
         </tbody>
