@@ -45,13 +45,6 @@
                                     @endif
                                 </button>
                             </form>
-                            <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>
-                            </form>
-                            
-                            
                         </div>
                     </td>
                 </tr>
