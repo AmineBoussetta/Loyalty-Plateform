@@ -22,9 +22,9 @@ class AddClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email|unique:users',
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|unique:clients|max:255',
+            'phone' => 'required|string|unique:clients|max:20',
         ];
     }
 }

@@ -29,7 +29,7 @@
                 <div class="custom-control custom-checkbox">
                     <input class="custom-control-input" type="checkbox" name="withCard" id="customSwitch1" {{ request()->query('withCard') ? 'checked' : '' }}>
                     <label class="custom-control-label" for="customSwitch1">
-                        Card
+                        Witch Card
                     </label>
                 </div>
             </div>
