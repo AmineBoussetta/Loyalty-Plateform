@@ -7,8 +7,6 @@ use App\Program;
 use App\Transaction;
 use App\CarteFidelite;
 use Illuminate\Http\Request;
-use App\Mail\TransactionReceipt;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AddTransactionRequest;
 
 class CaissierTransactionController extends Controller
@@ -54,7 +52,7 @@ class CaissierTransactionController extends Controller
                 
             })
             ->where('status', '!=', 'canceled')
-            ->orderBy('transaction_date', 'desc');
+            ->orderBy('created_at', 'desc');
 
         $transactions = $query->paginate(50);
 
@@ -110,16 +108,23 @@ class CaissierTransactionController extends Controller
             $program = Program::findOrFail($card->program_id);
             $transaction->carte_fidelite_id = $request->carte_fidelite_id;
 
-            if ($request->payment_method == 'fidelity_points') {
+            if ($program->status === 'inactive') {
+                $client->money_spent += $request->amount;
+                $client->save();
+                $transaction->points = 0;
+                $transaction->save();
+                return redirect()->route('caissierTransaction.index')->with('message', 'Transaction added successfully! Change to be given back: ' . $change . '. The program related to this fidelity card is inactive.');
+            }
 
+            if ($request->payment_method == 'fidelity_points') {
                 if ($card->money < $request->amount) {
                     return redirect()->back()->withErrors(['payment_method' => "Insufficient money on fidelity card."]);
                 }
 
-                $card->money -= $request->amount;
-                $transaction->points = $request->amount / $program->conversion_factor;
-                $card->points_sum = $card->money / $program->conversion_factor;
-                $card->save();
+                $pointsToDeduct = $request->amount / $program->conversion_factor;
+                $card->points_sum -= $pointsToDeduct;
+                $card->money = $card->points_sum * $program->conversion_factor;
+                $transaction->points = $pointsToDeduct;
 
             }else{
                 $transaction->points = $this->calculatePoints($request->amount, $card, $program);
@@ -160,7 +165,9 @@ class CaissierTransactionController extends Controller
 
     private function updateFidelityCard($card, $points, $amount)
     {
-        $card->points_sum += $points;
+        if ($points > 0) {
+            $card->points_sum += $points;
+        }
         $card->money = $card->points_sum * $card->program->conversion_factor;
         $card->save();
     }
