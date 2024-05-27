@@ -17,19 +17,22 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $program->name }}</td>
                     <td>
-                        <!-- Activate Button -->
-                        <form action="{{ route('gerantPrograms.activate', $program->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-success">Activate</button>
-                        </form>
-                        <!-- Delete Button -->
-                        <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;" id="deleteForm-{{ $program->id }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete(event, {{ $program->id }})">Delete</button>
-                        </form>
-                    </td>
+                        <div class="d-flex">
+                            <form action="{{ route('gerantPrograms.activate', $program->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-warning mr-2">
+                                        Activate
+                                </button>
+                            </form>
+                            <form action="{{ route('gerantPrograms.destroy', $program->id) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this program?')">Delete</button>
+                            </form>
+                            
+                            
+                        </div>
                 </tr>
             @empty
                 <tr>

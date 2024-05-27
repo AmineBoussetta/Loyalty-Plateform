@@ -15,6 +15,10 @@ class Client extends Model
     {
         return $this->hasOne(CarteFidelite::class, 'holder_id');
     }
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
 
 

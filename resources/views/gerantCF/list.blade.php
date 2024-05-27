@@ -22,7 +22,7 @@
                 <th>Fidelity Program</th>
                 <th>Tier</th>
                 <th>Total Points</th>
-                <th>Money</th>
+                <th>Converted Points</th>
             </tr>
         </thead>
         <tbody>

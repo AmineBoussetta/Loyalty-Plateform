@@ -1,7 +1,7 @@
 @extends('layouts.caissier')
 
 @section('main-content')
-    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Cancelled Transactions') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Cancelled Transaction List') }}</h1>
 
 
     <div class="mb-3">

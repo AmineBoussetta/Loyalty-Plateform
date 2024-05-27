@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Program;
 use App\Transaction;
 use App\CarteFidelite;
-use App\Client;
 use Illuminate\Http\Request;
+use App\Mail\TransactionReceipt;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AddTransactionRequest;
 
 class CaissierTransactionController extends Controller
@@ -57,7 +59,7 @@ class CaissierTransactionController extends Controller
         $transactions = $query->paginate(50);
 
         return view('caissierTransaction.list', [
-            'title' => 'Transaction List',
+            'title' => 'Active Transaction List',
             'transactions' => $transactions,
         ]);
     }
@@ -251,7 +253,7 @@ class CaissierTransactionController extends Controller
 
 
         return view('caissierTransaction.cancelled', [
-            'title' => 'Cancelled Transactions',
+            'title' => 'Cancelled Transaction List',
             'cancelledTransactions' => $cancelledTransactions,
         ]);
     }

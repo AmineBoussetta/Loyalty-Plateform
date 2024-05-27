@@ -42,7 +42,6 @@
                                     @endif
                                 </button>
                             </form>
-                           
                         </div>
                     </td>
                 </tr>
