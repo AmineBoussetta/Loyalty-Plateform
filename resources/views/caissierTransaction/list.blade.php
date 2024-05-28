@@ -4,48 +4,35 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Transactions') }}</h1>
 
-    <!-- Search Bar -->
     <form action="{{ route('caissierTransaction.index') }}" method="GET" class="mb-4">
         <div class="form-row align-items-center">
-            <!-- Search Bar -->
-            <div class="form-group col-md-4 mb-2">
-                <input type="text" name="search" class="form-control" placeholder="Search transactions..." value="{{ request()->query('search') }}">
+            <!-- Card Filter Dropdown -->
+            <div class="form-group col-md-2 mb-2">
+                <select name="cardFilter" class="form-control custom-select">
+                    <option value="" {{ request()->query('cardFilter') == '' ? 'selected' : '' }}>All Transactions</option>
+                    <option value="withCard" {{ request()->query('cardFilter') == 'withCard' ? 'selected' : '' }}>With Card</option>
+                    <option value="withoutCard" {{ request()->query('cardFilter') == 'withoutCard' ? 'selected' : '' }}>Without Card</option>
+                </select>
             </div>
-            <div class="form-group col-md-4 mb-2">
+            <!-- Search Bar -->
+            <div class="form-group col-md-3 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by: TRANS-ID, amount, client" value="{{ request()->query('search') }}">
+            </div>
+            <!-- Search Date -->
+            <div class="form-group col-md-3 mb-2">
                 <input type="date" name="searchDate" class="form-control" value="{{ request()->query('searchDate') }}">
             </div>
             <!-- Search Button -->
-            <div class="form-group col-md-1 mb-2">
-                <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Apply Filter</button>
             </div>
             <!-- Clear Button -->
-            <div class="form-group col-md-1 mb-2">
-                <a href="{{ route('caissierTransaction.index') }}" class="btn btn-outline-secondary w-100">Clear</a>
-            </div>
-        </div>
-        <!-- With Card Checkbox -->
-        <div class="form-row align-items-center">
             <div class="form-group col-md-2 mb-2">
-                <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" type="checkbox" name="withCard" id="customSwitch1" {{ request()->query('withCard') ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="customSwitch1">
-                        With Card
-                    </label>
-                </div>
-            </div>
-        </div>
-        <!-- Without Card Checkbox -->
-        <div class="form-row align-items-center">
-            <div class="form-group col-md-2 mb-2">
-                <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" type="checkbox" name="withoutCard" id="customSwitch2" {{ request()->query('withoutCard') ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="customSwitch2">
-                        Without Card
-                    </label>
-                </div>
+                <a href="{{ route('caissierTransaction.index') }}" class="btn btn-outline-secondary w-100">Clear Filter</a>
             </div>
         </div>
     </form>
+    
     
     <!-- Main Content goes here -->
     <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Transactions</a>
