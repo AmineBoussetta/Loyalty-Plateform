@@ -49,7 +49,7 @@ class CaissierTransactionController extends Controller
                 }
                 
             })
-            ->where('status', '!=', 'canceled')
+            ->where('status', '!=', 'cancelled')
             ->orderBy('created_at', 'desc');
 
         $transactions = $query->paginate(50);
@@ -252,15 +252,51 @@ class CaissierTransactionController extends Controller
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction canceled successfully!');
     }
 
-    public function cancelledTransactions()
+    public function cancelledTransactions(Request $request)
     {
-        $cancelledTransactions = Transaction::where('status', 'cancelled')->paginate(10);
+        $search = $request->input('search');
+        $searchDate = $request->input('searchDate');
+        $cardFilter = $request->input('cardFilter');
 
+        $query = Transaction::with(['carteFidelite.client'])
+            ->where(function ($q) use ($search, $searchDate, $cardFilter) {
+                if ($search) {
+                    $q->where('transaction_id', 'LIKE', "%{$search}%")
+                        ->orWhere('amount', 'LIKE', "%{$search}%")
+                        ->orWhereHas('client', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhereHas('carteFidelite.client', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhereHas('carteFidelite.program', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhereHas('carteFidelite', function ($query) use ($search) {
+                            $query->where('tier', 'LIKE', "%{$search}%");
+                        });
+                }
+
+                if ($searchDate) {
+                    $q->whereDate('transaction_date', $searchDate);
+                }
+
+                if ($cardFilter == 'withCard') {
+                    $q->whereNotNull('carte_fidelite_id');
+                } elseif ($cardFilter == 'withoutCard') {
+                    $q->whereNull('carte_fidelite_id');
+                }
+            })
+            ->where('status', 'cancelled')
+            ->orderBy('created_at', 'desc');
+
+        $cancelledTransactions = $query->paginate(50);
 
         return view('caissierTransaction.cancelled', [
             'title' => 'Cancelled Transaction List',
             'cancelledTransactions' => $cancelledTransactions,
         ]);
+    
     }
 
     public function reactivate(Transaction $transaction)
