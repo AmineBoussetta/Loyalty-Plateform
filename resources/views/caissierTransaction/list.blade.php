@@ -35,18 +35,11 @@
     
     
     <!-- Main Content goes here -->
-    <a href="{{ route('caissierTransaction.create') }}" 
-   class="btn btn-primary mb-3" 
-   style="background-color: #00337C; border-color: #00337C; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; padding: 0.5rem 1rem;">
-    Add Transaction
-</a>
-<a href="{{ route('caissierTransaction.cancelledTransactions') }}" 
-   class="btn btn-secondary mb-3" 
-   style="background-color: #5CE1E6; border-color: #5CE1E6; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; padding: 0.5rem 1rem;">
-    View Cancelled Transactions
-</a>
-
-
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Add Transactions</a>
+        <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary">Switch to Cancelled Transactions <span class="sort-indicator">→</span></a>
+    </div>
+    
     @if (session('message'))
         <div class="alert alert-success">
             {{ session('message') }}
