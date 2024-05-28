@@ -15,15 +15,13 @@ class CaissierTransactionController extends Controller
     {
         $search = $request->input('search');
         $searchDate = $request->input('searchDate');
-        $withCard = $request->input('withCard');
-        $withoutCard = $request->input('withoutCard');
+        $cardFilter = $request->input('cardFilter');
 
 
         $query = Transaction::with(['carteFidelite.client'])
-            ->where(function ($q) use ($search, $searchDate, $withCard, $withoutCard) {
+            ->where(function ($q) use ($search, $searchDate, $cardFilter) {
                 if ($search) {
                     $q->where('transaction_id', 'LIKE', "%{$search}%")
-                        ->orWhere('transaction_date', 'LIKE', "%{$search}%")
                         ->orWhere('amount', 'LIKE', "%{$search}%")
                         ->orWhereHas('client', function ($query) use ($search) {
                             $query->where('name', 'LIKE', "%{$search}%");
@@ -44,9 +42,9 @@ class CaissierTransactionController extends Controller
                 }
 
 
-                if ($withCard && !$withoutCard) {
+                if ($cardFilter == 'withCard') {
                     $q->whereNotNull('carte_fidelite_id');
-                } elseif(!$withCard && $withoutCard) {
+                } elseif ($cardFilter == 'withoutCard') {
                     $q->whereNull('carte_fidelite_id');
                 }
                 
