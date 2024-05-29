@@ -61,7 +61,7 @@
         </thead>
         <tbody>
             @forelse ($cartes as $carte)
-            <tr onclick="window.location='{{ route('carte_fidelite.edit', $carte->id) }}';" style="cursor:pointer;">
+            <tr onclick="window.location='{{ route('gerantCF.edit', $carte->id) }}';" style="cursor:pointer;">
                     <td>{{ $carte->commercial_ID }}</td>
                     <td>{{ $carte->client->name}}</td>
                     <td>
@@ -81,8 +81,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
-                        <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;" id="deleteForm-{{ $carte->id }}">
+                        <form action="{{ route('gerantCF.destroy', $carte) }}" method="post" style="display: inline;" id="deleteForm-{{ $carte->id }}">
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(event, {{ $carte->id }})" style="background-color: #F05713; border-color: #F05713;">Delete</button>
