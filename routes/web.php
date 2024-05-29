@@ -149,18 +149,10 @@ Route::delete('/transactions/{transaction}/permanentDelete', 'CaissierTransactio
 // routes/web.php for search
 Route::get('/search_clients', [ClientController::class, 'search'])->name('search_clients');
 Route::get('/search_companies', [CompanyController::class, 'search'])->name('search_companies');
+Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('load_all_clients');
+//Route::resource('gerantClients', ClientController::class);
 
-
-//gerant caissiers
-//Route::get('/gerant-caissier/create', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
-//Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
-//Route::get('/gerant-caissier/{caissier_id}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
-//Route::put('/gerant-caissier/{caissier}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
-//Route::delete('/gerant-caissier/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
-//Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
-
-
-
+Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
 Route::get('/gerant-caissier/create/{gerant}', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
 Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
 Route::get('gerant/{gerant}/caissier/{caissierID}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
