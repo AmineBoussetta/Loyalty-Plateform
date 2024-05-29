@@ -4,10 +4,56 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
+    <form method="GET" action="{{ route('gerantPrograms.index') }}" class="mb-4">
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-5 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by Program name" value="{{ request()->query('search') }}">
+            </div>
+            <div class="form-group col-md-3 mb-2 position-relative">
+                <label for="start_date" class="sr-only">Start Date</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request()->query('start_date') }}">
+                <span class="form-placeholder">Start Date</span>
+                <hr class="form-line">
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+            </div>
+            <!-- Clear Button -->
+            <div class="form-group col-md-2 mb-2">
+                <a href="{{ route('gerantPrograms.index') }}" class="btn btn-outline-secondary w-100">Clear Filter</a>
+            </div>
+        </div>
+    </form>
+
+    <style>
+        .position-relative {
+            position: relative;
+        }
+        .form-placeholder {
+            position: absolute;
+            top: -15px; /* Adjust this value as needed */
+            left: 1px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            opacity: 0.6;
+            background-color: white; /* Ensure the line doesn't overlap the text */
+            padding: 0 5px; /* Add padding to the placeholder */
+        }
+        .form-line {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            border-top: 1px solid #ccc;
+            margin: 0;
+        }
+    </style>
+
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add program</a>
-    <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-warning mb-3"  style="background-color: #5CE1E6; border-color: #5CE1E6;">View Inactive Programs</a>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ route('gerantPrograms.create') }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Add Program</a>
+        <a href="{{ route('gerantPrograms.inactive') }}" class="btn btn-secondary">Switch to Inactive Programs <span class="sort-indicator">→</span></a>
+    </div>
 
 
     @if (session('message'))
@@ -21,6 +67,8 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
+                <th>Starting date</th>
+                <th>Ending date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,6 +77,8 @@
                 <tr onclick="window.location='{{ route('gerantPrograms.edit', $program->id) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $program->name }}</td>
+                    <td>{{ $program->start_date }}</td>
+                    <td>{{ $program->expiry_date }}</td>
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('gerantPrograms.toggleStatus', $program->id) }}" method="POST">

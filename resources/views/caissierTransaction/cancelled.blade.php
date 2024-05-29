@@ -1,7 +1,7 @@
 @extends('layouts.caissier')
 
 @section('main-content')
-    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Cancelled Transaction List') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Cancelled Transactions List') }}</h1>
 
     <form action="{{ route('caissierTransaction.cancelledTransactions') }}" method="GET" class="mb-4">
         <div class="form-row align-items-center">

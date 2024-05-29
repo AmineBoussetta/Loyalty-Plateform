@@ -11,12 +11,24 @@ use App\Services\ClientImportService;
 
 class GerantClientsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
+        $query = Client::query();
+
+        if ($search) {
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('phone', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        }
+
+        $gerantClients = $query->paginate(50);
+
         return view('gerantClients.list', [
-        'title' => 'Clients List',
-        'gerantClients' => Client::paginate(10)
-    ]);
+            'title' => 'Clients List',
+            'gerantClients' => $gerantClients
+        ]);
     }
     
     public function create()

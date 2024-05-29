@@ -11,11 +11,23 @@ use App\Http\Requests\EditClientRequest;
 class ClientController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
+        $query = Client::query();
+
+        if ($search) {
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('phone', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        }
+
+        $clients = $query->paginate(50);
+
         return view('clients.list', [
             'title' => 'Clients List',
-            'clients' => Client::paginate(10)
+            'clients' => $clients
         ]);
     }
     
