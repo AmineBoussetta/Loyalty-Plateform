@@ -4,6 +4,39 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
+    <!-- Search Bar -->
+    <form method="GET" action="{{ route('gerantCF.index') }}" class="mb-4">
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by Commercial ID or holder name" value="{{ request()->query('search') }}">
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <select name="program" class="form-control">
+                    <option value="">All Programs</option>
+                    @foreach($programs as $program)
+                        <option value="{{ $program->id }}" {{ request()->query('program') == $program->id ? 'selected' : '' }}>
+                            {{ $program->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <select name="tier" class="form-control">
+                    <option value="">All Tiers</option>
+                    <option value="classic" {{ request()->query('tier') == 'classic' ? 'selected' : '' }}>Classic</option>
+                    <option value="premium" {{ request()->query('tier') == 'premium' ? 'selected' : '' }}>Premium</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+            </div>
+            <!-- Clear Button -->
+            <div class="form-group col-md-2 mb-2">
+                <a href="{{ route('gerantCF.index') }}" class="btn btn-outline-secondary w-100">Clear Filter</a>
+            </div>
+        </div>
+    </form>
+
     <!-- Main Content goes here -->
 
     <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Add Cards</a>

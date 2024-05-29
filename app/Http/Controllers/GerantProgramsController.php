@@ -9,15 +9,28 @@ use App\Http\Requests\EditProgramRequest;
 
 class GerantProgramsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $programs = Program::where('status', 'active')->paginate(10);
+        $search = $request->input('search');
+        $startDate = $request->input('start_date');
+
+        $query = Program::where('status', 'active');
+
+        if ($search) {
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+
+        if ($startDate) {
+            $query->whereDate('start_date', '>=', $startDate);
+        }
+
+        $programs = $query->paginate(10);
 
         return view('gerantPrograms.list', [
-            'title' => 'Programs List',
+            'title' => 'Active Programs List',
             'programs' => $programs
         ]);
-        }
+    }
     
     public function create()
     {
@@ -99,9 +112,17 @@ class GerantProgramsController extends Controller
         return redirect()->route('gerantPrograms.index')->with('message', 'Program deleted successfully!');
     }
 
-    public function inactive()
+    public function inactive(Request $request)
     {
-        $inactivePrograms = Program::where('status', 'inactive')->paginate(10);
+        $search = $request->input('search');
+
+        $query = Program::where('status', 'inactive');
+
+        if ($search) {
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+
+        $inactivePrograms = $query->paginate(10);
 
         return view('gerantPrograms.inactive', [
             'title' => 'Inactive Programs',

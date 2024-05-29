@@ -8,15 +8,36 @@ use App\CarteFidelite;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCardRequest;
 use App\Http\Requests\EditCardRequest;
-use Illuminate\Support\Facades\Log;
 
 class CarteFideliteController extends Controller
 {
-        public function index()
+        public function index(Request $request)
     {
-        $cartes = CarteFidelite::with('client')->paginate(10);
+        $search = $request->input('search');
+        $programFilter = $request->input('program');
+        $tierFilter = $request->input('tier');
+
+        $query = CarteFidelite::with('client', 'program');
+
+        if ($search) {
+            $query->where('commercial_ID', 'LIKE', "%{$search}%")
+                ->orWhereHas('client', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+        }
+
+        if ($programFilter) {
+            $query->where('program_id', $programFilter);
+        }
+    
+        if ($tierFilter) {
+            $query->where('tier', $tierFilter);
+        }
+
+        $cartes = $query->paginate(50);
         $clients = Client::all();
         $programs = Program::all();
+
         return view('carte_fidelite.list', [
             'title' => 'Cards List',
             'cartes' => $cartes,
