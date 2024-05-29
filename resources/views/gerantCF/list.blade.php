@@ -28,11 +28,11 @@
                 </select>
             </div>
             <div class="form-group col-md-2 mb-2">
-                <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+                <button type="submit" class="btn btn-outline-primary w-100">Apply Filter(s)</button>
             </div>
             <!-- Clear Button -->
             <div class="form-group col-md-2 mb-2">
-                <a href="{{ route('gerantCF.index') }}" class="btn btn-outline-secondary w-100">Clear Filter</a>
+                <a href="{{ route('gerantCF.index') }}" class="btn btn-outline-secondary w-100">Clear Filter(s)</a>
             </div>
         </div>
     </form>

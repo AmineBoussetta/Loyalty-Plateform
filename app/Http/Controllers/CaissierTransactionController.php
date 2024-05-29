@@ -55,7 +55,7 @@ class CaissierTransactionController extends Controller
         $transactions = $query->paginate(50);
 
         return view('caissierTransaction.list', [
-            'title' => 'Active Transaction List',
+            'title' => 'Active Transactions List',
             'transactions' => $transactions,
         ]);
     }
