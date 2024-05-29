@@ -72,8 +72,8 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        if ($client->carteFidelite || $client->transaction) {
-            return redirect()->route('clients.index')->with('error', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
+        if ($client->carteFidelite) {
+            return redirect()->route('clients.index')->with('warning', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
         }
     
         $client->delete();

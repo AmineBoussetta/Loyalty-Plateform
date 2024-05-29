@@ -80,7 +80,6 @@
                     @endif
                 </td>
                     <td>
-                        <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                         <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')

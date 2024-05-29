@@ -23,7 +23,7 @@
                     <label for="holder_name">Holder Name</label>
                     <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option value="" hidden>Select a holder</option>
-                        @foreach ($clients as $client)
+                        @foreach ($clientsWithoutCard as $client)
                             <option value="{{ $client->name }}">
                                 {{ $client->name }} ({{ $client->phone }})
                             </option>

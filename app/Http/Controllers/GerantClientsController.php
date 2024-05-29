@@ -72,6 +72,10 @@ class GerantClientsController extends Controller
 
     public function destroy(Client $client)
     {
+        if ($client->carteFidelite) {
+            return redirect()->route('clients.index')->with('warning', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
+        }
+    
         $client->delete();
 
         return redirect()->route('gerantClients.index')->with('message', 'Client deleted successfully!');
