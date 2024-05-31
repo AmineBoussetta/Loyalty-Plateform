@@ -26,6 +26,10 @@ class Gerant extends Authenticatable
     {
         return $this->belongsTo(Company::class, 'company_id')->onDelete('cascade');
     }
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
  
 
 

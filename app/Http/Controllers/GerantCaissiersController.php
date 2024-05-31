@@ -47,40 +47,45 @@ class GerantCaissiersController extends Controller
     }
 
     public function store(AddCaissierRequest $request, $gerant)
-    {
-        $companyId = Auth::user()->company_id;
-        $caissierID = $this->generateCaissierID();
+{
+    $companyId = Auth::user()->company_id;
+    $caissierID = $this->generateCaissierID();
 
-        $nameParts = explode(' ', $request->name);
-        $userName = $nameParts[0];
-        $userLastName = isset($nameParts[1]) ? $nameParts[1] : '';
-        $email = $request->email;
-        $userEmail = $userName . '.' . $userLastName . '@' . $request->company_name . '.com';
-        $password = Str::random(8);
-        $hashedPassword = Hash::make($password);
+    $nameParts = explode(' ', $request->name);
+    $userName = $nameParts[0];
+    $userLastName = isset($nameParts[1]) ? $nameParts[1] : '';
+    $email = $request->email;
+    $userEmail = $userName . '.' . $userLastName . '@' . $request->company_name . '.com';
+    $password = Str::random(8);
+    $hashedPassword = Hash::make($password);
 
-        Caissier::create([
-            'Caissier_ID' => $caissierID,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $email,
-            'company_name' => $request->company_name,
-            'company_id' => $companyId
-        ]);
+    // Créez d'abord l'utilisateur
+    $user = User::create([
+        'name' => $userName,
+        'last_name' => $userLastName,
+        'role' => 3,
+        'email' => $userEmail,
+        'password' => $hashedPassword,
+        'company_id' => $companyId
+    ]);
 
-        User::create([
-            'name' => $userName,
-            'last_name' => $userLastName,
-            'role' => 3,
-            'email' => $userEmail,
-            'password' => $hashedPassword,
-            'company_id' => $companyId
-        ]);
+    // Ensuite, créez le caissier en utilisant l'ID de l'utilisateur
+    Caissier::create([
+        'Caissier_ID' => $caissierID,
+        'name' => $request->name,
+        'phone' => $request->phone,
+        'email' => $email,
+        'company_name' => $request->company_name,
+        'company_id' => $companyId,
+        'user_id' => $user->id  // Utiliser l'ID de l'utilisateur créé
+    ]);
 
-        Mail::to($email)->send(new CaissierCredentialsEmail($userName, $userEmail, $password));
+    // Envoyer un email avec les informations de connexion
+    Mail::to($email)->send(new CaissierCredentialsEmail($userName, $userEmail, $password));
 
-        return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Caissier ajouté avec succès ! Email envoyé avec succès !');
-    }
+    return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Caissier ajouté avec succès ! Email envoyé avec succès !');
+}
+
 
     public function edit($gerant, $caissierID)
 {

@@ -25,6 +25,7 @@ class AddClientRequest extends FormRequest
             'name' => 'required',
             'phone' => 'required',
             'email' => 'required|email|unique:users',
+            'company_id'=>'required',
         ];
     }
 }

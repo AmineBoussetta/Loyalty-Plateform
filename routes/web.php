@@ -80,14 +80,16 @@ Route::middleware('auth')->group(function() {
 
 
 Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
+//caissier clients
+Route::middleware(['caissier-auth'])->group(function () {
+    Route::get('/caissier/{caissier}/clients', 'ClientController@index')->name('clients.index');
+    Route::get('/caissier/{caissier}/clients/create', 'ClientController@create')->name('clients.create');
+    Route::post('/caissier/{caissier}/clients', 'ClientController@store')->name('clients.store');
+    Route::get('/caissier/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
+    Route::put('/caissier/clients/{client}', 'ClientController@update')->name('clients.update');
+    Route::delete('/caissier/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
 
-Route::get('/clients', 'ClientController@index')->name('clients.index');
-Route::get('/clients/create', 'ClientController@create')->name('clients.create');
-Route::post('/clients', 'ClientController@store')->name('clients.store');
-Route::get('/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
-Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
-Route::delete('/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
-
+});
 Route::get('/profileCaissier', 'ProfileCaissierController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 Route::put('/profileCaissier', 'ProfileCaissierController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 
@@ -109,11 +111,15 @@ Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClie
 Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');
 
 //gerant clients
-Route::get('gerant-clients/create', 'GerantClientsController@create')->name('gerantClients.create');
-Route::post('gerant-clients/client', 'GerantClientsController@store')->name('gerantClients.store');
-Route::get('/gerant-clients/{client}/edit', 'GerantClientsController@edit')->name('gerantClients.edit');
-Route::put('/gerant-clients/{client}', 'GerantClientsController@update')->name('gerantClients.update');
-Route::delete('/gerant-clients/{client}', 'GerantClientsController@destroy')->name('gerantClients.destroy');
+Route::middleware(['gerant-auth'])->group(function () {
+    Route::get('/gerant/{gerant}/clients', 'GerantClientsController@index')->name('gerantClients.index');
+    Route::get('gerant-clients/create/{gerant}', 'GerantClientsController@create')->name('gerantClients.create');
+    Route::post('gerant-clients/{gerant}/client', 'GerantClientsController@store')->name('gerantClients.store');
+    Route::get('/gerant-clients/{client}/edit', 'GerantClientsController@edit')->name('gerantClients.edit');
+    Route::put('/gerant-clients/{client}', 'GerantClientsController@update')->name('gerantClients.update');
+    Route::delete('/gerant-clients/{client}', 'GerantClientsController@destroy')->name('gerantClients.destroy');
+
+});
 
 //gerant program
 Route::get('gerant-programs/create', 'GerantProgramsController@create')->name('gerantPrograms.create');

@@ -51,11 +51,12 @@ class User extends Authenticatable
 {
     return $this->hasOne(Gerant::class);
 }
-public function caissiers()
+public function caissier()
     {
-        return $this->hasMany(Caissier::class, 'company_name');
+        return $this->hasOne(Caissier::class, 'user_id'); // user_id est la clé étrangère dans la table caissiers
     }
-
 }
+
+
 
 

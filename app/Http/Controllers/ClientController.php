@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\User;
+
+use App\Company;
 use App\Http\Mail\ClientCredentialsEmail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -19,23 +21,32 @@ use App\Services\ClientImportService;
 class ClientController extends Controller
 {
 
-    public function index()
+    public function index($caissier)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
+        }
+
+        $companyId = Auth::user()->company_id;
+        $caissierClients = Client::where('company_id', $companyId)->paginate(10);
         return view('clients.list', [
             'title' => 'Clients List',
-            'clients' => Client::paginate(10)
+            'clients' => $caissierClients,
+            'caissier' => $caissier
         ]);
     }
     
-    public function create()
+    public function create($caissier)
     {
+        $companies = Company::all();
         return view('clients.create', [
         'title' => 'New Client',
+        'caissier' => $caissier,
         'clients' => Client::paginate(10)
         ]);
     }
 
-    public function store(AddClientRequest $request)
+    public function store(AddClientRequest $request,$caissier)
     {
         $companyId = Auth::user()->company_id;
         
@@ -53,7 +64,8 @@ class ClientController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $email,
-            'company_id' => $companyId
+            'company_id' => $companyId,
+            'money_spent' => 0.0,
         ]); 
 
         User::create([

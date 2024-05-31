@@ -67,7 +67,7 @@
 
         <!-- Client -->
         <li class="nav-item {{ Nav::isRoute('clients.index') }}">
-            <a class="nav-link" href="{{ route('clients.index') }}" style="color: white;">
+            <a class="nav-link" href="{{ route('clients.index',['caissier' => Auth::user()->company_id])}}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>

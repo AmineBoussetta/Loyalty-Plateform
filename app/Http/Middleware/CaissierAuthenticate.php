@@ -20,7 +20,14 @@ class caissierAuthenticate
         if(auth()->user() && auth()->user()->role == 3){
             return $next($request);
         }
+        $user = Auth::user();
+        if ($user && $user->gerant) {
+            $request->merge(['gerant' => $user->gerant]);
+            return $next($request);
+        }
 
         return redirect('/');
+
+        
     }
 }

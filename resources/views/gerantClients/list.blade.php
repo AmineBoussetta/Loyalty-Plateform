@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
+    <a href="{{ route('gerantClients.create', $gerant) }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
   
     <div class="mb-4">
         <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">

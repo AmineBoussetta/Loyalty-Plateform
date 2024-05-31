@@ -66,7 +66,7 @@
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
-            <a class="nav-link" href="{{ route('gerantClients.index') }}" style="color: white;">
+            <a class="nav-link" href="{{ route('gerantClients.index', ['gerant' => Auth::user()->gerant->company_id]) }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>
@@ -90,7 +90,7 @@
         </li>
        <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantCaissiers.index') }}"><!--STILL NEEDs FIXING -->
-            <a class="nav-link" href="{{ route('gerantCaissiers.index', ['gerant' => Auth::user()->gerant->id])}}" style="color: white">
+            <a class="nav-link" href="{{ route('gerantCaissiers.index', ['gerant' => Auth::user()->gerant->company_id])}}" style="color: white">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Caissiers') }}</span> 
             </a>
