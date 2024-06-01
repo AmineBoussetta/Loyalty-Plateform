@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('gerantClients.store', $gerant) }}" method="post">
+        <form action="{{ route('gerantClients.store', $gerant) }}" method="POST">
                 @csrf
 
                 <div class="form-group">

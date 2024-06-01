@@ -66,7 +66,7 @@
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
-            <a class="nav-link" href="{{ route('gerantClients.index', ['gerant' => Auth::user()->gerant->company_id]) }}" style="color: white;">
+            <a class="nav-link" href="{{ route('gerantClients.index', ['gerant' => Auth::user()->company_id]) }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>

@@ -53,8 +53,20 @@ class User extends Authenticatable
 }
 public function caissier()
     {
-        return $this->hasOne(Caissier::class, 'user_id'); // user_id est la clé étrangère dans la table caissiers
+        return $this->hasOne(Caissier::class, 'Caissier_ID','user_id'); // user_id est la clé étrangère dans la table caissiers
     }
+
+
+    public function cartesFidelite()
+    {
+        return $this->hasMany(CarteFidelite::class, 'holder_id', 'id'); // Remplacez 'id_user' par la clé étrangère appropriée dans la table 'cartefidelite'
+    }
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    
 }
 
 

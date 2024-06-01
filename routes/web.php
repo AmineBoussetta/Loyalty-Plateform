@@ -50,6 +50,8 @@ Route::get('/', function () {
 Route::get('/home_client', 'HomeClientController@index')->name('home_client');
 Route::get('/profileClient', 'ProfileClientController@index')->name('profileClient');
 Route::put('/profile-client', 'ProfileClientController@update')->name('profileClient.update');
+Route::get('/transactions','ClientController@transaction')->name('client.transaction');
+Route::get('/historique','ClientController@historique')->name('client.historique');
 
 
 
@@ -85,9 +87,9 @@ Route::middleware(['caissier-auth'])->group(function () {
     Route::get('/caissier/{caissier}/clients', 'ClientController@index')->name('clients.index');
     Route::get('/caissier/{caissier}/clients/create', 'ClientController@create')->name('clients.create');
     Route::post('/caissier/{caissier}/clients', 'ClientController@store')->name('clients.store');
-    Route::get('/caissier/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
-    Route::put('/caissier/clients/{client}', 'ClientController@update')->name('clients.update');
-    Route::delete('/caissier/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
+    Route::get('/caissier/clients/{caissier}/edit', 'ClientController@edit')->name('clients.edit');
+    Route::put('/caissier/clients/', 'ClientController@update')->name('clients.update');
+    Route::delete('/caissier/clients/{caissier}', 'ClientController@destroy')->name('clients.destroy');
 
 });
 Route::get('/profileCaissier', 'ProfileCaissierController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
@@ -107,7 +109,7 @@ Route::get('/profileGerant', 'ProfileGerantController@index')->name('profileGera
 Route::put('/profileGerant', 'ProfileGerantController@update')->name('profileGerant.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 
 Route::get('/gerant-programs', 'GerantProgramsController@index')->name('gerantPrograms.index');
-Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClients.index');
+
 Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');
 
 //gerant clients

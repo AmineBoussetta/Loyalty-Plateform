@@ -6,8 +6,11 @@ use App\Program;
 use App\Transaction;
 use App\CarteFidelite;
 use App\Client;
+use App\Caissier;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddTransactionRequest;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests\EditTransactionRequest;
 
 class CaissierTransactionController extends Controller
@@ -49,6 +52,9 @@ class CaissierTransactionController extends Controller
 
     public function store(AddTransactionRequest $request)
     {
+        $user = Auth::user()->id;
+        $caissier =Caissier::where('user_id',$user)->first();
+        $caissierId = $caissier->Caissier_ID;  
         $latestTransaction = Transaction::latest()->first();
         $transactionId = $latestTransaction ? 'TRANS-' . (intval(substr($latestTransaction->transaction_id, 6)) + 1) : 'TRANS-1';
         $change = $request->amount_spent - $request->amount;
@@ -61,6 +67,7 @@ class CaissierTransactionController extends Controller
         $transaction->amount_spent = $request->amount_spent;
         $transaction->payment_method = $request->payment_method ?? 'cash';
         $transaction->status = 'paid';
+        $transaction->caissier_id = $caissierId;
        
         
         $client = Client::findOrFail($request->client_id);

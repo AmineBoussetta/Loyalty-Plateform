@@ -27,7 +27,7 @@ class GerantCaissiersController extends Controller
         $gerantCaissiers = Caissier::where('company_id', $companyId)->paginate(10);
 
         return view('gerantCaissiers.list', [
-            'title' => 'Liste des Caissiers',
+            'title' => 'Cashier List',
             'gerantCaissiers' => $gerantCaissiers,
             'gerant' => $gerant
         ]);
@@ -39,7 +39,7 @@ class GerantCaissiersController extends Controller
         $companies = Company::all();
 
         return view('gerantCaissiers.create', [
-            'title' => 'Nouveau Caissier',
+            'title' => 'New Cashier',
             'companies' => $companies,
             'Caissier_ID' => $caissierID,
             'gerant' => $gerant
@@ -83,7 +83,7 @@ class GerantCaissiersController extends Controller
     // Envoyer un email avec les informations de connexion
     Mail::to($email)->send(new CaissierCredentialsEmail($userName, $userEmail, $password));
 
-    return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Caissier ajouté avec succès ! Email envoyé avec succès !');
+    return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Cashier added successfully!');
 }
 
 
@@ -94,7 +94,7 @@ class GerantCaissiersController extends Controller
     $companies = Company::all();
 
     return view('gerantCaissiers.edit', [
-        'title' => 'Modifier Caissier',
+        'title' => 'Edit Cashier',
         'caissier' => $caissier,
         'companies' => $companies,
         'gerant' => $gerant,
@@ -118,7 +118,7 @@ public function update(EditCaissierRequest $request, $gerant, $caissierID)
 
     // Rediriger vers la route 'gerantCaissiers.index' avec le paramètre 'gerant'
     return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])
-                     ->with('message', 'Caissier mis à jour avec succès !');
+                     ->with('message', 'Caissier updated successfully !');
 }
 
 
@@ -126,7 +126,7 @@ public function update(EditCaissierRequest $request, $gerant, $caissierID)
     {
         $caissier->delete();
 
-        return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Caissier supprimé avec succès !');
+        return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Cashier deleted successfully !');
     }
 
     private function generateCaissierID()

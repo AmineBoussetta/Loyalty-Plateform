@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\User;
-
+use App\CarteFidelite;
+use App\Transaction;
 use App\Company;
 use App\Http\Mail\ClientCredentialsEmail;
 use Illuminate\Support\Str;
@@ -48,7 +49,7 @@ class ClientController extends Controller
 
     public function store(AddClientRequest $request,$caissier)
     {
-        $companyId = Auth::user()->company_id;
+        
         
         
 
@@ -64,7 +65,7 @@ class ClientController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $email,
-            'company_id' => $companyId,
+            'company_id' => $caissier,
             'money_spent' => 0.0,
         ]); 
 
@@ -74,7 +75,7 @@ class ClientController extends Controller
             'role'=>4,
             'email'=> $email,
             'password'=>$hashedPassword,
-            'company_id' => $companyId
+            'company_id' => $caissier
 
         ]);
 
@@ -82,7 +83,7 @@ class ClientController extends Controller
         $emailSent= Mail::to($email)->send(new ClientCredentialsEmail($request->name,  $email, $password));
         
         if ($emailSent) {
-            return redirect()->route('clients.index')->with('message', 'Client added successfully!');
+            return redirect()->route('clients.index',['caissier' => $caissier])->with('message', 'Client added successfully!');
         }
         // Redirect the user back to the client listing page or any other desired page
     }
@@ -148,6 +149,29 @@ class ClientController extends Controller
         $this->clientImportService->import($filePath);
 
         return redirect()->back()->with('success', 'Clients imported successfully.');
+    }
+
+
+    public function transaction()
+    {
+        $email=Auth::user()->email;
+        $client =Client::where('email',$email)->first();
+        $transactions=Transaction:: where('client_id', $client->id)->paginate(10);
+        return view ('client_transaction',[
+            'transactions'=>$transactions,
+        ]);
+    }
+
+
+    public function historique()
+    {
+        $email=Auth::user()->email;
+        $client =Client::where('email',$email)->first();
+
+        $cartefidelites= CarteFidelite::where('holder_id', $client->id)->paginate(10);
+        return view ('client_historique',[
+            'carteFidelites'=>$cartefidelites,
+        ]);
     }
 
 

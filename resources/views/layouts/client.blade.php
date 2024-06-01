@@ -43,8 +43,8 @@
         <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item {{ Nav::isRoute('home_gerant') }}" style="margin-top: 50px;" >
-    <a class="nav-link" href="{{ route('home_gerant') }}" style="color: white;">
+<li class="nav-item {{ Nav::isRoute('home_client') }}" style="margin-top: 50px;" >
+    <a class="nav-link" href="{{ route('home_client') }}" style="color: white;">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span style="color: white;">{{ __('Dashboard') }}</span></a>
 </li>
@@ -58,16 +58,16 @@
         </div>
 
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('gerantPrograms.index') }}">
-            <a class="nav-link" href="{{ route('gerantPrograms.index') }}">
+        <li class="nav-item {{ Nav::isRoute('client.transaction') }}">
+            <a class="nav-link" href="{{ route('client.transaction') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Transactions') }}</span> 
             </a>
         </li>
 
         <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
-            <a class="nav-link" href="{{ route('gerantClients.index') }}">
+        <li class="nav-item {{ Nav::isRoute('client.historique') }}">
+            <a class="nav-link" href="{{ route('client.historique') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Historique') }}</span>
             </a>
