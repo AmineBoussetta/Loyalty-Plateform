@@ -5,7 +5,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
     <!-- Search Bar -->
-    <form method="GET" action="{{ route('gerantClients.index') }}" class="mb-4">
+    <form method="GET" action="{{ route('gerantClients.index', $gerant) }}" class="mb-4">
         <div class="row">
             <div class="form-group col-md-10 mb-2">
                 <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone number" value="{{ request()->query('search') }}">
@@ -18,8 +18,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantClients.create', $gerant) }}" class="btn btn-primary mb-3">Add Client</a>
-  
+    <a href="{{ route('gerantClients.create', $gerant) }}" class="btn btn-primary mb-3">Add Client</a>  
     <div class="mb-4">
         <form action="{{ route('gerantClients.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -62,8 +61,7 @@
         </thead>
         <tbody>
             @forelse ($gerantClients as $gerantClient)
-            <tr onclick="window.location='{{ route('gerantClients.edit', $gerantClient->id) }}';" style="cursor:pointer;">
-                    <td>{{ $loop->iteration }}</td>
+            <tr onclick="window.location='{{ route('gerantClients.edit', $gerantClient->id) }}';" style="cursor:pointer;">                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $gerantClient->name }}</td>
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>

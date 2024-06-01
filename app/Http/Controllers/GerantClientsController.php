@@ -17,8 +17,11 @@ use App\Services\ClientImportService;
 
 class GerantClientsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request,$gerant)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vous devez être connecté pour voir cette page.');
+        }
         $search = $request->input('search');
 
         $query = Client::query();
@@ -30,10 +33,13 @@ class GerantClientsController extends Controller
         }
 
         $gerantClients = $query->paginate(50);
-
+        $companyId = Auth::user()->company_id;
+        $gerantCaissiers = Client::where('company_id', $companyId)->paginate(10);
         return view('gerantClients.list', [
             'title' => 'Clients List',
-            'gerantClients' => $gerantClients
+            'gerantClients' => $gerantCaissiers,
+            'gerant' => $gerant
+        
         ]);
     }
     
