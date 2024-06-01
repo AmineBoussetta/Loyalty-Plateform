@@ -14,28 +14,8 @@
 
                 @csrf
                 @method('put')
-                
-                <div class="form-group">
-                  <label for="points_sum">Total Points</label>
-                  <input type="text" class="form-control @error('points_sum') is-invalid @enderror" name="points_sum" id="points_sum" placeholder="Total Points" autocomplete="off" value="{{ old('points_sum') ?? $carte->points_sum }}">
-                  @error('points_sum')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                </div>
 
                 <div class="form-group">
-                    <label for="tier">Tier</label>
-                    <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
-                        <option value="" hidden>Select a tier</option>
-                        <option value="classic" {{ old('tier', $carte->tier) == 'classic' ? 'selected' : '' }}>Classic</option>
-                        <option value="premium" {{ old('tier', $carte->tier) == 'premium' ? 'selected' : '' }}>Premium</option>
-                    </select>
-                    @error('tier')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </div>
-
-                  <div class="form-group">
                     <label for="holder_name">Holder Name</label>
                     <select class="form-control @error('holder_name') is-invalid @enderror" name="holder_name" id="holder_name">
                         <option value="" hidden>Select a holder</option>
@@ -48,9 +28,9 @@
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                  </div>
+                </div>
 
-                  <div class="form-group">
+                <div class="form-group">
                     <label for="fidelity_program">Fidelity Program</label>
                     <select class="form-control @error('fidelity_program') is-invalid @enderror" name="fidelity_program" id="fidelity_program">
                       <option value="" hidden>Select a program</option>
@@ -64,6 +44,26 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
+
+                <div class="form-group">
+                    <label for="tier">Tier</label>
+                    <select class="form-control @error('tier') is-invalid @enderror" name="tier" id="tier">
+                        <option value="" hidden>Select a tier</option>
+                        <option value="classic" {{ old('tier', $carte->tier) == 'classic' ? 'selected' : '' }}>Classic</option>
+                        <option value="premium" {{ old('tier', $carte->tier) == 'premium' ? 'selected' : '' }}>Premium</option>
+                    </select>
+                    @error('tier')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="points_sum">Total Points</label>
+                    <input type="text" class="form-control @error('points_sum') is-invalid @enderror" name="points_sum" id="points_sum" placeholder="Total Points" autocomplete="off" value="{{ old('points_sum') ?? $carte->points_sum }}">
+                    @error('points_sum')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="{{ route('gerantCF.index') }}" class="btn btn-default">Back to list</a>

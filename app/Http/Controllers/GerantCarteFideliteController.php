@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Program;
+use App\Transaction;
 use App\CarteFidelite;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCardRequest;
@@ -11,11 +12,33 @@ use App\Http\Requests\EditCardRequest;
 
 class GerantCarteFideliteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cartes = CarteFidelite::with('client')->paginate(10);
+        $search = $request->input('search');
+        $programFilter = $request->input('program');
+        $tierFilter = $request->input('tier');
+
+        $query = CarteFidelite::with('client', 'program');
+
+        if ($search) {
+            $query->where('commercial_ID', 'LIKE', "%{$search}%")
+                ->orWhereHas('client', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+        }
+
+        if ($programFilter) {
+            $query->where('program_id', $programFilter);
+        }
+    
+        if ($tierFilter) {
+            $query->where('tier', $tierFilter);
+        }
+
+        $cartes = $query->paginate(50);
         $programs = Program::all();
         $clients = Client::all();
+
         return view('gerantCF.list', [
             'title' => 'Cards List',
             'cartes' => $cartes,
@@ -35,12 +58,12 @@ class GerantCarteFideliteController extends Controller
         $newCardNumber = $latestCard ? ((int)substr($latestCard->commercial_ID, -5) + 1) : 1;
         $commercial_ID = "CARD-$currentYear-" . str_pad($newCardNumber, 5, '0', STR_PAD_LEFT);
 
-        $clients = Client::all(); // Récupération de la liste des clients
+        $clientsWithoutCard = Client::whereDoesntHave('carteFidelite')->get();
         $programs = Program::where('status', 'active')->get();
 
         return view('gerantCF.create', [
             'title' => 'New Card',
-            'clients' => $clients, // Passage de la liste des clients à la vue
+            'clientsWithoutCard' => $clientsWithoutCard,
             'commercial_ID' => $commercial_ID, // Passage de l'identifiant commercial à la vue
             'programs' => $programs
         ]);
@@ -116,6 +139,11 @@ class GerantCarteFideliteController extends Controller
 
         public function destroy(CarteFidelite $carte)
         {
+            // Check if the fidelity card has associated transactions
+            $hasTransactions = Transaction::where('carte_fidelite_id', $carte->id)->exists();
+            if ($hasTransactions) {
+                return redirect()->route('gerantCF.index')->with('warning', 'This fidelity card has active transaction(s). Please remove the transaction(s) before deleting the fidelity card.');
+            }
             $carte->delete();
 
             return redirect()->route('gerantCF.index')->with('message', 'Card deleted successfully!');

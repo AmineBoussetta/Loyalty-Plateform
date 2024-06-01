@@ -48,7 +48,7 @@
                 <hr>
                 <div class="form-group">
                     <label for="transaction_date">Transaction Date</label>
-                    <input type="date" class="form-control @error('transaction_date') is-invalid @enderror" name="transaction_date" value="{{ date('Y-m-d') }}" required>
+                    <input type="datetime-local" class="form-control @error('transaction_date') is-invalid @enderror" name="transaction_date" id="transaction_date" value="{{ $currentDateTime }}" required>
                     @error('transaction_date')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -57,14 +57,14 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <label for="amount">Total Amount</label>
-                        <input type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" placeholder="Total Amount" required>
+                        <input type="number" step="0.01" class="form-control @error('amount') is-invalid @enderror" name="amount" placeholder="Total Amount" required>
                         @error('amount')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="amount_spent">Amount Spent</label>
-                        <input type="number" class="form-control @error('amount_spent') is-invalid @enderror" name="amount_spent" placeholder="Amount Spent" required>
+                        <input type="number" step="0.01" class="form-control @error('amount_spent') is-invalid @enderror" name="amount_spent" placeholder="Amount Spent" required>
                         @error('amount_spent')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -73,7 +73,7 @@
                 <br>
                 
                 <input type="hidden" name="carte_fidelite_id" id="carte_fidelite_id">
-                <button type="submit" class="btn btn-primary">Create Transaction</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #5CE1E6; border-color: #5CE1E6; font-size: 15px;">Create Transaction</button>
             </div>
         </div>
     </form>

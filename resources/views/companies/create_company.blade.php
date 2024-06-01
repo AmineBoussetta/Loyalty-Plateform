@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="abbreviation" class="font-weight-bold text-black">Abbreviation</label>
-                            <input type="text" class="form-control @error('abbreviation') is-invalid @enderror" name="abbreviation" id="abbreviation" placeholder="Abbreviation" autocomplete="off" value="{{ old('abbreviation') }}">
+                            <input type="text" class="form-control @error('abbreviation') is-invalid @enderror" name="abbreviation" id="abbreviation" placeholder="abrv" autocomplete="off" value="{{ old('abbreviation') }}">
                             @error('abbreviation')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -48,7 +48,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="country" class="font-weight-bold text-black">Country</label>
-                            <input type="text" class="form-control @error('country') is-invalid @enderror" name="country" id="country" placeholder="Country" autocomplete="off" value="{{ old('country') }}">
+                            <input type="text" class="form-control @error('country') is-invalid @enderror" name="country" id="country" placeholder="Sousse" autocomplete="off" value="{{ old('country') }}">
                             @error('country')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -70,7 +70,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="phone" class="font-weight-bold text-black">Phone</label>
-                            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="Phone" autocomplete="off" value="{{ old('phone') }}">
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="+216 50 987 617" autocomplete="off" value="{{ old('phone') }}">
                             @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -82,7 +82,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email" class="font-weight-bold text-black">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ old('email') }}">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="name@company.com" autocomplete="off" value="{{ old('email') }}">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -92,7 +92,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="website" class="font-weight-bold text-black">Website</label>
-                            <input type="text" class="form-control @error('website') is-invalid @enderror" name="website" id="website" placeholder="Website" autocomplete="off" value="{{ old('website') }}">
+                            <input type="text" class="form-control @error('website') is-invalid @enderror" name="website" id="website" placeholder="wwww.companyname.com" autocomplete="off" value="{{ old('website') }}">
                             @error('website')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -119,21 +119,21 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="gerant_name_1" class="font-weight-bold text-black">Manager Name</label>
+                                        <label for="gerant_name_1" class="font-weight-bold text-black">Name</label>
                                         <input type="text" class="form-control" name="gerant_name[]" placeholder="Manager Name" autocomplete="off">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="gerant_email_1" class="font-weight-bold text-black">Manager Email</label>
+                                        <label for="gerant_email_1" class="font-weight-bold text-black">name@company.coml</label>
                                         <input type="email" class="form-control" name="gerant_email[]" placeholder="Manager Email" autocomplete="off">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="gerant_phone_1" class="font-weight-bold text-black">Manager Phone</label>
+                                        <label for="gerant_phone_1" class="font-weight-bold text-black">+216 50 987 617</label>
                                         <input type="text" class="form-control" name="gerant_phone[]" placeholder="Manager Phone" autocomplete="off">
                                     </div>
                                 </div>

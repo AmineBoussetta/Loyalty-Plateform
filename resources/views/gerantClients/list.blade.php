@@ -4,12 +4,24 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
+    <!-- Search Bar -->
+    <form method="GET" action="{{ route('gerantClients.index') }}" class="mb-4">
+        <div class="row">
+            <div class="form-group col-md-10 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone number" value="{{ request()->query('search') }}">
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+            </div>
+        </div>
+    </form>
+
     <!-- Main Content goes here -->
 
     <a href="{{ route('gerantClients.create', $gerant) }}" class="btn btn-primary mb-3">Add Client</a>
   
     <div class="mb-4">
-        <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('gerantClients.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <label for="file" class="col-form-label">Or you can choose an Excel file to import clients:</label>
             <div class="form-group row">
@@ -44,7 +56,8 @@
                 <th>Phone number</th>
                 <th>Money Spent</th>
                 <th>Commercial ID</th>
-                <th>Actions</th>
+                <th>Fidelity Card Points</th>
+                <th>Fidelity Card Money</th>
             </tr>
         </thead>
         <tbody>
@@ -55,7 +68,28 @@
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>
                     <td>{{ $gerantClient->money_spent }}</td>
-                    <td>{{ $gerantClient->fidelity_card_commercial_ID }}</td>
+                    <td>
+                        @if ($gerantClient->carteFidelite)
+                            {{ $gerantClient->carteFidelite->commercial_ID }}
+                        @else
+                            <a href="{{ route('gerantCF.create') }}" class="btn btn-primary">Create Card</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($gerantClient->carteFidelite)
+                            {{ optional($gerantClient->carteFidelite)->points_sum }}
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                        
+                    <td>
+                        @if ($gerantClient->carteFidelite)
+                            {{ optional($gerantClient->carteFidelite)->money }}                            
+                        @else
+                            No Card
+                        @endif
+                    </td>
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('gerantClients.destroy', $gerantClient->id) }}" method="post" style="display: inline;">

@@ -4,104 +4,110 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Transactions') }}</h1>
 
-    <!-- Search Bar -->
     <form action="{{ route('caissierTransaction.index') }}" method="GET" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Search transactions..." value="{{ request()->query('search') }}">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-outline-primary">Search</button>
+        <div class="form-row align-items-center">
+            <!-- Card Filter Dropdown -->
+            <div class="form-group col-md-2 mb-2">
+                <select name="cardFilter" class="form-control custom-select">
+                    <option value="" {{ request()->query('cardFilter') == '' ? 'selected' : '' }}>All Transactions</option>
+                    <option value="withCard" {{ request()->query('cardFilter') == 'withCard' ? 'selected' : '' }}>With Card</option>
+                    <option value="withoutCard" {{ request()->query('cardFilter') == 'withoutCard' ? 'selected' : '' }}>Without Card</option>
+                </select>
+            </div>
+            <!-- Search Bar -->
+            <div class="form-group col-md-3 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by: TRANS-ID, amount, client" value="{{ request()->query('search') }}">
+            </div>
+            <!-- Search Date -->
+            <div class="form-group col-md-3 mb-2">
+                <input type="date" name="searchDate" class="form-control" value="{{ request()->query('searchDate') }}">
+            </div>
+            <!-- Search Button -->
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Apply Filter(s)</button>
+            </div>
+            <!-- Clear Button -->
+            <div class="form-group col-md-2 mb-2">
+                <a href="{{ route('caissierTransaction.index') }}" class="btn btn-outline-secondary w-100">Clear Filter(s)</a>
             </div>
         </div>
     </form>
-
+    
+    
     <!-- Main Content goes here -->
-    <a href="{{ route('caissierTransaction.create') }}" 
-   class="btn btn-primary mb-3" 
-   style="background-color: #00337C; border-color: #00337C; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; padding: 0.5rem 1rem;">
-    Add Transaction
-</a>
-<a href="{{ route('caissierTransaction.cancelledTransactions') }}" 
-   class="btn btn-secondary mb-3" 
-   style="background-color: #5CE1E6; border-color: #5CE1E6; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; padding: 0.5rem 1rem;">
-    View Cancelled Transactions
-</a>
-
-
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ route('caissierTransaction.create') }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Add Transaction</a>
+        <a href="{{ route('caissierTransaction.cancelledTransactions') }}" class="btn btn-secondary">Switch to Cancelled Transactions <span class="sort-indicator">→</span></a>
+    </div>
+    
     @if (session('message'))
         <div class="alert alert-success">
             {{ session('message') }}
         </div>
     @endif
-
+    
     <table class="table table-bordered table-stripped">
         <thead>
             <tr>
-                <th>No</th>
                 <th>Transaction ID</th>
-                <th>Transaction Date</th>
-                <th>Amount</th>
-                <th>Points Added/Deducted</th>
-                <th>Money Added/Deducted</th>
+                <th>Status</th>
+                <th>Transaction Date <span class="sort-indicator">▼</span></th>
+                <th>Transaction Amount</th>
+                <th>Points Added/Deducted from the Card</th>
+                <th>Money Added/Deducted from the Card</th>
                 <th>Client</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($transactions as $transaction)
-                @if ($transaction->status == 'paid')
-                    <tr onclick="window.location='{{ route('caissierTransaction.edit', $transaction->id) }}';" style="cursor:pointer;">
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $transaction->transaction_id }}</td>
-                        <td>{{ $transaction->transaction_date }}</td>
-                        <td>{{ $transaction->amount }}</td>
-                        <td>
-                            @if ($transaction->carteFidelite)
-                                @if ($transaction->payment_method == 'fidelity_points')
-                                    - {{ $transaction->points }}
-                                @else
-                                    + {{ $transaction->points }}
-                                @endif
+                <tr>
+                    <td>{{ $transaction->transaction_id }}</td>
+                    <td>{{ $transaction->status }}</td>
+                    <td>{{ $transaction->transaction_date }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    <td>
+                        @if ($transaction->carteFidelite)
+                            @if ($transaction->payment_method == 'fidelity_points')
+                                {{ $transaction->points }}
                             @else
-                                N/A
+                                + {{ $transaction->points }}
                             @endif
-                        </td>
-                        <td>
-                            @if ($transaction->carteFidelite)
-                                @if ($transaction->payment_method == 'fidelity_points')
-                                    - {{ $transaction->amount }}
-                                @else
-                                    + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}
-                                @endif
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                    <td>
+                        @if ($transaction->carteFidelite)
+                            @if ($transaction->payment_method == 'fidelity_points')
+                                - {{ $transaction->amount }}
                             @else
-                                N/A
+                                + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}
                             @endif
-                        </td>
-                        <td>
-                            @if ($transaction->carteFidelite)
-                                {{ $transaction->carteFidelite->holder_name}} ({{ $transaction->carteFidelite->commercial_ID }})
-                            @else
-                                {{ $transaction->client->name }}
-                            @endif
-                        </td>
-                        <td>
-                            <div class="d-row">
-                                <form action="{{ route('caissierTransaction.destroy', $transaction->id) }}" method="post" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>
-                                </form>
-                                <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endif
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                    <td>
+                        @if ($transaction->carteFidelite)
+                            {{ $transaction->carteFidelite->client->name }} ({{ $transaction->carteFidelite->tier }})
+                        @else
+                            {{ $transaction->client->name }}
+                        @endif
+                    </td>
+                    <td>
+                        <div class="d-row">
+                            <form action="{{ route('caissierTransaction.cancel', $transaction->id) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure to cancel this transaction?')">Cancel Transaction</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="text-center">No transactions found.</td>
+                    <td colspan="9" class="text-center">No transactions found.</td>
                 </tr>
             @endforelse
         </tbody>

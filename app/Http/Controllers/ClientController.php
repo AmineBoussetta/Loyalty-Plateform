@@ -17,23 +17,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddClientRequest;
 use App\Http\Requests\EditClientRequest;
-use App\Services\ClientImportService;
+
 
 class ClientController extends Controller
 {
 
-    public function index($caissier)
+    public function index(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
+        $search = $request->input('search');
+
+        $query = Client::query();
+
+        if ($search) {
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('phone', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
         }
 
-        $companyId = Auth::user()->company_id;
-        $caissierClients = Client::where('company_id', $companyId)->paginate(10);
+        $clients = $query->paginate(50);
+
         return view('clients.list', [
             'title' => 'Clients List',
-            'clients' => $caissierClients,
-            'caissier' => $caissier
+            'clients' => $clients
         ]);
     }
     
@@ -108,71 +113,16 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
+        if ($client->carteFidelite) {
+            return redirect()->route('clients.index')->with('warning', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
+        }
+    
         $client->delete();
 
         return redirect()->route('clients.index')->with('message', 'User deleted successfully!');
     }
 
-    public function search(Request $request)
-{
-    $query = $request->input('query');
-    $clients = GerantClient::where('name', 'like', '%' . $query . '%')->get();
-    return response()->json($clients);
-}
 
-    public function loadAll()
-    {
-        // Fetch all clients
-        $gerantClients = Client::all();
-        
-        // Pass the clients to the view
-        return view('gerantClients.list', compact('gerantClients'));
-    }
-
-
-
-// import export methods by excel ( baha )
-    protected $clientImportService;
-
-    public function __construct(ClientImportService $clientImportService)
-    {
-        $this->clientImportService = $clientImportService;
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
-
-        $filePath = $request->file('file')->getRealPath();
-        $this->clientImportService->import($filePath);
-
-        return redirect()->back()->with('success', 'Clients imported successfully.');
-    }
-
-
-    public function transaction()
-    {
-        $email=Auth::user()->email;
-        $client =Client::where('email',$email)->first();
-        $transactions=Transaction:: where('client_id', $client->id)->paginate(10);
-        return view ('client_transaction',[
-            'transactions'=>$transactions,
-        ]);
-    }
-
-
-    public function historique()
-    {
-        $email=Auth::user()->email;
-        $client =Client::where('email',$email)->first();
-
-        $cartefidelites= CarteFidelite::where('holder_id', $client->id)->paginate(10);
-        return view ('client_historique',[
-            'carteFidelites'=>$cartefidelites,
-        ]);
-    }
 
 
 }

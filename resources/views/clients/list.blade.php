@@ -4,30 +4,21 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
+    <!-- Search Bar -->
+    <form method="GET" action="{{ route('clients.index') }}" class="mb-4">
+        <div class="row">
+            <div class="form-group col-md-10 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone number" value="{{ request()->query('search') }}">
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+            </div>
+        </div>
+    </form>
+
     <!-- Main Content goes here -->
 
-    <a href="{{ route('clients.create',$caissier) }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Clients</a>
-  
-    <!-- Import Clients Section
-    <div class="mb-4">
-        <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <label for="file" class="col-form-label">Or you can choose an Excel file to import clients:</label>
-            <div class="form-group row">
-                
-                <div class="col-sm-7">
-                    <div class="custom-file">
-                        <input type="file" name="file" id="file" class="custom-file-input" required>
-                        <label class="custom-file-label" for="file">Choose file</label>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success" style="background-color: #5CE1E6; border-color: #5CE1E6;">Import Clients</button>
-                </div>
-            </div>
-        </form>
-    </div>
- -->
+    <a href="{{ route('clients.create',$caissier) }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Client</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -46,7 +37,9 @@
                 <th>Phone number</th>
                 <th>Money Spent</th>
                 <th>Commercial ID</th>
-                <th>Actions</th>
+                <th>Fidelity Card Points</th>
+                <th>Fidelity Card Money</th>
+
             </tr>
         </thead>
         <tbody>
@@ -57,7 +50,29 @@
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
                     <td>{{ $client->money_spent }}</td>
-                    <td>{{ $client->fidelity_card_commercial_ID }}</td>
+                    <td>
+                        @if ($client->carteFidelite)
+                            {{ $client->carteFidelite->commercial_ID }}
+                        @else
+                        <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary">Create Card</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($client->carteFidelite)
+                            {{ optional($client->carteFidelite)->points_sum }}
+                        @else
+                            No Card
+                        @endif
+                    </td>
+                        
+                    <td>
+                        @if ($client->carteFidelite)
+                            {{ optional($client->carteFidelite)->money }}                            
+                        @else
+                            No Card
+                        @endif
+                    </td>
+
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;" id="deleteForm-{{ $client->id }}">

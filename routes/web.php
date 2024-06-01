@@ -10,7 +10,11 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CarteFideliteController;
 use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
-use App\Http\Controller\GerantCaissiersController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\GerantClientsController;
+use App\Http\Controllers\Transaction;
+
+
 
 
 
@@ -167,5 +171,20 @@ Route::get('gerant/{gerant}/caissier/{caissierID}/edit', 'GerantCaissiersControl
 Route::put('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@update')->name('gerantCaissier.update');
 Route::delete('/gerant-caissier/{gerant}/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
 Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
+// Routes for import functionality
+Route::post('/gerant-clients/import', [GerantClientsController::class, 'import'])->name('gerantClients.import');
+
+
+
+//gerant caissiers
+//Route::get('/gerant-caissier/create', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
+//Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
+//Route::get('/gerant-caissier/{caissier_id}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
+//Route::put('/gerant-caissier/{caissier}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
+//Route::delete('/gerant-caissier/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
+//Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
+
+
+
 
 

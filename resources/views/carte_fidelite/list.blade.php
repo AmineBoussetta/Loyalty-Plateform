@@ -4,9 +4,42 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
+    <!-- Search Bar -->
+    <form method="GET" action="{{ route('gerantCF.index') }}" class="mb-4">
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search by Commercial ID or holder name" value="{{ request()->query('search') }}">
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <select name="program" class="form-control">
+                    <option value="">All Programs</option>
+                    @foreach($programs as $program)
+                        <option value="{{ $program->id }}" {{ request()->query('program') == $program->id ? 'selected' : '' }}>
+                            {{ $program->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <select name="tier" class="form-control">
+                    <option value="">All Tiers</option>
+                    <option value="classic" {{ request()->query('tier') == 'classic' ? 'selected' : '' }}>Classic</option>
+                    <option value="premium" {{ request()->query('tier') == 'premium' ? 'selected' : '' }}>Premium</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Apply Filter(s)</button>
+            </div>
+            <!-- Clear Button -->
+            <div class="form-group col-md-2 mb-2">
+                <a href="{{ route('gerantCF.index') }}" class="btn btn-outline-secondary w-100">Clear Filter(s)</a>
+            </div>
+        </div>
+    </form>
+
     <!-- Main Content goes here -->
 
-    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Add Cards</a>
+    <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary mb-3"  style="background-color: #00337C; border-color: #00337C;">Add Card</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -18,30 +51,35 @@
         <thead>
             <tr>
                 <th>Commercial ID</th>
-                <th>Total Points</th>
-                <th>Tier</th>
                 <th>Holder Name</th>
                 <th>Fidelity Program</th>
-                <th>Money</th>
+                <th>Tier</th>
+                <th>Total Points</th>
+                <th>Converted Points</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($cartes as $carte)
             <tr onclick="window.location='{{ route('carte_fidelite.edit', $carte->id) }}';" style="cursor:pointer;">
-                    <td>{{ $carte->commercial_ID }}</td>
-                    <td>{{ $carte->points_sum }}</td>
-                    <td>{{ $carte->tier }}</td>
-                    <td>{{ $carte->client->name}}</td>
+                <td>{{ $carte->commercial_ID }}</td>
+                <td>{{ $carte->client->name}}</td>
+                <td>
+                    @if ($carte->program->status === 'inactive')
+                        {{ $carte->program->name }} (Program Inactive)
+                    @else
+                        {{ $carte->program->name }}
+                    @endif
+                </td>
+                <td>{{ $carte->tier }}</td>
+                <td>{{ $carte->points_sum }}</td>
+                <td>
+                    @if ($carte->money > 0)
+                        {{ $carte->money}}
+                    @else
+                        0
+                    @endif
+                </td>
                     <td>
-                        @if ($carte->program->status === 'inactive')
-                            {{ $carte->program->name }} (Program Inactive)
-                        @else
-                            {{ $carte->program->name }}
-                        @endif
-                    </td>
-                    <td>{{ $carte->money}}</td>
-                    <td>
-                        <a href="{{ route('carte_fidelite.edit', $carte) }}" class="btn btn-sm btn-primary mr-2"  style="background-color: #00337C; border-color: #00337C;">Edit</a>
                         <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')

@@ -13,21 +13,27 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ClientImportService;
 
 class GerantClientsController extends Controller
 {
-    public function index($gerant)
+    public function index(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Vous devez être connecté pour voir cette page.');
+        $search = $request->input('search');
+
+        $query = Client::query();
+
+        if ($search) {
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('phone', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
         }
 
-        $companyId = Auth::user()->company_id;
-        $gerantCaissiers = Client::where('company_id', $companyId)->paginate(10);
+        $gerantClients = $query->paginate(50);
+
         return view('gerantClients.list', [
             'title' => 'Clients List',
-            'gerantClients' => $gerantCaissiers,
-            'gerant' => $gerant
+            'gerantClients' => $gerantClients
         ]);
     }
     
@@ -101,8 +107,10 @@ class GerantClientsController extends Controller
 
     public function destroy(Client $client)
     {
-        $gerant = Auth::user()->id; // Supposons que l'utilisateur authentifié est le gérant
-
+        if ($client->carteFidelite) {
+            return redirect()->route('clients.index')->with('warning', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
+        }
+    
         $client->delete();
 
         return redirect()->route('gerantClients.index', ['gerant' => $gerant])->with('message', 'Client deleted successfully!');
@@ -115,9 +123,31 @@ class GerantClientsController extends Controller
         return response()->json($clients);
     }
 
-    public function loadAll()
-    {
-        $clients = Client::all();
-        return response()->json($clients);
-    }
+public function loadAll()
+{
+    $clients = Client::all();
+    return response()->json($clients);
+}
+
+
+
+// import export methods by excel 
+protected $clientImportService;
+
+public function __construct(ClientImportService $clientImportService)
+{
+    $this->clientImportService = $clientImportService;
+}
+
+public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv',
+    ]);
+
+    $filePath = $request->file('file')->getRealPath();
+    $this->clientImportService->import($filePath);
+
+    return redirect()->back()->with('success', 'Clients imported successfully.');
+}
 }
