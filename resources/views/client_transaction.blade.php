@@ -11,7 +11,6 @@
                     
                     <th>Amount Spent</th>
                     <th>Method of Payment</th>
-                    <th>Points Earned</th>
                     <th>Cashier ID</th> 
                     <th>Date of Transaction</th>                   
                 </tr>
@@ -23,7 +22,6 @@
                         
                         <td>{{ $transaction->amount_spent  }}</td>
                         <td>{{  $transaction->payment_method }}</td>
-                        <td>{{ $transaction->points  }}</td>
                         <td>{{  $transaction->Caissier_ID }}</td>
                         <td>{{ $transaction->transaction_date  }}</td>
                     
