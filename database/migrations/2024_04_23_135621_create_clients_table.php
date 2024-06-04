@@ -23,7 +23,6 @@ return new class extends Migration
 
             $table->timestamps();
             $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade');
-            $table->foreign('company_id')->references('company_id')->on('caissiers')->onDelete('cascade');
         });
     }
 
