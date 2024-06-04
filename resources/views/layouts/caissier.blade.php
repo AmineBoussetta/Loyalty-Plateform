@@ -41,20 +41,17 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item {{ Nav::isRoute('home_caissier') }}" style="margin-top: 50px;">
+        {{-- <li class="nav-item {{ Nav::isRoute('home_caissier') }}" style="margin-top: 50px;">
             <a class="nav-link" href="{{ route('home_caissier') }}" style="color: white;">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span style="color: white;">{{ __('Dashboard') }}</span>
             </a>
-        </li>
+        </li> --}}
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <div class="sidebar-heading" style="color: white;">
-            {{ __('Settings') }}
-        </div>
+        <hr>
 
         <!-- Transaction -->
         <li class="nav-item {{ Nav::isRoute('caissierTransaction.index') }}">

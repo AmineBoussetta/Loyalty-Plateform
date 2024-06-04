@@ -33,7 +33,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'homeController@index')->name('home');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function() {
 
 });
 
-Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
+Route::get('/home_caissier', 'CaissierTransactionController@index')->name('home_caissier');
 
 Route::get('/clients', 'ClientController@index')->name('clients.index');
 Route::get('/clients/create', 'ClientController@create')->name('clients.create');
