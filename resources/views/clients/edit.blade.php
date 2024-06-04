@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('clients.update', $client->id) }}" method="post">
+        <form action="{{ route('clients.update', ['caissier' => Auth::user()->company_id, 'client' => $client->id]) }}" method="post">
                 @csrf
                 @method('put')
 

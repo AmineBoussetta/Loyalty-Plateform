@@ -36,7 +36,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Save</button>
-                <a href="{{ route('gerantClients.index', $gerant,$request) }}" class="btn btn-default">Back to list</a>
+                <a href="{{ route('gerantClients.index', $gerant) }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>

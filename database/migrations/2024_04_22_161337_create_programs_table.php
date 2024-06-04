@@ -23,6 +23,9 @@ return new class extends Migration
             $table->integer('points_premium')->nullable();
             $table->decimal('minimum_amount_premium', 8, 2)->nullable();
             $table->decimal('conversion_factor', 8, 2)->nullable();
+            $table->unsignedBigInteger('company_id'); 
+
+
             $table->string('status');
             $table->string('comment')->nullable();
             $table->timestamps();

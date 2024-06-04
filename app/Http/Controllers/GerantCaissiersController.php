@@ -16,19 +16,33 @@ use App\Http\Requests\EditCaissierRequest;
 
 class GerantCaissiersController extends Controller
 {
-    public function index($gerant)
+    public function index(Request $request,$gerant)
     {
         // Vérifiez si l'utilisateur est authentifié
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
         }
+        $search = $request->input('search');
+        $query = Caissier::where('company_id', Auth::user()->company_id);
 
-        $companyId = Auth::user()->company_id;
-        $gerantCaissiers = Caissier::where('company_id', $companyId)->paginate(10);
+        if ($search) {
+            $query->where(function ($subQuery) use ($search) {
+            $subQuery->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('phone', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
+        });
+        }
+
+        $gerantCaissiers = $query->paginate(10);
+
+        
+        
+
 
         return view('gerantCaissiers.list', [
             'title' => 'Cashier List',
             'gerantCaissiers' => $gerantCaissiers,
+            
             'gerant' => $gerant
         ]);
     }
@@ -122,12 +136,16 @@ public function update(EditCaissierRequest $request, $gerant, $caissierID)
 }
 
 
-    public function destroy($gerant, Caissier $caissier)
-    {
-        $caissier->delete();
+public function destroy($gerant, $caissierID){
+{
+    $caissier = Caissier::where('Caissier_ID', $caissierID)->firstOrFail();
 
-        return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Cashier deleted successfully !');
+        $caissier->delete();
+        return redirect()->route('gerantCaissiers.index', ['gerant' => $gerant])->with('message', 'Cashier deleted successfully!');
+       
     }
+}
+
 
     private function generateCaissierID()
     {

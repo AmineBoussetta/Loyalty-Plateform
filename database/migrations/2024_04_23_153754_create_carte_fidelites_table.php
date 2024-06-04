@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('carte_fidelites', function (Blueprint $table) {
             $table->id();
-            $table->string('commercial_ID');
+            $table->string('commercial_ID')->unique;
             $table->integer('points_sum');
             $table->string('tier');
             $table->string('holder_name')->nullable();
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->decimal('money', 8, 2)->nullable();
             $table->unsignedBigInteger('holder_id');
             $table->unsignedBigInteger('program_id');
+            $table->unsignedBigInteger('company_id'); 
+
 
             $table->foreign('holder_id')->references('id')->on('clients')
             ->onUpdate('cascade')->onDelete('cascade');

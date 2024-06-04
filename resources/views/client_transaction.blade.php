@@ -2,17 +2,17 @@
 
 @section('main-content')
 <div class="container">
-        <h1>Historique des transactions</h1>
+        <h1>Transaction History</h1>
         <table class="table">
             <thead>
                 <tr>
-                    <th>N° Transaction</th>
+                    <th>Transaction Number</th>
                     
                     
                     <th>Amount Spent</th>
                     <th>Method of Payment</th>
-                    <th>Points Won</th>
-                    <th>ID Caissier</th> 
+                    <th>Points Earned</th>
+                    <th>Cashier ID</th> 
                     <th>Date of Transaction</th>                   
                 </tr>
             </thead>
@@ -24,7 +24,7 @@
                         <td>{{ $transaction->amount_spent  }}</td>
                         <td>{{  $transaction->payment_method }}</td>
                         <td>{{ $transaction->points  }}</td>
-                        <td>{{  $transaction->caissier_id }}</td>
+                        <td>{{  $transaction->Caissier_ID }}</td>
                         <td>{{ $transaction->transaction_date  }}</td>
                     
                         

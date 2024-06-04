@@ -24,20 +24,22 @@ class GerantClientsController extends Controller
         }
         $search = $request->input('search');
 
-        $query = Client::query();
+$query = Client::where('company_id', Auth::user()->company_id);
 
-        if ($search) {
-            $query->where('name', 'LIKE', "%{$search}%")
-                ->orWhere('phone', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%");
-        }
+if ($search) {
+    $query->where(function ($subQuery) use ($search) {
+        $subQuery->where('name', 'LIKE', "%{$search}%")
+                 ->orWhere('phone', 'LIKE', "%{$search}%")
+                 ->orWhere('email', 'LIKE', "%{$search}%");
+    });
+}
 
-        $gerantClients = $query->paginate(50);
-        $companyId = Auth::user()->company_id;
-        $gerantCaissiers = Client::where('company_id', $companyId)->paginate(10);
+$gerantClients = $query->paginate(10);
+
         return view('gerantClients.list', [
             'title' => 'Clients List',
-            'gerantClients' => $gerantCaissiers,
+            'gerantClients' => $gerantClients,
+            
             'gerant' => $gerant
         
         ]);
@@ -111,10 +113,12 @@ class GerantClientsController extends Controller
         return redirect()->route('gerantClients.index', ['gerant' => $gerant])->with('message', 'Client updated successfully!');
     }
 
-    public function destroy(Client $client)
+    public function destroy( Client $client)
     {
+
+        $gerant = Auth::user()->id;
         if ($client->carteFidelite) {
-            return redirect()->route('clients.index')->with('warning', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
+            return redirect()->route('gerantClients.index', ['gerant' => $gerant])->with('warning', 'This client has an active fidelity card. Please remove the fidelity card before deleting the client.');
         }
     
         $client->delete();

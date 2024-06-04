@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('carte_fidelite.update', ['carte' => $carte->id]) }}" method="post">
+        <form action="{{ route('carte_fidelite.update', $carte->id) }}" method="post">
 
                 @csrf
                 @method('put')

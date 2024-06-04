@@ -91,11 +91,13 @@ Route::middleware(['caissier-auth'])->group(function () {
     Route::get('/caissier/{caissier}/clients', 'ClientController@index')->name('clients.index');
     Route::get('/caissier/{caissier}/clients/create', 'ClientController@create')->name('clients.create');
     Route::post('/caissier/{caissier}/clients', 'ClientController@store')->name('clients.store');
-    Route::get('/caissier/clients/{caissier}/edit', 'ClientController@edit')->name('clients.edit');
-    Route::put('/caissier/clients/', 'ClientController@update')->name('clients.update');
-    Route::delete('/caissier/clients/{caissier}', 'ClientController@destroy')->name('clients.destroy');
-
+    Route::get('/caissier/{caissier}/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
+    Route::put('/caissier/{caissier}/clients/{client}', 'ClientController@update')->name('clients.update');
+    Route::delete('/caissier/{caissier}/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
 });
+
+
+
 Route::get('/profileCaissier', 'ProfileCaissierController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 Route::put('/profileCaissier', 'ProfileCaissierController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 
@@ -165,23 +167,16 @@ Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('loa
 //Route::resource('gerantClients', ClientController::class);
 
 Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
-Route::get('/gerant-caissier/create/{gerant}', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
-Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
-Route::get('gerant/{gerant}/caissier/{caissierID}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
-Route::put('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@update')->name('gerantCaissier.update');
-Route::delete('/gerant-caissier/{gerant}/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
-Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
+//gerantCaissiers
+    Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
+    Route::get('/gerant-caissier/create/{gerant}', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
+    Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
+    Route::get('/gerant/{gerant}/caissier/{caissierID}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
+    Route::put('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
+    Route::delete('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
+
+
 // Routes for import functionality
 Route::post('/gerant-clients/import', [GerantClientsController::class, 'import'])->name('gerantClients.import');
-
-
-//gerant caissiers
-
-Route::get('/gerant-caissier/create', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
-Route::post('/gerant/{gerant}/caissier', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
-Route::put('/gerant-caissier/{caissier}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
-Route::delete('/gerant-caissier/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
-Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
-
 
 

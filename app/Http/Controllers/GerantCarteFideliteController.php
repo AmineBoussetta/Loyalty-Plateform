@@ -9,16 +9,19 @@ use App\CarteFidelite;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCardRequest;
 use App\Http\Requests\EditCardRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class GerantCarteFideliteController extends Controller
 {
     public function index(Request $request)
     {
+        $id = Auth::user()->company_id;
         $search = $request->input('search');
         $programFilter = $request->input('program');
         $tierFilter = $request->input('tier');
 
-        $query = CarteFidelite::with('client', 'program');
+        $query = CarteFidelite::with('client', 'program')->where('company_id', $id);
 
         if ($search) {
             $query->where('commercial_ID', 'LIKE', "%{$search}%")
@@ -85,6 +88,8 @@ class GerantCarteFideliteController extends Controller
 
         $client = Client::where('name', $request->holder_name)->first();
         $program = Program::where('name', $request->fidelity_program)->first();
+        $id = Auth::user()->company_id;
+
 
 
         $card = CarteFidelite::create([
@@ -95,6 +100,7 @@ class GerantCarteFideliteController extends Controller
             'holder_id' => $client->id,
             'program_id' => $program->id,
             'fidelity_program' => $request->fidelity_program,
+            'company_id'=>$id,
         ]); 
 
             $client->fidelity_card_commercial_ID = $newCardID;

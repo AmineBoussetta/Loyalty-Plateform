@@ -21,7 +21,7 @@ class CaissierTransactionController extends Controller
         $cardFilter = $request->input('cardFilter');
 
 
-        $query = Transaction::with(['carteFidelite.client'])
+        $query = Transaction::where('company_id',Auth::user()->company_id)->with(['carteFidelite.client'])
             ->where(function ($q) use ($search, $searchDate, $cardFilter) {
                 if ($search) {
                     $q->where('transaction_id', 'LIKE', "%{$search}%")
@@ -85,7 +85,7 @@ class CaissierTransactionController extends Controller
     public function store(AddTransactionRequest $request)
     {
         $user = Auth::user()->id;
-        $caissier =Caissier::where('user_id',$user)->first();
+        $caissier = Caissier::where('user_id', $user)->first();
         $caissierId = $caissier->Caissier_ID;  
         $latestTransaction = Transaction::latest()->first();
         $transactionId = $latestTransaction ? 'TRANS-' . (intval(substr($latestTransaction->transaction_id, 6)) + 1) : 'TRANS-1';
@@ -100,8 +100,9 @@ class CaissierTransactionController extends Controller
         $transaction->payment_method = $request->payment_method ?? 'cash';
         $transaction->status = 'paid';
         $transaction->caissier_id = $caissierId;
-       
+        $transaction->company_id = Auth::user()->company_id;
         
+
         $client = Client::findOrFail($request->client_id);
 
         if ($request->payment_method == 'fidelity_points' && !$client->carteFidelite) {
@@ -109,9 +110,9 @@ class CaissierTransactionController extends Controller
         }
 
         if ($client->carteFidelite) {
-            $card = CarteFidelite::findOrFail($request->carte_fidelite_id);
-            $program = Program::findOrFail($card->program_id);
-            $transaction->carte_fidelite_id = $request->carte_fidelite_id;
+            $card = $client->carteFidelite; // Utiliser la relation pour obtenir la carte de fidélité
+            $program = $card->program;
+            $transaction->carte_fidelite_id = $card->id; // Utiliser l'ID numérique
 
             if ($program->status === 'inactive') {
                 $client->money_spent += $request->amount;
@@ -131,7 +132,7 @@ class CaissierTransactionController extends Controller
                 $card->money = $card->points_sum * $program->conversion_factor;
                 $transaction->points = -$pointsToDeduct;
 
-            }else{
+            } else {
                 $transaction->points = $this->calculatePoints($request->amount, $card, $program);
             }
 
@@ -139,9 +140,8 @@ class CaissierTransactionController extends Controller
             $transaction->payment_method = $request->payment_method;
         }
 
-
         $transaction->save();
-        if ($request->payment_method != 'fidelity_points'){
+        if ($request->payment_method != 'fidelity_points') {
             $client->money_spent += $request->amount;
             $client->save();
         }

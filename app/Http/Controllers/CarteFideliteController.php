@@ -8,17 +8,21 @@ use App\Transaction;
 use App\CarteFidelite;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCardRequest;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests\EditCardRequest;
 
 class CarteFideliteController extends Controller
 {
         public function index(Request $request)
     {
+        $id = Auth::user()->company_id;
+
         $search = $request->input('search');
         $programFilter = $request->input('program');
         $tierFilter = $request->input('tier');
 
-        $query = CarteFidelite::with('client', 'program');
+        $query = CarteFidelite::with('client', 'program')->where('company_id', $id);
 
         if ($search) {
             $query->where('commercial_ID', 'LIKE', "%{$search}%")
@@ -62,20 +66,23 @@ class CarteFideliteController extends Controller
 
     // Fetch clients who don't have a fidelity card associated with them
     $clientsWithoutCard = Client::whereDoesntHave('carteFidelite')->get();
-
+    $clients = Client::all();
     // Fetch active programs
     $programs = Program::where('status', 'active')->get();
 
-    return view('gerantCF.create', [
+    return view('carte_fidelite.create', [
         'title' => 'New Card',
         'commercial_ID' => $commercial_ID,
         'clientsWithoutCard' => $clientsWithoutCard,
         'programs' => $programs,
+        'clients' => $clients,
     ]);
     }
 
     public function store(AddCardRequest $request)
     {
+        $id = Auth::user()->company_id;
+
         $currentYear = date('Y');
         $latestCard = CarteFidelite::where('commercial_ID', 'like', "CARD-$currentYear%")
             ->orderBy('commercial_ID', 'desc')
@@ -95,6 +102,7 @@ class CarteFideliteController extends Controller
             'holder_id' => $client->id,
             'program_id' => $program->id,
             'fidelity_program' => $request->fidelity_program,
+            'company_id'=>$id,
         ]); 
 
             $client->fidelity_card_commercial_ID = $newCardID;
@@ -138,14 +146,15 @@ class CarteFideliteController extends Controller
 
         public function destroy(CarteFidelite $carte)
         {
-            // Check if the fidelity card has associated transactions
+            // Vérifiez si la carte de fidélité a des transactions associées
             $hasTransactions = Transaction::where('carte_fidelite_id', $carte->id)->exists();
             if ($hasTransactions) {
                 return redirect()->route('carte_fidelite.index')->with('warning', 'This fidelity card has active transaction(s). Please remove the transaction(s) before deleting the fidelity card.');
             }
-
-            // If no associated transactions, proceed with deletion
+        
+            // Si aucune transaction associée, procédez à la suppression
             $carte->delete();
             return redirect()->route('carte_fidelite.index')->with('message', 'Card deleted successfully!');
         }
+        
 }

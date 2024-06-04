@@ -90,7 +90,7 @@
                     </td>
                     <td>
                         <div class="d-flex">
-                            <form action="{{ route('gerantClients.destroy', $gerantClient->id) }}" method="post" style="display: inline;">
+                            <form action="{{ route('gerantClients.destroy', $gerantClient->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>

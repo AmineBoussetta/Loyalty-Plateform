@@ -18,12 +18,11 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->decimal('money_spent', 10, 2);
             $table->unsignedBigInteger('fidelity_card_id')->nullable();
-            $table->unsignedBigInteger('company_id'); 
             $table->string('fidelity_card_commercial_ID')->nullable();
+            $table->unsignedBigInteger('company_id'); 
+
             $table->timestamps();
-
-
-            $table->foreign('company_id')->references('company_id')->on('gerants')->onDelete('cascade');
+            $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade');
             $table->foreign('company_id')->references('company_id')->on('caissiers')->onDelete('cascade');
         });
     }
@@ -36,7 +35,6 @@ return new class extends Migration
 
         Schema::table('carte_fidelites', function (Blueprint $table) {
             $table->dropForeign(['holder_name']);
-            $table->dropForeign(['company_id']);
         });
 
         Schema::dropIfExists('clients');
