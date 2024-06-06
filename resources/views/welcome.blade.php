@@ -8,7 +8,7 @@
         body, html {
             height: 100%;
             margin: 0;
-            background: url('{{ asset('img/welcome.png') }}') no-repeat center center fixed;
+            background: url('{{ asset('img/welcoma.png') }}') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -18,7 +18,8 @@
         .top-right {
             position: absolute;
             top: 25px;
-            right: -700px;
+            right: 25px;
+            z-index: 999;
         }
         .top-right a {
             color: white;
@@ -35,6 +36,22 @@
             display: flex;
             gap: 10px;
         }
+        /* Rounded blue button styles */
+        .login-button {
+            position: absolute;
+            bottom: 150px;
+            left: -600px;
+            padding: 20px 36px;
+            background-color: #00337C;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight :bold;
+        }
+        .login-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -44,13 +61,17 @@
                 @auth
                     <a href="{{ url('/home') }}">Home</a>
                 @else
-                    <a href="{{ route('login') }}">Log in</a>
+                    <a href="{{ route('login') }}"></a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}">Register</a>
+                        <a href="{{ route('register') }}"></a>
                     @endif
                 @endauth
             </div>
         </div>
     @endif
+
+    <!-- Rounded blue button -->
+    
+    <a href="{{ route('login') }}"class="login-button">Login Now</a>
 </body>
 </html>

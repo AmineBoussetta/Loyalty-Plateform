@@ -7,7 +7,14 @@
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+                        <div class="col-lg-6 d-none d-lg-block" style="background-color: #f8f9fc; position: relative;">
+                            <div class="text-center mt-5">
+                                <img src="{{ asset('img/logo_w.png') }}" alt="Logo" style="width: 200px;">
+                            </div>
+                            <div class="position-absolute bottom-0 mb-4 w-100 text-center">
+                                <p class="text-muted">Welcome back! Please login to your account.</p>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
@@ -26,7 +33,6 @@
 
                                 <form method="POST" action="{{ route('password.update') }}" class="user">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                                     <div class="form-group">
