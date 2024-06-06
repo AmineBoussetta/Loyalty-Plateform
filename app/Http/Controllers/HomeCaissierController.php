@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\CarteFidelite;
 use App\User;
+use App\Transaction;
 use App\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeCaissierController extends Controller
 {
@@ -16,7 +19,7 @@ class HomeCaissierController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('caissier-auth');
     }
 
     /**
@@ -26,12 +29,14 @@ class HomeCaissierController extends Controller
      */
     public function index()
     {
-        $clientsCount = Client::count();
-        $cardsCount = CarteFidelite::count();
+        $clientsCount = Client::where('company_id', Auth::user()->company_id)->count();
+        $cardsCount = CarteFidelite::where('company_id', Auth::user()->company_id)->count();
+        $transactionCount = Transaction::where('company_id', Auth::user()->company_id)->count();
 
         $widget = [
             'clientsCount' => $clientsCount,
             'cardsCount' => $cardsCount,
+            'transactionCount'=> $transactionCount,
             // Add more widget data if needed
         ];
 

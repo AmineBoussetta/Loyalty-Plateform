@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('gerantClients.update', $client->id) }}" method="post">
+        <form action="{{ route('gerantClients.update', $client->id) }}" method="POST">
                 @csrf
                 @method('put')
 
@@ -37,7 +37,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('gerantClients.index') }}" class="btn btn-default">Back to list</a>
+                <a href="{{ route('gerantClients.index', $gerant) }}" class="btn btn-default">Back to list</a>
 
             </form>
         </div>

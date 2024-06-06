@@ -31,7 +31,7 @@
     <!-- Sidebar -->
     <ul class="navbar-nav  sidebar  accordion" id="accordionSidebar" style="background-color: #00337C;" >
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}" >
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home_gerant') }}" >
 <div class="sidebar-brand-icon" style="margin-top: 50px;" >
             <img src="{{ asset('img/home_c.png') }}" alt="Logo" width="120" height="120">
         </div>
@@ -66,7 +66,7 @@
 
         <!-- Nav Item -->
         <li class="nav-item {{ Nav::isRoute('gerantClients.index') }}">
-            <a class="nav-link" href="{{ route('gerantClients.index') }}" style="color: white;">
+            <a class="nav-link" href="{{ route('gerantClients.index', ['gerant' => Auth::user()->company_id]) }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>{{ __('Clients') }}</span>
             </a>
@@ -88,10 +88,16 @@
                 <span>{{ __('Offers') }}</span> 
             </a>
         </li>
-
+       <!-- Nav Item -->
+        <li class="nav-item {{ Nav::isRoute('gerantCaissiers.index') }}"><!--STILL NEEDs FIXING -->
+            <a class="nav-link" href="{{ route('gerantCaissiers.index', ['gerant' => Auth::user()->company_id])}}" style="color: white">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Cashiers') }}</span> 
+            </a>
+        </li>
         <!-- Nav Item - Profile -->
-        <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile') }}"style="color: white;">
+        <li class="nav-item {{ Nav::isRoute('profileGerant') }}">
+            <a class="nav-link" href="{{ route('profileGerant') }}"style="color: white;">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Profile') }}</span>
             </a>
@@ -253,15 +259,19 @@
                             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                         </div>
                     </li>
-<!-- Nav Item - User Information -->
-<li class="nav-item dropdown no-arrow">
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        @auth
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                             <img class="img-profile rounded-circle" src="{{ asset('img/pdp.png') }}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profileCaissier') }}">
+                            <a class="dropdown-item" href="{{ route('profileGerant') }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Profile') }}
                             </a>
@@ -275,6 +285,8 @@
                                 {{ __('Logout') }}
                             </a>
                         </div>
+
+ 			@endauth
                     </li>
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -321,7 +333,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ __('Ready to Leave?') }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

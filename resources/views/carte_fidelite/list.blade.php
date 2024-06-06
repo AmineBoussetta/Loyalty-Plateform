@@ -5,7 +5,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
     <!-- Search Bar -->
-    <form method="GET" action="{{ route('gerantCF.index') }}" class="mb-4">
+    <form method="GET" action="{{ route('carte_fidelite.index') }}" class="mb-4">
         <div class="form-row align-items-center">
             <div class="form-group col-md-4 mb-2">
                 <input type="text" name="search" class="form-control" placeholder="Search by Commercial ID or holder name" value="{{ request()->query('search') }}">
@@ -80,7 +80,7 @@
                     @endif
                 </td>
                     <td>
-                        <form action="{{ route('carte_fidelite.destroy', $carte) }}" method="post" style="display: inline;">
+                    <form action="{{ route('carte_fidelite.destroy', ['carte' => $carte->id]) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')" style="background-color: #F05713; border-color: #F05713;">Delete</button>

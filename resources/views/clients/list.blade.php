@@ -1,11 +1,10 @@
 @extends('layouts.caissier')
 
 @section('main-content')
-    <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Blank Page') }}</h1>
 
     <!-- Search Bar -->
-    <form method="GET" action="{{ route('clients.index') }}" class="mb-4">
+    <form method="GET" action="{{ route('clients.index', ['caissier' => Auth::user()->company_id]) }}" class="mb-4">
         <div class="row">
             <div class="form-group col-md-10 mb-2">
                 <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone number" value="{{ request()->query('search') }}">
@@ -16,9 +15,7 @@
         </div>
     </form>
 
-    <!-- Main Content goes here -->
-
-    <a href="{{ route('gerantClients.create') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Client</a>
+    <a href="{{ route('clients.create', ['caissier' => Auth::user()->company_id]) }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Client</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -27,9 +24,7 @@
     @endif
 
     <table class="table table-bordered table-stripped">
-        
         <thead>
-        
             <tr>
                 <th>No</th>
                 <th>Full Name</th>
@@ -39,12 +34,12 @@
                 <th>Commercial ID</th>
                 <th>Fidelity Card Points</th>
                 <th>Fidelity Card Money</th>
-
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($clients as $client)
-            <tr onclick="window.location='{{ route('clients.edit', $client->id) }}';" style="cursor:pointer;">
+                <tr onclick="window.location='{{ route('clients.edit', ['caissier' => Auth::user()->company_id, 'client' => $client->id]) }}';" style="cursor:pointer;">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
@@ -54,7 +49,7 @@
                         @if ($client->carteFidelite)
                             {{ $client->carteFidelite->commercial_ID }}
                         @else
-                        <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary">Create Card</a>
+                            <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary">Create Card</a>
                         @endif
                     </td>
                     <td>
@@ -64,18 +59,16 @@
                             No Card
                         @endif
                     </td>
-                        
                     <td>
                         @if ($client->carteFidelite)
-                            {{ optional($client->carteFidelite)->money }}                            
+                            {{ optional($client->carteFidelite)->money }}
                         @else
                             No Card
                         @endif
                     </td>
-
                     <td>
                         <div class="d-flex">
-                            <form action="{{ route('clients.destroy', $client->id) }}" method="post" style="display: inline;" id="deleteForm-{{ $client->id }}">
+                            <form action="{{ route('clients.destroy', ['caissier' => Auth::user()->company_id, 'client' => $client->id]) }}" method="post" style="display: inline;" id="deleteForm-{{ $client->id }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;" onclick="confirmDelete(event, {{ $client->id }})">Delete</button>
@@ -85,15 +78,13 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">No clients found.</td>
+                    <td colspan="9" class="text-center">No clients found.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
     {{ $clients->links() }}
-
-    <!-- End of Main Content -->
 @endsection
 
 @push('notif')
@@ -107,8 +98,8 @@
     @endif
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <!-- SweetAlert Script -->
-      <script>
+    <!-- SweetAlert Script -->
+    <script>
         function confirmDelete(event, clientId) {
             event.stopPropagation(); // Stop the click event from propagating to the row
             Swal.fire({

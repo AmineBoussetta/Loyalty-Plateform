@@ -13,11 +13,19 @@ return new class extends Migration
     {
         Schema::create('caissiers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->string('Caissier_ID')->unique();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
             $table->string('company_name');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('company_id');
+
+
+            $table->foreign('company_id')->references('company_id')->on('gerants')->onDelete('cascade');
+            
 
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -26,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('caissiers');
+        Schema::dropIfExists('_caissiers');
     }
 };

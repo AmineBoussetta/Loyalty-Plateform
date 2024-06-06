@@ -28,13 +28,40 @@ use App\Http\Controllers\Transaction;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        $user = Auth::user();
+
+   
+    if ($user->role == 1) {
+        return redirect()->route('home');
+    } elseif ($user->role == 2) {
+        return redirect()->route('home_gerant');
+    } elseif ($user->role == 3) {
+        return redirect()->route('home_caissier');
+    } elseif ($user->role == 4) {
+    return redirect()->route('home_client');
+    }
+        
+        
+    } else {
+        
+        return view('welcome');
+    }
 });
 
-Route::get('/home', 'homeController@index')->name('home');
 
+Route::get('/home_client', 'HomeClientController@index')->name('home_client');
+Route::get('/profileClient', 'ProfileClientController@index')->name('profileClient');
+Route::put('/profile-client', 'ProfileClientController@update')->name('profileClient.update');
+Route::get('/transactions','ClientController@transaction')->name('client.transaction');
+Route::get('/historique','ClientController@historique')->name('client.historique');
+
+
+
+Route::post('/login',[AuthController::class,'login'])->name('login');
+
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 
@@ -56,14 +83,20 @@ Route::middleware('auth')->group(function() {
 
 });
 
-Route::get('/home_caissier', 'CaissierTransactionController@index')->name('home_caissier');
 
-Route::get('/clients', 'ClientController@index')->name('clients.index');
-Route::get('/clients/create', 'ClientController@create')->name('clients.create');
-Route::post('/clients', 'ClientController@store')->name('clients.store');
-Route::get('/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
-Route::put('/clients/{client}', 'ClientController@update')->name('clients.update');
-Route::delete('/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
+
+Route::get('/home_caissier', 'HomeCaissierController@index')->name('home_caissier');
+//caissier clients
+Route::middleware(['caissier-auth'])->group(function () {
+    Route::get('/caissier/{caissier}/clients', 'ClientController@index')->name('clients.index');
+    Route::get('/caissier/{caissier}/clients/create', 'ClientController@create')->name('clients.create');
+    Route::post('/caissier/{caissier}/clients', 'ClientController@store')->name('clients.store');
+    Route::get('/caissier/{caissier}/clients/{client}/edit', 'ClientController@edit')->name('clients.edit');
+    Route::put('/caissier/{caissier}/clients/{client}', 'ClientController@update')->name('clients.update');
+    Route::delete('/caissier/{caissier}/clients/{client}', 'ClientController@destroy')->name('clients.destroy');
+});
+
+
 
 Route::get('/profileCaissier', 'ProfileCaissierController@index')->name('profileCaissier'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 Route::put('/profileCaissier', 'ProfileCaissierController@update')->name('profileCaissier.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
@@ -82,15 +115,19 @@ Route::get('/profileGerant', 'ProfileGerantController@index')->name('profileGera
 Route::put('/profileGerant', 'ProfileGerantController@update')->name('profileGerant.update'); // STILL NEED ADJUSMTENTS IN CONTROLLERS
 
 Route::get('/gerant-programs', 'GerantProgramsController@index')->name('gerantPrograms.index');
-Route::get('/gerant-clients', 'GerantClientsController@index')->name('gerantClients.index');
+
 Route::get('/gerant-offers', 'GerantOffersController@index')->name('gerantOffers.index');
 
 //gerant clients
-Route::get('gerant-clients/create', 'GerantClientsController@create')->name('gerantClients.create');
-Route::post('gerant-clients/client', 'GerantClientsController@store')->name('gerantClients.store');
-Route::get('/gerant-clients/{client}/edit', 'GerantClientsController@edit')->name('gerantClients.edit');
-Route::put('/gerant-clients/{client}', 'GerantClientsController@update')->name('gerantClients.update');
-Route::delete('/gerant-clients/{client}', 'GerantClientsController@destroy')->name('gerantClients.destroy');
+Route::middleware(['gerant-auth'])->group(function () {
+    Route::get('/gerant/{gerant}/clients', 'GerantClientsController@index')->name('gerantClients.index');
+    Route::get('gerant-clients/create/{gerant}', 'GerantClientsController@create')->name('gerantClients.create');
+    Route::post('gerant-clients/{gerant}/client', 'GerantClientsController@store')->name('gerantClients.store');
+    Route::get('/gerant-clients/{client}/edit', 'GerantClientsController@edit')->name('gerantClients.edit');
+    Route::put('/gerant-clients/{client}', 'GerantClientsController@update')->name('gerantClients.update');
+    Route::delete('/gerant-clients/{client}', 'GerantClientsController@destroy')->name('gerantClients.destroy');
+
+});
 
 //gerant program
 Route::get('gerant-programs/create', 'GerantProgramsController@create')->name('gerantPrograms.create');
@@ -126,22 +163,20 @@ Route::delete('/transactions/{transaction}/permanentDelete', 'CaissierTransactio
 // routes/web.php for search
 Route::get('/search_clients', [ClientController::class, 'search'])->name('search_clients');
 Route::get('/search_companies', [CompanyController::class, 'search'])->name('search_companies');
-
 Route::get('/load_all_clients', [ClientController::class, 'loadAll'])->name('load_all_clients');
+//Route::resource('gerantClients', ClientController::class);
+
+Route::post('/clients/import', [ClientController::class, 'import'])->name('clients.import');
+//gerantCaissiers
+    Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
+    Route::get('/gerant-caissier/create/{gerant}', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
+    Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
+    Route::get('/gerant/{gerant}/caissier/{caissierID}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
+    Route::put('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
+    Route::delete('/gerant-caissier/{gerant}/{caissierID}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
+
+
 // Routes for import functionality
 Route::post('/gerant-clients/import', [GerantClientsController::class, 'import'])->name('gerantClients.import');
-
-
-
-//gerant caissiers
-//Route::get('/gerant-caissier/create', 'GerantCaissiersController@create')->name('gerantCaissiers.create');
-//Route::post('/gerant/{gerant}/caissiers', 'GerantCaissiersController@store')->name('gerantCaissiers.store');
-//Route::get('/gerant-caissier/{caissier_id}/edit', 'GerantCaissiersController@edit')->name('gerantCaissiers.edit');
-//Route::put('/gerant-caissier/{caissier}', 'GerantCaissiersController@update')->name('gerantCaissiers.update');
-//Route::delete('/gerant-caissier/{caissier}', 'GerantCaissiersController@destroy')->name('gerantCaissiers.destroy');
-//Route::get('/gerant/{gerant}/caissiers', 'GerantCaissiersController@index')->name('gerantCaissiers.index');
-
-
-
 
 

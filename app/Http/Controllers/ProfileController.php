@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Mail;
+
+
+
+use App\Http\Requests\EditUserRequest;
+
 class ProfileController extends Controller
 {
     public function __construct()
@@ -27,7 +33,8 @@ class ProfileController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id,
             'current_password' => 'nullable|required_with:new_password',
             'new_password' => 'nullable|min:8|max:12|required_with:current_password',
-            'password_confirmation' => 'nullable|min:8|max:12|required_with:new_password|same:new_password'
+            'password_confirmation' => 'nullable|min:8|max:12|required_with:new_password|same:new_password',
+            'company_id' => 'sometimes|required|exists:companies,id'
         ]);
 
 

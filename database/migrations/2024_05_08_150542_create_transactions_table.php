@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('payment_method')->default('cash');
             $table->string('status')->default('amended');
             $table->integer('points')->nullable();
+            $table->unsignedBigInteger('company_id'); 
 
             $table->timestamps();
 

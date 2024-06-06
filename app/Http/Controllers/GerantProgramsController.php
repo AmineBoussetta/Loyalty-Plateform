@@ -6,15 +6,18 @@ use App\Program;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddProgramRequest;
 use App\Http\Requests\EditProgramRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class GerantProgramsController extends Controller
 {
     public function index(Request $request)
     {
+        $id = Auth::user()->company_id;
         $search = $request->input('search');
         $startDate = $request->input('start_date');
 
-        $query = Program::where('status', 'active');
+        $query = Program::where('status', 'active')->where('company_id', $id);
 
         if ($search) {
             $query->where('name', 'LIKE', "%{$search}%");
@@ -48,6 +51,7 @@ class GerantProgramsController extends Controller
         if (strtotime($request->start_date) <= time() && strtotime($request->expiry_date) > time()) {
             $status = 'active'; // Set status to active
         }
+        $id = Auth::user()->company_id;
 
         Program::create([
             'name' => $request->name,
@@ -62,6 +66,7 @@ class GerantProgramsController extends Controller
             'conversion_factor' => $request->conversion_factor,
             'status' => $request->status ?? $status,
             'comment' => $request->comment,
+            'company_id'=> $id,
         ]); 
 
         // Redirect the user back to the client listing page or any other desired page

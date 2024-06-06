@@ -19,7 +19,10 @@ return new class extends Migration
             $table->decimal('money_spent', 10, 2);
             $table->unsignedBigInteger('fidelity_card_id')->nullable();
             $table->string('fidelity_card_commercial_ID')->nullable();
+            $table->unsignedBigInteger('company_id'); 
+
             $table->timestamps();
+            $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade');
         });
     }
 

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name', 'email', 'password',
+        'name', 'last_name', 'email','role', 'password','company_id'
     ];
 
     /**
@@ -51,7 +51,24 @@ class User extends Authenticatable
 {
     return $this->hasOne(Gerant::class);
 }
+public function caissier()
+    {
+        return $this->hasOne(Caissier::class, 'Caissier_ID','user_id'); // user_id est la clé étrangère dans la table caissiers
+    }
 
+
+    public function cartesFidelite()
+    {
+        return $this->hasMany(CarteFidelite::class, 'holder_id', 'id'); // Remplacez 'id_user' par la clé étrangère appropriée dans la table 'cartefidelite'
+    }
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    
 }
+
+
 
 

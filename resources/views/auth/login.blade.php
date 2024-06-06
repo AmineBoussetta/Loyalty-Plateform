@@ -1,10 +1,10 @@
 @extends('layouts.auth')
 
 @section('main-content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-xl-10 col-lg-12 col-md-9">
-            <div class="card o-hidden border-0 shadow-lg my-5">
+<div class="container" >
+    <div class="row justify-content-center" >
+        <div class="col-xl-10 col-lg-12 col-md-9" >
+            <div class="card o-hidden border-0 shadow-lg my-5" >
                 <div class="card-body p-0">
                     <div class="row">
                     <div class="col-lg-6 d-none d-lg-block" style="background-image: url('{{ asset('img/home_c.png') }}'); background-size: 99%;"></div>
@@ -62,11 +62,7 @@
                                     </div>
                                 @endif
 
-                                @if (Route::has('register'))
-                                    <div class="text-center">
-                                        <a class="small" href="{{ route('register') }}">{{ __('Create an Account!') }}</a>
-                                    </div>
-                                @endif
+                                
                             </div>
                         </div>
                     </div>
