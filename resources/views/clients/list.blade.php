@@ -49,7 +49,7 @@
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
-                    <td>{{ $client->money_spent }}</td>
+                    <td>{{ $client->money_spent }}<span style="color: green;font-weight : bold">  TND</span></td>
                     <td>
                         @if ($client->carteFidelite)
                             {{ $client->carteFidelite->commercial_ID }}

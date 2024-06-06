@@ -65,7 +65,7 @@
                     <td>{{ $transaction->transaction_id }}</td>
                     <td>{{ $transaction->status }}</td>
                     <td>{{ $transaction->transaction_date }}</td>
-                    <td>{{ $transaction->amount }}</td>
+                    <td>{{ $transaction->amount }} <span style="color: green; font-weight : bold">TND</span></td>
                     <td>
                         @if ($transaction->carteFidelite)
                             @if ($transaction->payment_method == 'fidelity_points')
@@ -78,16 +78,17 @@
                         @endif
                     </td>
                     <td>
-                        @if ($transaction->carteFidelite)
-                            @if ($transaction->payment_method == 'fidelity_points')
-                                - {{ $transaction->amount }}
-                            @else
-                                + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }}
-                            @endif
-                        @else
-                            No Card
-                        @endif
-                    </td>
+    @if ($transaction->carteFidelite)
+        @if ($transaction->payment_method == 'fidelity_points')
+            - {{ $transaction->amount }} <span style="color: green; font-weight : bold">TND</span>
+        @else
+            + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }} <span style="color: green;font-weight : bold">TND</span>
+        @endif
+    @else
+        No Card
+    @endif
+</td>
+
                     <td>
                         @if ($transaction->carteFidelite)
                             {{ $transaction->carteFidelite->client->name }} ({{ $transaction->carteFidelite->tier }})

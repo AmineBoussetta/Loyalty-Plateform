@@ -67,7 +67,7 @@
                     <td>{{ $gerantClient->name }}</td>
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>
-                    <td>{{ $gerantClient->money_spent }}</td>
+                    <td>{{ $gerantClient->money_spent }} <span style="color: green;font-weight : bold">TND</span></td>
                     <td>
                         @if ($gerantClient->carteFidelite)
                             {{ $gerantClient->carteFidelite->commercial_ID }}
@@ -85,7 +85,7 @@
                         
                     <td>
                         @if ($gerantClient->carteFidelite)
-                            {{ optional($gerantClient->carteFidelite)->money }}                            
+                            {{ optional($gerantClient->carteFidelite)->money }}   <span style="color: green;font-weight : bold">TND</span>                         
                         @else
                             No Card
                         @endif

@@ -6,52 +6,11 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantOffers.index') }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Offers</a>
-
-    @if (session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
+    <div class="card">
+        <div class="card-body">
+      <h1>  Add new offer</h1>
         </div>
-    @endif
-
-    <table class="table table-bordered table-stripped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>x</th>
-                <th>x</th>
-                <th>x</th>
-                <th>x</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            {{-- @forelse ($offers as $offer)
-                <tr>
-                    <td>{{  }}</td>
-                    <td>{{  }}</td>
-                    <td>{{  }}</td>
-                    <td>{{  }}</td>
-                    <td>
-                        <div class="d-flex">
-                            <a href="{{ route('gerantOffers.index', $gerantOffers->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a><!-- change gerantClients.index to .edit-->
-                            <form action="{{ route('gerantOffers.index', $gerantOffers->id) }}" method="post" style="display: inline;"><!-- change gerantClients.index to .destroy -->
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this client?')">Delete</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="text-center">No clients found.</td>
-                </tr>
-            @endforelse --}}
-        </tbody>
-    </table>
-
-    {{ $offers->links() }}
+    </div>
 
     <!-- End of Main Content -->
 @endsection
