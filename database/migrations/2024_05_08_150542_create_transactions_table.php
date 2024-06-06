@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('status')->default('amended');
             $table->integer('points')->nullable();
             $table->unsignedBigInteger('company_id'); 
-
+            $table->string('Caissier_ID')->unique();
             $table->timestamps();
 
             $table->foreign('carte_fidelite_id')->references('id')->on('carte_fidelites');
