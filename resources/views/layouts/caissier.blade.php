@@ -74,7 +74,7 @@
         <li class="nav-item {{ Nav::isRoute('carte_fidelite.index') }}">
             <a class="nav-link" href="{{ route('carte_fidelite.index') }}" style="color: white;">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Carte fidélite') }}</span>
+                <span>{{ __('Fidelity Cards') }}</span>
             </a>
         </li>
         

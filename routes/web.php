@@ -1,18 +1,19 @@
 <?php
 
 use App\CarteFidelite;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\Transaction;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BasicController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CarteFideliteController;
+use App\Http\Controllers\GerantClientsController;
 use App\Http\Controllers\ProfileGerantController;
 use App\Http\Controllers\ProfileCaissierController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\GerantClientsController;
-use App\Http\Controllers\Transaction;
 
 
 
