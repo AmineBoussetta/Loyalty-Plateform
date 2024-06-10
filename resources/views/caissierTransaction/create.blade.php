@@ -73,7 +73,7 @@
                 <br>
                 
                 <input type="hidden" name="carte_fidelite_id" id="carte_fidelite_id">
-                <button type="submit" class="btn btn-primary" style="background-color: #5CE1E6; border-color: #5CE1E6; font-size: 15px;">Create Transaction</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;">Create Transaction</button>
             </div>
         </div>
     </form>

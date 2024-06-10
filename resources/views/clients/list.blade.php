@@ -44,12 +44,12 @@
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
-                    <td>{{ $client->money_spent }}<span style="color: green;font-weight : bold">  TND</span></td>
+                    <td>{{ $client->money_spent }}<span style="font-weight : bold"> TND</span></td>
                     <td>
                         @if ($client->carteFidelite)
                             {{ $client->carteFidelite->commercial_ID }}
                         @else
-                            <a href="{{ route('carte_fidelite.create') }}" class="btn btn-primary">Create Card</a>
+                            <a href="{{ route('carte_fidelite.create') }}" class="btn btn-outline-primary">Create Card</a>
                         @endif
                     </td>
                     <td>
@@ -61,7 +61,7 @@
                     </td>
                     <td>
                         @if ($client->carteFidelite)
-                            {{ optional($client->carteFidelite)->money }}
+                            {{ optional($client->carteFidelite)->money }} <span style="font-weight : bold"> TND</span>
                         @else
                             No Card
                         @endif
@@ -71,7 +71,7 @@
                             <form action="{{ route('clients.destroy', ['caissier' => Auth::user()->company_id, 'client' => $client->id]) }}" method="post" style="display: inline;" id="deleteForm-{{ $client->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;" onclick="confirmDelete(event, {{ $client->id }})">Delete</button>
+                                <button type="button" class="btn btn-sm btn-danger" style="background-color: #F05713; border-color: #F05713;" onclick="confirmDelete(event, {{ $client->id }})">Delete</button>
                             </form>
                         </div>
                     </td>

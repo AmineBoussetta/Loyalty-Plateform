@@ -86,7 +86,7 @@ class CaissierTransactionController extends Controller
     {
         $user = Auth::user()->id;
         $caissier = Caissier::where('user_id', $user)->first();
-        $caissierId = $caissier->Caissier_ID;  
+        $caissierId = $caissier->Caissier_ID;
         $latestTransaction = Transaction::latest()->first();
         $transactionId = $latestTransaction ? 'TRANS-' . (intval(substr($latestTransaction->transaction_id, 6)) + 1) : 'TRANS-1';
         $change = $request->amount_spent - $request->amount;
@@ -147,7 +147,8 @@ class CaissierTransactionController extends Controller
         }
 
         return redirect()->route('caissierTransaction.index')->with('message', 'Transaction added successfully! Change to be given back: ' . $change);
-    }
+    
+}
 
     private function calculatePoints($amount, $card, $program)
     {

@@ -80,7 +80,7 @@
                     <td>
     @if ($transaction->carteFidelite)
         @if ($transaction->payment_method == 'fidelity_points')
-            - {{ $transaction->amount }} <span style="color: green; font-weight : bold">TND</span>
+            - {{ $transaction->amount }} <span style="font-weight : bold">TND</span>
         @else
             + {{ $transaction->points * $transaction->carteFidelite->program->conversion_factor }} <span style="color: green;font-weight : bold">TND</span>
         @endif

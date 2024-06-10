@@ -18,7 +18,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('gerantClients.create', $gerant) }}" class="btn btn-primary mb-3">Add Client</a>  
+    <a href="{{ route('gerantClients.create', $gerant) }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Client</a>  
     <div class="mb-4">
         <form action="{{ route('gerantClients.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success" style="background-color: #5CE1E6; border-color: #5CE1E6;">Import Clients</button>
+                    <button type="submit" class="btn btn-success" style="background-color: #00337C; border-color: #00337C;">Import Clients</button>
                 </div>
             </div>
         </form>
@@ -61,16 +61,17 @@
         </thead>
         <tbody>
             @forelse ($gerantClients as $gerantClient)
-            <tr onclick="window.location='{{ route('gerantClients.edit', $gerantClient->id) }}';" style="cursor:pointer;">                    <td>{{ $loop->iteration }}</td>
+            <tr onclick="window.location='{{ route('gerantClients.edit', $gerantClient->id) }}';" style="cursor:pointer;">                    
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $gerantClient->name }}</td>
                     <td>{{ $gerantClient->email }}</td>
                     <td>{{ $gerantClient->phone }}</td>
-                    <td>{{ $gerantClient->money_spent }} <span style="color: green;font-weight : bold">TND</span></td>
+                    <td>{{ $gerantClient->money_spent }} <span style="bold">TND</span></td>
                     <td>
                         @if ($gerantClient->carteFidelite)
                             {{ $gerantClient->carteFidelite->commercial_ID }}
                         @else
-                            <a href="{{ route('gerantCF.create') }}" class="btn btn-primary">Create Card</a>
+                            <a href="{{ route('gerantCF.create') }}" class="btn btn-outline-primary">Create Card</a>
                         @endif
                     </td>
                     <td>

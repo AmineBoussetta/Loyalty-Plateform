@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block ml-2" style="background-color: #5CE1E6; border-color: #5CE1E6; font-size: 17px;" >Apply Filter</button>
+                <button type="submit" class="btn btn-primary btn-block ml-2" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;" >Apply Filter</button>
             </div>
         </div>
        

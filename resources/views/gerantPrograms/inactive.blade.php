@@ -15,7 +15,7 @@
     </form>
 
     <div class="mb-3">
-        <a href="{{ route('gerantPrograms.index') }}" class="btn btn-primary"><span class="sort-indicator">←</span> Go back to Active Programs</a>
+        <a href="{{ route('gerantPrograms.index') }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;"><span class="sort-indicator">←</span> Go back to Active Programs</a>
     </div>
 
     <table class="table table-bordered table-stripped">

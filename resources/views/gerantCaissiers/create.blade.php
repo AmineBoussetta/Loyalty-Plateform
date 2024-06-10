@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                   <label for="name">Full Name</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="First name" autocomplete="off" value="{{ old('name') }}">
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Enter name and last name" autocomplete="off" value="{{ old('name') }}">
                   @error('name')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -27,7 +27,7 @@
 
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ old('email') }}">
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="email@gmail.com" autocomplete="off" value="{{ old('email') }}">
                   @error('email')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                   <label for="phone">Phone Number</label>
-                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="Phone Number" autocomplete="off" value="{{ old('phone') }}">
+                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="+216" autocomplete="off" value="{{ old('phone') }}">
                   @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror

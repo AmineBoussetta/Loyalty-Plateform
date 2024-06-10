@@ -32,10 +32,7 @@ protected $fillable = ['Caissier_ID', 'name', 'email', 'phone', 'company_name','
     {
         return $this->belongsTo(Company::class, 'company_id');
     }
-    
-    
-    
-    
+
 }
 
 ?>

@@ -84,7 +84,7 @@
                             <form action="{{ route('gerantPrograms.toggleStatus', $program->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-warning mr-2" style="background-color: #03C988; border-color: #03C988;">
+                                <button type="submit" class="btn btn-sm btn-secondary" >
                                     @if ($program->status === 'active')
                                         Deactivate
                                     @else

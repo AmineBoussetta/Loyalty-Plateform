@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Client;
-use Illuminate\Support\Facades\DB;
-use App\CarteFidelite;
-
+use Carbon\Carbon;
 use App\Transaction;
+
+use App\CarteFidelite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -33,36 +34,43 @@ class HomeClientController extends Controller
 
      public function index()
      {
-        $clientsDataQuery = Client::where('email',Auth::user()->email)
-                        ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as count')
+    //     $clientsDataQuery = Client::where('email',Auth::user()->email)
+    //                     ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as count')
                         
-                        ->groupBy('month');
-        $moneySpentMonthlyQuery = Transaction::where('client_id',Auth::user()->id)->select(
-        DB::raw('DATE_FORMAT(amount, "%Y-%m") as month'),
-        DB::raw('SUM(amount_spent) as total_money_spent')
-        )                
-                    ->groupBy('month'); 
+    //                     ->groupBy('month');
+    //     $moneySpentMonthlyQuery = Transaction::where('client_id',Auth::user()->id)->select(
+    //     DB::raw('DATE_FORMAT(amount, "%Y-%m") as month'),
+    //     DB::raw('SUM(amount_spent) as total_money_spent')
+    //     )                
+    //                 ->groupBy('month'); 
 
-        $moneySpentMonthly = $moneySpentMonthlyQuery->get()->map(function ($item) {
-        // Convert the month to month name
-            $item->month = Carbon::createFromFormat('Y-m', $item->month)->formatLocalized('%B');
-            return $item;
-        });
-        $pointsSumArrays = CarteFidelite::where('holder_id', Auth::user()->id)->get();
+    //     $moneySpentMonthly = $moneySpentMonthlyQuery->get()->map(function ($item) {
+    //     // Convert the month to month name
+    //         $item->month = Carbon::createFromFormat('Y-m', $item->month)->formatLocalized('%B');
+    //         return $item;
+    //     });
+    //     $pointsSumArrays = CarteFidelite::where('holder_id', Auth::user()->id)->get();
 
 
         
-        $pointsData = [];
-        foreach ($pointsSumArrays as $pointsSumArray) {
-            $pointsData[] = [
-                'points_sum' => $pointsSumArray->points_sum,
+    //     $pointsData = [];
+    //     foreach ($pointsSumArrays as $pointsSumArray) {
+    //         $pointsData[] = [
+    //             'points_sum' => $pointsSumArray->points_sum,
                 
-            ];
-        }
+    //         ];
+    //     }
         
-        return view('home_client',[
-            'moneySpentMonthly' => $moneySpentMonthly,
-            'pointsData' => $pointsData,
-         ]);
-     } 
-}
+    //     return view('home_client',[
+    //         'moneySpentMonthly' => $moneySpentMonthly,
+    //         'pointsData' => $pointsData,
+    //      ]);
+    //  } 
+    $carteFidelites = CarteFidelite::where('holder_id', Auth::user()->id)->get();
+    $transactionDetails = [];
+
+        return view('client_historique',[
+            'carteFidelites' => $carteFidelites,
+            'transactionDetails' => $transactionDetails,
+        ]);
+    }}

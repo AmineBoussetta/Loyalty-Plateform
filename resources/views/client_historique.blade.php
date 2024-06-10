@@ -10,7 +10,6 @@
                     <th>Fidelity Card Number</th>
                     <th>Total Points</th>
                     <th>Points Spent</th>
-                    <th>Points Remaining</th>
                     <th>Transaction ID</th>
                     <th>Program Type</th>
                     
@@ -25,7 +24,6 @@
                             <td>{{ $carteFidelite->commercial_ID }}</td>
                             <td>{{ $carteFidelite->points_sum }}</td>
                             <td>{{ $tran['points_spent'] }}</td>
-                            <td>{{ $carteFidelite->points_sum - $tran['points_spent'] }}</td>
                             <td>{{ $tran['transaction']->transaction_id }}</td>
                             <td>{{ $tran['program']->name }}</td>
                         </tr>

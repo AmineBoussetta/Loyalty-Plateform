@@ -92,7 +92,7 @@
         <li class="nav-item {{ Nav::isRoute('gerantCaissiers.index') }}"><!--STILL NEEDs FIXING -->
             <a class="nav-link" href="{{ route('gerantCaissiers.index', ['gerant' => Auth::user()->company_id])}}" style="color: white">
                 <i class="fas fa-fw fa-plus"></i>
-                <span>{{ __('Cashiers') }}</span> 
+                <span>{{ __('Add Cashiers') }}</span> 
             </a>
         </li>
         <!-- Nav Item - Profile -->

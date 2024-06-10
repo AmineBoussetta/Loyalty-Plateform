@@ -14,7 +14,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="font-weight-bold text-black">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Name" autocomplete="off" value="{{ old('name') }}">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Add Name and Last name" autocomplete="off" value="{{ old('name') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="abbreviation" class="font-weight-bold text-black">Abbreviation</label>
-                            <input type="text" class="form-control @error('abbreviation') is-invalid @enderror" name="abbreviation" id="abbreviation" placeholder="abrv" autocomplete="off" value="{{ old('abbreviation') }}">
+                            <input type="text" class="form-control @error('abbreviation') is-invalid @enderror" name="abbreviation" id="abbreviation" placeholder="Add an abreviation" autocomplete="off" value="{{ old('abbreviation') }}">
                             @error('abbreviation')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label for="default_currency" class="font-weight-bold text-black">Default Currency</label>
                             <select class="form-control" name="default_currency" id="default_currency">
-                                <option value="">Select Currency</option>
+                                <option value="">Select the Currency</option>
                                 @foreach($currencies as $code => $name)
                                     <option value="{{ $code }}">{{ $name }} ({{ $code }})</option>
                                 @endforeach
@@ -48,7 +48,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="country" class="font-weight-bold text-black">Country</label>
-                            <input type="text" class="form-control @error('country') is-invalid @enderror" name="country" id="country" placeholder="Sousse" autocomplete="off" value="{{ old('country') }}">
+                            <input type="text" class="form-control @error('country') is-invalid @enderror" name="country" id="country" placeholder="Add country" autocomplete="off" value="{{ old('country') }}">
                             @error('country')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -60,7 +60,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="tax_id" class="font-weight-bold text-black">Tax ID</label>
-                            <input type="text" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" id="tax_id" placeholder="Tax ID" autocomplete="off" value="{{ old('tax_id') }}">
+                            <input type="text" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" id="tax_id" placeholder="Add Tax ID" autocomplete="off" value="{{ old('tax_id') }}">
                             @error('tax_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -70,7 +70,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="phone" class="font-weight-bold text-black">Phone</label>
-                            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="+216 50 987 617" autocomplete="off" value="{{ old('phone') }}">
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" placeholder="+216" autocomplete="off" value="{{ old('phone') }}">
                             @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -120,21 +120,21 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="gerant_name_1" class="font-weight-bold text-black">Name</label>
-                                        <input type="text" class="form-control" name="gerant_name[]" placeholder="Manager Name" autocomplete="off">
+                                        <input type="text" class="form-control" name="gerant_name[]" placeholder="Add Manager Name and Last name" autocomplete="off">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="gerant_email_1" class="font-weight-bold text-black">name@company.coml</label>
-                                        <input type="email" class="form-control" name="gerant_email[]" placeholder="Manager Email" autocomplete="off">
+                                        <label for="gerant_email_1" class="font-weight-bold text-black">name@company.com</label>
+                                        <input type="email" class="form-control" name="gerant_email[]" placeholder="Add Manager Email" autocomplete="off">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="gerant_phone_1" class="font-weight-bold text-black">+216 50 987 617</label>
-                                        <input type="text" class="form-control" name="gerant_phone[]" placeholder="Manager Phone" autocomplete="off">
+                                        <input type="text" class="form-control" name="gerant_phone[]" placeholder="Add Manager Phone" autocomplete="off">
                                     </div>
                                 </div>
                             </div>

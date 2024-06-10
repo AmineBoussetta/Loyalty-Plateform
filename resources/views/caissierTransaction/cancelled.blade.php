@@ -34,7 +34,7 @@
 
 
     <div class="mb-3">
-        <a href="{{ route('caissierTransaction.index') }}" class="btn btn-primary"><span class="sort-indicator">←</span> Go back to Active Transactions</a>
+        <a href="{{ route('caissierTransaction.index') }}" class="btn btn-primary" style="background-color: #00337C; border-color: #00337C;"><span class="sort-indicator" >←</span> Go back to Active Transactions</a>
     </div>
 
     <table class="table table-bordered table-stripped">
@@ -88,12 +88,12 @@
                         </td>
                         <td>
                             <div class="d-inline">
-                                <form action="{{ route('caissierTransaction.reactivate', $cancelledTransaction->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('caissierTransaction.reactivate', $cancelledTransaction->id) }}" method="POST" style="display:inline-block; margin-right: 10px;">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Are you sure to reactivate this transaction?')">Amend</button>
                                 </form>
-                                <form action="{{ route('caissierTransaction.permanentDelete', $cancelledTransaction->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('caissierTransaction.permanentDelete', $cancelledTransaction->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this transaction permanently?')">Permanent Delete</button>

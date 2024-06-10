@@ -15,7 +15,7 @@
         </div>
     </form>
 
-    <a href="{{ route('gerantCaissiers.create', ['gerant' => $gerant]) }}" class="btn btn-primary mb-3">Add Cashier</a>
+    <a href="{{ route('gerantCaissiers.create', ['gerant' => $gerant]) }}" class="btn btn-primary mb-3" style="background-color: #00337C; border-color: #00337C;">Add Cashier</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -36,7 +36,7 @@
         </thead>
         <tbody>
         @forelse ($gerantCaissiers as $gerantCaissier)
-    <tr>
+        <tr onclick="window.location='{{ route('gerantCaissiers.edit', ['gerant' => $gerant, 'caissierID' => $gerantCaissier->Caissier_ID]) }}';" style="cursor:pointer;">
         <td>{{ $gerantCaissier->Caissier_ID }}</td>
         <td>{{ $gerantCaissier->name }}</td>
         <td>{{ $gerantCaissier->email }}</td>
@@ -44,11 +44,10 @@
         <td>{{ $gerantCaissier->company_name }}</td>
         <td>
             <div class="d-flex">
-                <a href="{{ route('gerantCaissiers.edit', ['gerant' => $gerant, 'caissierID' => $gerantCaissier->Caissier_ID]) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
                <form id="deleteForm-{{ $gerantCaissier->Caissier_ID }}" action="{{ route('gerantCaissiers.destroy', ['gerant' => $gerant, 'caissierID' => $gerantCaissier->Caissier_ID]) }}" method="post" style="display: inline;">
     @csrf
     @method('DELETE')
-    <button class="btn btn-danger" style="background-color: #F05713; border-color: #F05713;" onclick="confirmDelete(event, '{{ $gerantCaissier->Caissier_ID }}')">Delete</button>
+    <button class="btn btn-sm btn-danger" style="background-color: #F05713; border-color: #F05713;" onclick="confirmDelete(event, '{{ $gerantCaissier->Caissier_ID }}')">Delete</button>
 </form>
 
             </div>
